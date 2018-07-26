@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+require("firebase/firestore");
 var app_1 = require("firebase/app");
 var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");

@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require("firebase/firestore");
 var app_1 = require("firebase/app");
 app_1.firestore.Firestore.prototype.docData = function (doc, options) {
     return __awaiter(this, void 0, void 0, function () {

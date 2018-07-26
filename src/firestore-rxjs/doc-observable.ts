@@ -1,3 +1,4 @@
+import "firebase/firestore";
 import {firestore as _firestore, firestore} from "firebase/app";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
