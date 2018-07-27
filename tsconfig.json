@@ -17,7 +17,5 @@
         "dist",
         "test",
         "node_modules"
-    ],
-
-    "compileOnSave": false
+    ]
 }

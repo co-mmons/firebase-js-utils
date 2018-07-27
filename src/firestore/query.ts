@@ -1,4 +1,3 @@
-import "firebase/firestore";
 import {firestore, firestore as _firestore} from "firebase/app";
 
 declare module "firebase/app" {
