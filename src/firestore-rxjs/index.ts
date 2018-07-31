@@ -6,7 +6,7 @@ import {docLoaded} from "./doc-observable";
 import {queryLoaded} from "./query-observable";
 export * from "./query-observable";
 
-export function extendFirestoreRxjs() {
+export function extendFirestore() {
     _extendFirestore();
     docLoaded;
     queryLoaded;
