@@ -1,21 +1,6 @@
-import {firestore as _firestore, firestore} from "firebase/app";
+import {firestore, firestore as _firestore} from "firebase/app";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-
-declare module "firebase/app" {
-
-    namespace firestore {
-        interface Firestore {
-            observeDocData<V = any>(doc: string | _firestore.DocumentReference, options?: _firestore.GetOptions & _firestore.SnapshotOptions): Observable<V>;
-            observeDoc(doc: string | _firestore.DocumentReference, options?: _firestore.SnapshotListenOptions): Observable<_firestore.DocumentSnapshot>;
-        }
-
-        interface DocumentReference {
-            observeData<V = any>(options?: _firestore.SnapshotListenOptions & _firestore.SnapshotOptions): Observable<V>;
-            observeSnapshot(options?: _firestore.SnapshotListenOptions): Observable<_firestore.DocumentSnapshot>;
-        }
-    }
-}
 
 firestore.Firestore.prototype.observeDocData = function <V = any>(this: firestore.Firestore, doc: string | _firestore.DocumentReference, options?: _firestore.GetOptions & firestore.SnapshotOptions): Observable<V> {
 

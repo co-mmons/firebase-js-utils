@@ -1,0 +1,5 @@
+{
+    "name": "@co.mmons/firebase-js-utils/firestore",
+    "main": "index.js",
+    "module": "../esm/firestore/index.js"
+}
