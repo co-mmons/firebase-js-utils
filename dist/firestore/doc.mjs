@@ -48,4 +48,5 @@ firestore.Firestore.prototype.docData = function (doc, options) {
         });
     });
 };
+export var docLoaded = true;
 //# sourceMappingURL=doc.js.map

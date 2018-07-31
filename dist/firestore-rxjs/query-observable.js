@@ -27,4 +27,5 @@ app_1.firestore.Query.prototype.observeSnapshot = function (options) {
         return function () { return unsubscribe(); };
     });
 };
+exports.queryLoaded = true;
 //# sourceMappingURL=query-observable.js.map

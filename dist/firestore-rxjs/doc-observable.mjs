@@ -28,4 +28,5 @@ firestore.DocumentReference.prototype.observeSnapshot = function (options) {
         return function () { return unsubscribe(); };
     });
 };
+export var docLoaded = true;
 //# sourceMappingURL=doc-observable.js.map

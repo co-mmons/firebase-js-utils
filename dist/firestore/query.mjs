@@ -81,4 +81,5 @@ firestore.Query.prototype.docs = function (options) {
         });
     });
 };
+export var queryLoaded = true;
 //# sourceMappingURL=query.js.map

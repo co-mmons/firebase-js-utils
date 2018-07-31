@@ -50,3 +50,5 @@ firestore.Query.prototype.docsData = async function <V = any>(this: firestore.Qu
 firestore.Query.prototype.docs = async function(this: firestore.Query, options?: _firestore.GetOptions & firestore.SnapshotOptions): Promise<_firestore.QueryDocumentSnapshot[]> {
     return (await this.get(options)).docs;
 }
+
+export const queryLoaded = true;

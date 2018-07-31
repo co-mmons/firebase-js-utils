@@ -44,3 +44,5 @@ firestore.Query.prototype.observeSnapshot = function (this: firestore.Query, opt
         return () => unsubscribe();
     });
 }
+
+export const queryLoaded = true;

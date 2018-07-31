@@ -12,3 +12,5 @@ declare module "firebase/app" {
 firestore.CollectionReference.prototype.docData = async function <V = any>(this: firestore.CollectionReference, docPath: string, options?: _firestore.GetOptions & firestore.SnapshotOptions): Promise<V> {
     return (await this.doc(docPath).get(options)).data(options) as V;
 }
+
+export const collectionLoaded = true;

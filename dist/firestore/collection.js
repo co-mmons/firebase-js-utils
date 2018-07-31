@@ -46,4 +46,5 @@ app_1.firestore.CollectionReference.prototype.docData = function (docPath, optio
         });
     });
 };
+exports.collectionLoaded = true;
 //# sourceMappingURL=collection.js.map

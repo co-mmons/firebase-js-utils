@@ -51,3 +51,5 @@ firestore.DocumentReference.prototype.observeSnapshot = function <V = any>(this:
         return () => unsubscribe();
     });
 }
+
+export const docLoaded = true;

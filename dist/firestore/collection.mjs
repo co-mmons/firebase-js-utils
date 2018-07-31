@@ -44,4 +44,5 @@ firestore.CollectionReference.prototype.docData = function (docPath, options) {
         });
     });
 };
+export var collectionLoaded = true;
 //# sourceMappingURL=collection.js.map

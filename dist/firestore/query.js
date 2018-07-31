@@ -83,4 +83,5 @@ app_1.firestore.Query.prototype.docs = function (options) {
         });
     });
 };
+exports.queryLoaded = true;
 //# sourceMappingURL=query.js.map

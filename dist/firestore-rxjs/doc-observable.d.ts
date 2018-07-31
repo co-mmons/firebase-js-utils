@@ -12,3 +12,4 @@ declare module "firebase/app" {
         }
     }
 }
+export declare const docLoaded: boolean;

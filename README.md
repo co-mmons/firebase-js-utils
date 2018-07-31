@@ -6,8 +6,12 @@ For now only Firestore extensions are available.
 # Getting started
 To load extensions:
 
-```import "@co.mmons/firebase-js-utils/firestore"```
+```import {extendFirestore} "@co.mmons/firebase-js-utils/firestore"```
+
+extendFirestore();
 
 If you want to use rxjs Observables:
 
-```import "@co.mmons/firebase-js-utils/firestore-rxjs"```
+```import {extendFirestore} from "@co.mmons/firebase-js-utils/firestore-rxjs"```
+
+extendFirestore();

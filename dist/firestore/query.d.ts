@@ -11,3 +11,4 @@ declare module "firebase/app" {
         }
     }
 }
+export declare const queryLoaded: boolean;

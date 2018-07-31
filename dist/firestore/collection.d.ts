@@ -6,3 +6,4 @@ declare module "firebase/app" {
         }
     }
 }
+export declare const collectionLoaded: boolean;

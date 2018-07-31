@@ -17,3 +17,5 @@ firestore.Firestore.prototype.docData = async function <V = any>(this: firestore
 
     return (await doc.get(options)).data(options) as V;
 }
+
+export const docLoaded = true;
