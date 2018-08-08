@@ -34,7 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { firestore } from "firebase/app";
-firestore.CollectionReference.prototype.docData = function (docPath, options) {
+function docData(docPath, options) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -43,6 +43,8 @@ firestore.CollectionReference.prototype.docData = function (docPath, options) {
             }
         });
     });
-};
-export var collectionLoaded = true;
+}
+export function loadCollection() {
+    firestore.CollectionReference.prototype.docData = docData;
+}
 //# sourceMappingURL=collection.js.map

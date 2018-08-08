@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -33,8 +34,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { firestore } from "firebase/app";
-firestore.CollectionReference.prototype.docData = function (docPath, options) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var app_1 = require("firebase/app");
+function docData(docPath, options) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -43,6 +45,9 @@ firestore.CollectionReference.prototype.docData = function (docPath, options) {
             }
         });
     });
-};
-export var collectionLoaded = true;
+}
+function loadCollection() {
+    app_1.firestore.CollectionReference.prototype.docData = docData;
+}
+exports.loadCollection = loadCollection;
 //# sourceMappingURL=collection.js.map

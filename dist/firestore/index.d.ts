@@ -1,4 +1,2 @@
-import "./collection";
-import "./doc";
-import "./query";
+import "./declarations";
 export declare function extendFirestore(): void;

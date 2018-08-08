@@ -1,1 +1,1 @@
-export declare const queryLoaded: boolean;
+export declare function loadQuery(): void;

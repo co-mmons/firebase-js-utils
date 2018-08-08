@@ -1,12 +1,11 @@
-import "./collection";
-import {collectionLoaded} from "./collection";
-import "./doc";
-import {docLoaded} from "./doc";
-import "./query";
-import {queryLoaded} from "./query";
+import "./declarations";
+
+import {loadCollection} from "./collection";
+import {loadDoc} from "./doc";
+import {loadQuery} from "./query";
 
 export function extendFirestore() {
-    docLoaded;
-    queryLoaded;
-    collectionLoaded;
+    loadCollection();
+    loadQuery();
+    loadDoc();
 }

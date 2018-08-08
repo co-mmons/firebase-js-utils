@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -33,20 +34,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { firestore } from "firebase/app";
-firestore.Firestore.prototype.docs = function (collection, options) {
-    if (typeof collection == "string") {
-        return this.docs(firestore().collection(collection), options);
-    }
-    return collection.docs(options);
-};
-firestore.Firestore.prototype.docsData = function (collection, options) {
-    if (typeof collection == "string") {
-        return this.docsData(firestore().collection(collection), options);
-    }
-    return collection.docsData();
-};
-firestore.Query.prototype.docsData = function (options) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var app_1 = require("firebase/app");
+function docsData(options) {
     return __awaiter(this, void 0, void 0, function () {
         var data, _i, _a, d;
         return __generator(this, function (_b) {
@@ -70,8 +60,8 @@ firestore.Query.prototype.docsData = function (options) {
             }
         });
     });
-};
-firestore.Query.prototype.docs = function (options) {
+}
+function docs(options) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -80,6 +70,10 @@ firestore.Query.prototype.docs = function (options) {
             }
         });
     });
-};
-export var queryLoaded = true;
+}
+function loadQuery() {
+    app_1.firestore.Query.prototype.docsData = docsData;
+    app_1.firestore.Query.prototype.docs = docs;
+}
+exports.loadQuery = loadQuery;
 //# sourceMappingURL=query.js.map

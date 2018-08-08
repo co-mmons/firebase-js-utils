@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -33,20 +34,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { firestore } from "firebase/app";
-firestore.Firestore.prototype.docData = function (doc, options) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var app_1 = require("firebase/app");
+function docData(doc, options) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (typeof doc == "string") {
-                        return [2 /*return*/, this.docData(firestore().doc(doc), options)];
+                        return [2 /*return*/, this.docData(app_1.firestore().doc(doc), options)];
                     }
                     return [4 /*yield*/, doc.get(options)];
                 case 1: return [2 /*return*/, (_a.sent()).data(options)];
             }
         });
     });
-};
-export var docLoaded = true;
+}
+function docs(collection, options) {
+    if (typeof collection == "string") {
+        return this.docs(app_1.firestore().collection(collection), options);
+    }
+    return collection.docs(options);
+}
+function docsData(collection, options) {
+    if (typeof collection == "string") {
+        return this.docsData(app_1.firestore().collection(collection), options);
+    }
+    return collection.docsData();
+}
+function loadDoc() {
+    app_1.firestore.Firestore.prototype.docData = docData;
+    app_1.firestore.Firestore.prototype.docs = docs;
+    app_1.firestore.Firestore.prototype.docsData = docsData;
+}
+exports.loadDoc = loadDoc;
 //# sourceMappingURL=doc.js.map

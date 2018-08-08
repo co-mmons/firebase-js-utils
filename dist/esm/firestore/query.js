@@ -34,19 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { firestore } from "firebase/app";
-firestore.Firestore.prototype.docs = function (collection, options) {
-    if (typeof collection == "string") {
-        return this.docs(firestore().collection(collection), options);
-    }
-    return collection.docs(options);
-};
-firestore.Firestore.prototype.docsData = function (collection, options) {
-    if (typeof collection == "string") {
-        return this.docsData(firestore().collection(collection), options);
-    }
-    return collection.docsData();
-};
-firestore.Query.prototype.docsData = function (options) {
+function docsData(options) {
     return __awaiter(this, void 0, void 0, function () {
         var data, _i, _a, d;
         return __generator(this, function (_b) {
@@ -70,8 +58,8 @@ firestore.Query.prototype.docsData = function (options) {
             }
         });
     });
-};
-firestore.Query.prototype.docs = function (options) {
+}
+function docs(options) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -80,6 +68,9 @@ firestore.Query.prototype.docs = function (options) {
             }
         });
     });
-};
-export var queryLoaded = true;
+}
+export function loadQuery() {
+    firestore.Query.prototype.docsData = docsData;
+    firestore.Query.prototype.docs = docs;
+}
 //# sourceMappingURL=query.js.map

@@ -2,7 +2,7 @@ import {firestore, firestore as _firestore} from "firebase/app";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 
-firestore.Query.prototype.observeDocsData = function <V = any>(this: firestore.Query, options?: firestore.SnapshotListenOptions & firestore.SnapshotOptions): Observable<V[]> {
+function observeDocsData<V = any>(this: firestore.Query, options?: firestore.SnapshotListenOptions & firestore.SnapshotOptions): Observable<V[]> {
 
     return this.observeSnapshot(options).pipe(map(snapshot => {
         let data: V[] = [];
@@ -17,17 +17,21 @@ firestore.Query.prototype.observeDocsData = function <V = any>(this: firestore.Q
     }));
 }
 
-firestore.Query.prototype.observeDocs = function (this: firestore.Query, options?: firestore.SnapshotListenOptions & firestore.SnapshotOptions): Observable<_firestore.QueryDocumentSnapshot[]> {
+function observeDocs(this: firestore.Query, options?: firestore.SnapshotListenOptions & firestore.SnapshotOptions): Observable<_firestore.QueryDocumentSnapshot[]> {
     return this.observeSnapshot(options).pipe(map(snapshot => {
         return snapshot.docs;
     }));
 }
 
-firestore.Query.prototype.observeSnapshot = function (this: firestore.Query, options?: firestore.SnapshotListenOptions): Observable<firestore.QuerySnapshot> {
+function observeSnapshot(this: firestore.Query, options?: firestore.SnapshotListenOptions): Observable<firestore.QuerySnapshot> {
     return new Observable(subscriber => {
         let unsubscribe = this.onSnapshot(options || {}, subscriber);
         return () => unsubscribe();
     });
 }
 
-export const queryLoaded = true;
+export function loadQuery() {
+    firestore.Query.prototype.observeDocsData = observeDocsData;
+    firestore.Query.prototype.observeDocs = observeDocs;
+    firestore.Query.prototype.observeSnapshot = observeSnapshot;
+}

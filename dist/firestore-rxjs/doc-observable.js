@@ -1,32 +1,40 @@
-import { firestore } from "firebase/app";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
-firestore.Firestore.prototype.observeDocData = function (doc, options) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var app_1 = require("firebase/app");
+var rxjs_1 = require("rxjs");
+var operators_1 = require("rxjs/operators");
+function observeDocData(doc, options) {
     if (typeof doc == "string") {
         return this.observeDocData(this.doc(doc), options);
     }
-    var observable = this.observeDoc(doc).pipe(map(function (snapshot) {
+    var observable = this.observeDoc(doc).pipe(operators_1.map(function (snapshot) {
         return snapshot.data();
     }));
     return observable;
-};
-firestore.Firestore.prototype.observeDoc = function (doc, options) {
+}
+function observeDoc(doc, options) {
     if (typeof doc == "string") {
         return this.observeDoc(this.doc(doc), options);
     }
     return doc.observeSnapshot();
-};
-firestore.DocumentReference.prototype.observeData = function (options) {
-    return this.observeSnapshot(options).pipe(map(function (snapshot) {
+}
+function observeData(options) {
+    return this.observeSnapshot(options).pipe(operators_1.map(function (snapshot) {
         return snapshot.data(options);
     }));
-};
-firestore.DocumentReference.prototype.observeSnapshot = function (options) {
+}
+function observeSnapshot(options) {
     var _this = this;
-    return new Observable(function (subscriber) {
+    return new rxjs_1.Observable(function (subscriber) {
         var unsubscribe = _this.onSnapshot(options || {}, subscriber);
         return function () { return unsubscribe(); };
     });
-};
-export var docLoaded = true;
+}
+function loadDoc() {
+    app_1.firestore.Firestore.prototype.observeDocData = observeDocData;
+    app_1.firestore.Firestore.prototype.observeDoc = observeDoc;
+    app_1.firestore.DocumentReference.prototype.observeData = observeData;
+    app_1.firestore.DocumentReference.prototype.observeSnapshot = observeSnapshot;
+}
+exports.loadDoc = loadDoc;
 //# sourceMappingURL=doc-observable.js.map

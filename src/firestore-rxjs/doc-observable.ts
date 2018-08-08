@@ -2,7 +2,7 @@ import {firestore, firestore as _firestore} from "firebase/app";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 
-firestore.Firestore.prototype.observeDocData = function <V = any>(this: firestore.Firestore, doc: string | _firestore.DocumentReference, options?: _firestore.GetOptions & firestore.SnapshotOptions): Observable<V> {
+function observeDocData<V = any>(this: firestore.Firestore, doc: string | _firestore.DocumentReference, options?: _firestore.GetOptions & firestore.SnapshotOptions): Observable<V> {
 
     if (typeof doc == "string") {
         return this.observeDocData(this.doc(doc), options);
@@ -15,7 +15,7 @@ firestore.Firestore.prototype.observeDocData = function <V = any>(this: firestor
     return observable;
 }
 
-firestore.Firestore.prototype.observeDoc = function <V = any>(this: firestore.Firestore, doc: string | _firestore.DocumentReference, options?: _firestore.GetOptions & firestore.SnapshotOptions): Observable<firestore.DocumentSnapshot> {
+function observeDoc <V = any>(this: firestore.Firestore, doc: string | _firestore.DocumentReference, options?: _firestore.GetOptions & firestore.SnapshotOptions): Observable<firestore.DocumentSnapshot> {
 
     if (typeof doc == "string") {
         return this.observeDoc(this.doc(doc), options);
@@ -24,17 +24,22 @@ firestore.Firestore.prototype.observeDoc = function <V = any>(this: firestore.Fi
     return doc.observeSnapshot();
 }
 
-firestore.DocumentReference.prototype.observeData = function <V = any>(this: firestore.DocumentReference, options?: firestore.SnapshotListenOptions & firestore.SnapshotOptions): Observable<V> {
+function observeData <V = any>(this: firestore.DocumentReference, options?: firestore.SnapshotListenOptions & firestore.SnapshotOptions): Observable<V> {
     return this.observeSnapshot(options).pipe(map(snapshot => {
         return snapshot.data(options) as V;
     }));
 }
 
-firestore.DocumentReference.prototype.observeSnapshot = function <V = any>(this: firestore.DocumentReference, options?: firestore.SnapshotListenOptions): Observable<firestore.DocumentSnapshot> {
+function observeSnapshot <V = any>(this: firestore.DocumentReference, options?: firestore.SnapshotListenOptions): Observable<firestore.DocumentSnapshot> {
     return new Observable(subscriber => {
         let unsubscribe = this.onSnapshot(options || {}, subscriber);
         return () => unsubscribe();
     });
 }
 
-export const docLoaded = true;
+export function loadDoc () {
+    firestore.Firestore.prototype.observeDocData = observeDocData;
+    firestore.Firestore.prototype.observeDoc = observeDoc;
+    firestore.DocumentReference.prototype.observeData = observeData;
+    firestore.DocumentReference.prototype.observeSnapshot = observeSnapshot;
+}

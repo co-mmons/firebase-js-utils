@@ -1,1 +1,1 @@
-export declare const docLoaded: boolean;
+export declare function loadDoc(): void;
