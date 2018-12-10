@@ -9,6 +9,7 @@
     "build": "node-utils-file-system-glob-delete \"dist/**/*\" && tsc && tsc -p tsconfig.esm.json && node-utils-file-system-glob-copy ./ dist package.json && node-utils-file-system-glob-copy src dist \"**/package.json\""
   },
   "dependencies": {
+    "@co.mmons/js-utils": "git+https://github.com/co-mmons/js-utils.git",
     "@co.mmons/node-utils": "git+https://github.com/co-mmons/node-utils.git"
   },
   "peerDependencies": {
@@ -18,7 +19,5 @@
   "devDependencies": {
     "typescript": "^2.9.0"
   },
-  "main": "index.js",
-  "module": "index.esm.js",
   "sideEffects": false
 }

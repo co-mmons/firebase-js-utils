@@ -1,0 +1,5 @@
+{
+    "name": "@co.mmons/firebase-js-utils/firestore/wrappers",
+    "main": "index.js",
+    "module": "../esm/firestore/wrappers/index.js"
+}

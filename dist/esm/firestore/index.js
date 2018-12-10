@@ -1,10 +1,5 @@
-import "./declarations";
-import { loadCollection } from "./collection";
-import { loadDoc } from "./doc";
-import { loadQuery } from "./query";
-export function extendFirestore() {
-    loadCollection();
-    loadQuery();
-    loadDoc();
-}
+export * from "./helper";
+import "./doc-data";
+import "./docs-data";
+import "./docs";
 //# sourceMappingURL=index.js.map
