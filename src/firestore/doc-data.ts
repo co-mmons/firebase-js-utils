@@ -1,8 +1,8 @@
 import {DocumentReference, GetOptions, SnapshotOptions} from "./types";
 import {SerializationOptions} from "./serialization-options";
-import {FirestoreHelper} from "./helper";
+import {AbstractFirestore} from "./firestore";
 
-async function docData<V = any> (this: FirestoreHelper, doc: string | DocumentReference, options ?: GetOptions & SnapshotOptions & SerializationOptions): Promise<V> {
+async function docData<V = any> (this: AbstractFirestore, doc: string | DocumentReference, options ?: GetOptions & SnapshotOptions & SerializationOptions): Promise<V> {
 
     if(typeof doc == "string") {
         return this.docData<V>(this.doc(doc), options);
@@ -11,13 +11,13 @@ async function docData<V = any> (this: FirestoreHelper, doc: string | DocumentRe
     let data = (await doc.get(options)).data(options);
 }
 
-declare module "./helper" {
+declare module "./firestore" {
 
-    interface FirestoreHelper {
+    interface AbstractFirestore {
 
         docData<V = any>(doc: string | DocumentReference, options?: GetOptions & SnapshotOptions): Promise<V>;
     }
 
 }
 
-FirestoreHelper.prototype.docData = docData;
+AbstractFirestore.prototype.docData = docData;

@@ -1,11 +1,11 @@
 import {ArraySerializer} from "@co.mmons/js-utils/json";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {FirestoreHelper} from "../helper";
+import {AbstractFirestore} from "../firestore";
 import {SerializationOptions} from "../serialization-options";
 import {GetOptions, Query, SnapshotOptions} from "../types";
 
-function docsDataObservable<V = any>(this: FirestoreHelper, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V[]> {
+function docsDataObservable<V = any>(this: AbstractFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V[]> {
 
     if (typeof collectionPathOrQuery == "string") {
         return this.docDataObservable(this.doc(collectionPathOrQuery), options);
@@ -28,12 +28,12 @@ function docsDataObservable<V = any>(this: FirestoreHelper, collectionPathOrQuer
     return observable;
 }
 
-declare module "../helper" {
+declare module "../firestore" {
 
-    interface FirestoreHelper {
+    interface AbstractFirestore {
         docsDataObservable<V = any>(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V[]>;
     }
 
 }
 
-FirestoreHelper.prototype.docsDataObservable = docsDataObservable;
+AbstractFirestore.prototype.docsDataObservable = docsDataObservable;

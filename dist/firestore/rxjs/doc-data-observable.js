@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var helper_1 = require("../helper");
+var firestore_1 = require("../firestore");
 var operators_1 = require("rxjs/operators");
 function docDataObservable(doc, options) {
     var _this = this;
@@ -16,5 +16,5 @@ function docDataObservable(doc, options) {
     }));
     return observable;
 }
-helper_1.FirestoreHelper.prototype.docDataObservable = docDataObservable;
+firestore_1.AbstractFirestore.prototype.docDataObservable = docDataObservable;
 //# sourceMappingURL=doc-data-observable.js.map

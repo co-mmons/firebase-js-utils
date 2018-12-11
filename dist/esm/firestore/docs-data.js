@@ -34,7 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { ArraySerializer } from "@co.mmons/js-utils/json";
-import { FirestoreHelper } from "./helper";
+import { AbstractFirestore } from "./firestore";
 function docsData(collectionPathOrQuery, options) {
     return __awaiter(this, void 0, void 0, function () {
         var data, _i, _a, d;
@@ -64,5 +64,5 @@ function docsData(collectionPathOrQuery, options) {
         });
     });
 }
-FirestoreHelper.prototype.docsData = docsData;
+AbstractFirestore.prototype.docsData = docsData;
 //# sourceMappingURL=docs-data.js.map

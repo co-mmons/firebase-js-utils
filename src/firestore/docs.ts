@@ -1,7 +1,7 @@
-import {FirestoreHelper} from "./helper";
+import {AbstractFirestore} from "./firestore";
 import {GetOptions, Query, QueryDocumentSnapshot, SnapshotOptions} from "./types";
 
-async function docs(this: FirestoreHelper, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions): Promise<QueryDocumentSnapshot[]> {
+async function docs(this: AbstractFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions): Promise<QueryDocumentSnapshot[]> {
 
     if (typeof collectionPathOrQuery == "string") {
         return this.docs(this.collection(collectionPathOrQuery), options);
@@ -11,12 +11,12 @@ async function docs(this: FirestoreHelper, collectionPathOrQuery: string | Query
 }
 
 
-declare module "./helper" {
+declare module "./firestore" {
 
-    interface FirestoreHelper {
+    interface AbstractFirestore {
         docs(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions): Promise<QueryDocumentSnapshot[]>;
     }
 
 }
 
-FirestoreHelper.prototype.docs = docs;
+AbstractFirestore.prototype.docs = docs;

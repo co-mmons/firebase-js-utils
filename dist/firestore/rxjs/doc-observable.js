@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var rxjs_1 = require("rxjs");
-var helper_1 = require("../helper");
+var firestore_1 = require("../firestore");
 function docObservable(doc, options) {
     if (typeof doc == "string") {
         return this.docObservable(this.doc(doc), options);
@@ -11,5 +11,5 @@ function docObservable(doc, options) {
         return function () { return unsubscribe(); };
     });
 }
-helper_1.FirestoreHelper.prototype.docObservable = docObservable;
+firestore_1.AbstractFirestore.prototype.docObservable = docObservable;
 //# sourceMappingURL=doc-observable.js.map

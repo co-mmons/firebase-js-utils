@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var rxjs_1 = require("rxjs");
-var helper_1 = require("../helper");
+var firestore_1 = require("../firestore");
 function collectionOrQueryObservable(collectionPathOrQuery, options) {
     if (typeof collectionPathOrQuery == "string") {
         return this.collectionObservable(this.collection(collectionPathOrQuery), options);
@@ -11,6 +11,6 @@ function collectionOrQueryObservable(collectionPathOrQuery, options) {
         return function () { return unsubscribe(); };
     });
 }
-helper_1.FirestoreHelper.prototype.collectionObservable = collectionOrQueryObservable;
-helper_1.FirestoreHelper.prototype.queryObservable = collectionOrQueryObservable;
+firestore_1.AbstractFirestore.prototype.collectionObservable = collectionOrQueryObservable;
+firestore_1.AbstractFirestore.prototype.queryObservable = collectionOrQueryObservable;
 //# sourceMappingURL=query-observable.js.map

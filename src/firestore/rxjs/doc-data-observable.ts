@@ -1,10 +1,10 @@
 import {DocumentReference, GetOptions, SnapshotOptions} from "../types";
 import {Observable} from "rxjs";
-import {FirestoreHelper} from "../helper";
+import {AbstractFirestore} from "../firestore";
 import {SerializationOptions} from "../serialization-options";
 import {map} from "rxjs/operators";
 
-function docDataObservable<V = any>(this: FirestoreHelper, doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V> {
+function docDataObservable<V = any>(this: AbstractFirestore, doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V> {
 
     if (typeof doc == "string") {
         return this.docDataObservable(this.doc(doc), options);
@@ -23,12 +23,12 @@ function docDataObservable<V = any>(this: FirestoreHelper, doc: string | Documen
     return observable;
 }
 
-declare module "../helper" {
+declare module "../firestore" {
 
-    interface FirestoreHelper {
+    interface AbstractFirestore {
         docDataObservable<V = any>(doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V>;
     }
 
 }
 
-FirestoreHelper.prototype.docDataObservable = docDataObservable;
+AbstractFirestore.prototype.docDataObservable = docDataObservable;

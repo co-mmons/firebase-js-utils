@@ -1,9 +1,9 @@
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {FirestoreHelper} from "../helper";
-import {GetOptions, Query, QueryDocumentSnapshot, QuerySnapshot, SnapshotOptions} from "../types";
+import {AbstractFirestore} from "../firestore";
+import {GetOptions, Query, QueryDocumentSnapshot, QuerySnapshot, SnapshotOptions, SnapshotListenOptions} from "../types";
 
-function docsObservable(this: FirestoreHelper, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions): Observable<QueryDocumentSnapshot[]> {
+function docsObservable(this: AbstractFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QueryDocumentSnapshot[]> {
 
     if (typeof collectionPathOrQuery == "string") {
         return this.docsObservable(this.collection(collectionPathOrQuery), options);
@@ -15,12 +15,12 @@ function docsObservable(this: FirestoreHelper, collectionPathOrQuery: string | Q
     }).pipe(map((snapshot: QuerySnapshot) => snapshot.docs));
 }
 
-declare module "../helper" {
+declare module "../firestore" {
 
-    interface FirestoreHelper {
-        docsObservable(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions): Observable<QueryDocumentSnapshot[]>;
+    interface AbstractFirestore {
+        docsObservable(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QueryDocumentSnapshot[]>;
     }
 
 }
 
-FirestoreHelper.prototype.docsObservable = docsObservable;
+AbstractFirestore.prototype.docsObservable = docsObservable;

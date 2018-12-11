@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var helper_1 = require("./helper");
+var firestore_1 = require("./firestore");
 function docs(collectionPathOrQuery, options) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -50,5 +50,5 @@ function docs(collectionPathOrQuery, options) {
         });
     });
 }
-helper_1.FirestoreHelper.prototype.docs = docs;
+firestore_1.AbstractFirestore.prototype.docs = docs;
 //# sourceMappingURL=docs.js.map

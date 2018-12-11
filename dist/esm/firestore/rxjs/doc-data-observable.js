@@ -1,4 +1,4 @@
-import { FirestoreHelper } from "../helper";
+import { AbstractFirestore } from "../firestore";
 import { map } from "rxjs/operators";
 function docDataObservable(doc, options) {
     var _this = this;
@@ -14,5 +14,5 @@ function docDataObservable(doc, options) {
     }));
     return observable;
 }
-FirestoreHelper.prototype.docDataObservable = docDataObservable;
+AbstractFirestore.prototype.docDataObservable = docDataObservable;
 //# sourceMappingURL=doc-data-observable.js.map

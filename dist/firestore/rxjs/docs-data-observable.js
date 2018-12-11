@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var json_1 = require("@co.mmons/js-utils/json");
 var operators_1 = require("rxjs/operators");
-var helper_1 = require("../helper");
+var firestore_1 = require("../firestore");
 function docsDataObservable(collectionPathOrQuery, options) {
     var _this = this;
     if (typeof collectionPathOrQuery == "string") {
@@ -21,5 +21,5 @@ function docsDataObservable(collectionPathOrQuery, options) {
     }));
     return observable;
 }
-helper_1.FirestoreHelper.prototype.docsDataObservable = docsDataObservable;
+firestore_1.AbstractFirestore.prototype.docsDataObservable = docsDataObservable;
 //# sourceMappingURL=docs-data-observable.js.map

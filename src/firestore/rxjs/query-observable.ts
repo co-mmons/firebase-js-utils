@@ -1,8 +1,8 @@
 import {Observable} from "rxjs";
-import {FirestoreHelper} from "../helper";
-import {CollectionReference, GetOptions, Query, QuerySnapshot, SnapshotOptions} from "../types";
+import {AbstractFirestore} from "../firestore";
+import {CollectionReference, GetOptions, Query, QuerySnapshot, SnapshotOptions, SnapshotListenOptions} from "../types";
 
-function collectionOrQueryObservable(this: FirestoreHelper, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions): Observable<QuerySnapshot> {
+function collectionOrQueryObservable(this: AbstractFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QuerySnapshot> {
 
     if (typeof collectionPathOrQuery == "string") {
         return this.collectionObservable(this.collection(collectionPathOrQuery), options);
@@ -14,14 +14,14 @@ function collectionOrQueryObservable(this: FirestoreHelper, collectionPathOrQuer
     });
 }
 
-declare module "../helper" {
+declare module "../firestore" {
 
-    interface FirestoreHelper {
-        collectionObservable(collectionPathOrQuery: string | CollectionReference, options?: GetOptions & SnapshotOptions): Observable<QuerySnapshot>;
-        queryObservable(query: Query, options?: GetOptions & SnapshotOptions): Observable<QuerySnapshot>;
+    interface AbstractFirestore {
+        collectionObservable(collectionPathOrQuery: string | CollectionReference, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QuerySnapshot>;
+        queryObservable(query: Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QuerySnapshot>;
     }
 
 }
 
-FirestoreHelper.prototype.collectionObservable = collectionOrQueryObservable;
-FirestoreHelper.prototype.queryObservable = collectionOrQueryObservable;
+AbstractFirestore.prototype.collectionObservable = collectionOrQueryObservable;
+AbstractFirestore.prototype.queryObservable = collectionOrQueryObservable;

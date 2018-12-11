@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
-var helper_1 = require("../helper");
+var firestore_1 = require("../firestore");
 function docsObservable(collectionPathOrQuery, options) {
     if (typeof collectionPathOrQuery == "string") {
         return this.docsObservable(this.collection(collectionPathOrQuery), options);
@@ -12,5 +12,5 @@ function docsObservable(collectionPathOrQuery, options) {
         return function () { return unsubscribe(); };
     }).pipe(operators_1.map(function (snapshot) { return snapshot.docs; }));
 }
-helper_1.FirestoreHelper.prototype.docsObservable = docsObservable;
+firestore_1.AbstractFirestore.prototype.docsObservable = docsObservable;
 //# sourceMappingURL=docs-observable.js.map

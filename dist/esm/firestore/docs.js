@@ -33,7 +33,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { FirestoreHelper } from "./helper";
+import { AbstractFirestore } from "./firestore";
 function docs(collectionPathOrQuery, options) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -48,5 +48,5 @@ function docs(collectionPathOrQuery, options) {
         });
     });
 }
-FirestoreHelper.prototype.docs = docs;
+AbstractFirestore.prototype.docs = docs;
 //# sourceMappingURL=docs.js.map

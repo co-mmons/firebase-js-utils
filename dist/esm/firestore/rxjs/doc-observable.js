@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { FirestoreHelper } from "../helper";
+import { AbstractFirestore } from "../firestore";
 function docObservable(doc, options) {
     if (typeof doc == "string") {
         return this.docObservable(this.doc(doc), options);
@@ -9,5 +9,5 @@ function docObservable(doc, options) {
         return function () { return unsubscribe(); };
     });
 }
-FirestoreHelper.prototype.docObservable = docObservable;
+AbstractFirestore.prototype.docObservable = docObservable;
 //# sourceMappingURL=doc-observable.js.map

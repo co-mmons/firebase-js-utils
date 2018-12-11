@@ -1,4 +1,4 @@
-export * from "./helper";
+export * from "./firestore";
 
 import "./doc-data";
 import "./docs-data";
