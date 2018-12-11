@@ -9,6 +9,12 @@ async function docData<V = any> (this: AbstractFirestore, doc: string | Document
     }
 
     let data = (await doc.get(options)).data(options);
+
+    if (options && options.serializer) {
+        return this.unserialize(data, options.serializer, options.serializationOptions);
+    }
+
+    return data as V;
 }
 
 declare module "./firestore" {

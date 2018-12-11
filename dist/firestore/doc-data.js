@@ -48,7 +48,10 @@ function docData(doc, options) {
                     return [4 /*yield*/, doc.get(options)];
                 case 1:
                     data = (_a.sent()).data(options);
-                    return [2 /*return*/];
+                    if (options && options.serializer) {
+                        return [2 /*return*/, this.unserialize(data, options.serializer, options.serializationOptions)];
+                    }
+                    return [2 /*return*/, data];
             }
         });
     });
