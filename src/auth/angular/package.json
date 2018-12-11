@@ -1,0 +1,5 @@
+{
+    "name": "@co.mmons/firebase-js-utils/auth/angular",
+    "main": "index.js",
+    "module": "../../esm/auth/angular/index.js"
+}
