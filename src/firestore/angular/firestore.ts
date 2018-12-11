@@ -1,10 +1,10 @@
 import {AngularFirestore as AngularFireFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from "@angular/fire/firestore";
 import firebase from "firebase/app";
+import {first} from "rxjs/operators";
+import {AbstractFirestore} from "../";
 import {CollectionOrQueryWrapper} from "../collection-query-wrapper";
 import {DocumentWrapper} from "../document-wrapper";
-import {AbstractFirestore} from "../firestore";
 import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, Query, TimestampStatic, Transaction, WriteBatch} from "../types";
-import {first} from "rxjs/operators";
 
 export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
 

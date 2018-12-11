@@ -14,10 +14,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var app_1 = require("firebase/app");
+var operators_1 = require("rxjs/operators");
+var __1 = require("../");
 var collection_query_wrapper_1 = require("../collection-query-wrapper");
 var document_wrapper_1 = require("../document-wrapper");
-var firestore_1 = require("../firestore");
-var operators_1 = require("rxjs/operators");
 var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
     __extends(CollectionOrQueryAngularWrapper, _super);
     function CollectionOrQueryAngularWrapper(firestore, collection, query) {
@@ -91,6 +91,6 @@ var AngularFirestore = /** @class */ (function (_super) {
         return app_1.default.firestore.FieldPath;
     };
     return AngularFirestore;
-}(firestore_1.AbstractFirestore));
+}(__1.AbstractFirestore));
 exports.AngularFirestore = AngularFirestore;
 //# sourceMappingURL=firestore.js.map

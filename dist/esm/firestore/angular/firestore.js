@@ -12,10 +12,10 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import firebase from "firebase/app";
+import { first } from "rxjs/operators";
+import { AbstractFirestore } from "../";
 import { CollectionOrQueryWrapper } from "../collection-query-wrapper";
 import { DocumentWrapper } from "../document-wrapper";
-import { AbstractFirestore } from "../firestore";
-import { first } from "rxjs/operators";
 var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
     __extends(CollectionOrQueryAngularWrapper, _super);
     function CollectionOrQueryAngularWrapper(firestore, collection, query) {
