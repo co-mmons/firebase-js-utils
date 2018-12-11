@@ -1,5 +1,5 @@
 {
     "name": "@co.mmons/firebase-js-utils/firestore/angular/rxjs",
     "main": "index.js",
-    "module": "../esm/firestore/angular/rxjs/index.js"
+    "module": "../../../esm/firestore/angular/rxjs/index.js"
 }
