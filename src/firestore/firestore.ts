@@ -1,6 +1,6 @@
 import {CollectionReference, DocumentReference, FirebaseFirestore, Transaction, WriteBatch, Timestamp, TimestampStatic, GeoPointStatic, FieldValueStatic, FieldPathStatic} from "./types";
 import {Type} from "@co.mmons/js-utils/core";
-import {Serializer, unserialize, SerializationOptions} from "@co.mmons/js-utils/json";
+import {Serializer, unserialize, SerializationOptions, serialize} from "@co.mmons/js-utils/json";
 
 export abstract class AbstractFirestore implements FirebaseFirestore {
 
@@ -53,6 +53,10 @@ export abstract class AbstractFirestore implements FirebaseFirestore {
     abstract classFieldValue(): FieldValueStatic;
 
     abstract classFieldPath(): FieldPathStatic;
+
+    serialize(data: any, options?: SerializationOptions & {level?: number}) {
+        return serialize(data, options);
+    }
 
     unserialize(json: any, targetClassOrSerializer: Type<any> | Serializer, options?: SerializationOptions) {
 

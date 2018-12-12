@@ -42,5 +42,8 @@ export declare abstract class AbstractFirestore implements FirebaseFirestore {
     abstract classGeoPoint(): GeoPointStatic;
     abstract classFieldValue(): FieldValueStatic;
     abstract classFieldPath(): FieldPathStatic;
+    serialize(data: any, options?: SerializationOptions & {
+        level?: number;
+    }): any;
     unserialize(json: any, targetClassOrSerializer: Type<any> | Serializer, options?: SerializationOptions): any;
 }
