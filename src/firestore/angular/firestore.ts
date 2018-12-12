@@ -72,19 +72,19 @@ export class AngularFirestore extends AbstractFirestore {
         return this.realAngularFirestore.firestore.batch();
     }
 
-    classTimestamp(): TimestampStatic {
+    get Timestamp(): TimestampStatic {
         return firebase.firestore.Timestamp;
     }
 
-    classGeoPoint(): GeoPointStatic {
+    get GeoPoint(): GeoPointStatic {
         return firebase.firestore.GeoPoint;
     }
 
-    classFieldValue(): FieldValueStatic {
+    get FieldValue(): FieldValueStatic {
         return firebase.firestore.FieldValue;
     }
 
-    classFieldPath(): FieldPathStatic {
+    get FieldPath(): FieldPathStatic {
         return firebase.firestore.FieldPath;
     }
 }

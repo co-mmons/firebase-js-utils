@@ -38,10 +38,10 @@ export declare abstract class AbstractFirestore implements FirebaseFirestore {
      * atomic operation.
      */
     abstract batch(): WriteBatch;
-    abstract classTimestamp(): TimestampStatic;
-    abstract classGeoPoint(): GeoPointStatic;
-    abstract classFieldValue(): FieldValueStatic;
-    abstract classFieldPath(): FieldPathStatic;
+    abstract readonly Timestamp: TimestampStatic;
+    abstract readonly GeoPoint: GeoPointStatic;
+    abstract readonly FieldValue: FieldValueStatic;
+    abstract readonly FieldPath: FieldPathStatic;
     serialize(data: any, options?: SerializationOptions & {
         level?: number;
     }): any;

@@ -78,18 +78,34 @@ var AngularFirestore = /** @class */ (function (_super) {
     AngularFirestore.prototype.batch = function () {
         return this.realAngularFirestore.firestore.batch();
     };
-    AngularFirestore.prototype.classTimestamp = function () {
-        return app_1.default.firestore.Timestamp;
-    };
-    AngularFirestore.prototype.classGeoPoint = function () {
-        return app_1.default.firestore.GeoPoint;
-    };
-    AngularFirestore.prototype.classFieldValue = function () {
-        return app_1.default.firestore.FieldValue;
-    };
-    AngularFirestore.prototype.classFieldPath = function () {
-        return app_1.default.firestore.FieldPath;
-    };
+    Object.defineProperty(AngularFirestore.prototype, "Timestamp", {
+        get: function () {
+            return app_1.default.firestore.Timestamp;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AngularFirestore.prototype, "GeoPoint", {
+        get: function () {
+            return app_1.default.firestore.GeoPoint;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AngularFirestore.prototype, "FieldValue", {
+        get: function () {
+            return app_1.default.firestore.FieldValue;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AngularFirestore.prototype, "FieldPath", {
+        get: function () {
+            return app_1.default.firestore.FieldPath;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return AngularFirestore;
 }(__1.AbstractFirestore));
 exports.AngularFirestore = AngularFirestore;

@@ -30,8 +30,8 @@ export declare class AngularFirestore extends AbstractFirestore {
      * atomic operation.
      */
     batch(): WriteBatch;
-    classTimestamp(): TimestampStatic;
-    classGeoPoint(): GeoPointStatic;
-    classFieldValue(): FieldValueStatic;
-    classFieldPath(): FieldPathStatic;
+    readonly Timestamp: TimestampStatic;
+    readonly GeoPoint: GeoPointStatic;
+    readonly FieldValue: FieldValueStatic;
+    readonly FieldPath: FieldPathStatic;
 }
