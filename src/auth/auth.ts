@@ -1,7 +1,7 @@
 import {UserInfo} from "./user-info";
 import {Observable} from "rxjs";
 
-export abstract class AbstractAuth {
+export abstract class UniversalAuth {
 
     readonly user: UserInfo;
 

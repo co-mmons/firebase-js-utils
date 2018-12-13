@@ -1,7 +1,7 @@
-var AbstractAuth = /** @class */ (function () {
-    function AbstractAuth() {
+var UniversalAuth = /** @class */ (function () {
+    function UniversalAuth() {
     }
-    return AbstractAuth;
+    return UniversalAuth;
 }());
-export { AbstractAuth };
+export { UniversalAuth };
 //# sourceMappingURL=auth.js.map

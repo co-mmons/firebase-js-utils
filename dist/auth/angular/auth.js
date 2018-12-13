@@ -50,37 +50,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var auth_1 = require("../auth");
 var rxjs_1 = require("rxjs");
-var AngularAuth = /** @class */ (function (_super) {
-    __extends(AngularAuth, _super);
-    function AngularAuth(realAuth) {
+var UniversalAuthAngularImpl = /** @class */ (function (_super) {
+    __extends(UniversalAuthAngularImpl, _super);
+    function UniversalAuthAngularImpl(auth) {
         var _this = _super.call(this) || this;
-        _this.realAuth = realAuth;
+        _this.auth = auth;
         _this.admin = false;
         _this.authInitialized = false;
         _this.userObservable = new rxjs_1.ReplaySubject(1);
         _this.userIdObservable = new rxjs_1.ReplaySubject(1);
-        _this.authSubscription = _this.realAuth.idToken.subscribe(function (user) { return _this.userChanged(); }, function (error) { return _this.onAuthError(error); });
+        _this.authSubscription = _this.auth.idToken.subscribe(function (user) { return _this.userChanged(); }, function (error) { return _this.onAuthError(error); });
         return _this;
     }
-    Object.defineProperty(AngularAuth.prototype, "user", {
+    Object.defineProperty(UniversalAuthAngularImpl.prototype, "user", {
         get: function () {
             return this._user;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(AngularAuth.prototype, "userId", {
+    Object.defineProperty(UniversalAuthAngularImpl.prototype, "userId", {
         get: function () {
             return this._user.uid;
         },
         enumerable: true,
         configurable: true
     });
-    AngularAuth.prototype.userChanged = function () {
+    UniversalAuthAngularImpl.prototype.userChanged = function () {
         return __awaiter(this, void 0, void 0, function () {
             var user, changed;
             return __generator(this, function (_a) {
-                user = this.realAuth.auth.currentUser;
+                user = this.auth.auth.currentUser;
                 changed = !this.authInitialized || (!this._user && user) || (this._user && !user) || (this._user && user && this._user.uid != user.uid) ? true : false;
                 this._user = user;
                 this.authInitialized = true;
@@ -101,17 +101,17 @@ var AngularAuth = /** @class */ (function (_super) {
             });
         });
     };
-    Object.defineProperty(AngularAuth.prototype, "offline", {
+    Object.defineProperty(UniversalAuthAngularImpl.prototype, "offline", {
         get: function () {
             return false;
         },
         enumerable: true,
         configurable: true
     });
-    AngularAuth.prototype.ngOnDestroy = function () {
+    UniversalAuthAngularImpl.prototype.ngOnDestroy = function () {
         this.authSubscription.unsubscribe();
     };
-    return AngularAuth;
-}(auth_1.AbstractAuth));
-exports.AngularAuth = AngularAuth;
+    return UniversalAuthAngularImpl;
+}(auth_1.UniversalAuth));
+exports.UniversalAuthAngularImpl = UniversalAuthAngularImpl;
 //# sourceMappingURL=auth.js.map

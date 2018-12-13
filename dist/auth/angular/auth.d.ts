@@ -1,10 +1,10 @@
-import { AbstractAuth } from "../auth";
+import { UniversalAuth } from "../auth";
 import { UserInfo } from "../user-info";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { ReplaySubject } from "rxjs";
-export declare abstract class AngularAuth extends AbstractAuth {
-    readonly realAuth: AngularFireAuth;
-    constructor(realAuth: AngularFireAuth);
+export declare abstract class UniversalAuthAngularImpl extends UniversalAuth {
+    readonly auth: AngularFireAuth;
+    constructor(auth: AngularFireAuth);
     readonly admin = false;
     private authSubscription;
     private authInitialized;

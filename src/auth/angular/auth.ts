@@ -1,14 +1,14 @@
-import {AbstractAuth} from "../auth";
+import {UniversalAuth} from "../auth";
 import {UserInfo} from "../user-info";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {Subscription, ReplaySubject} from "rxjs";
 
-export abstract class AngularAuth extends AbstractAuth {
+export abstract class UniversalAuthAngularImpl extends UniversalAuth {
 
-    constructor(public readonly realAuth: AngularFireAuth) {
+    constructor(public readonly auth: AngularFireAuth) {
         super();
 
-        this.authSubscription = this.realAuth.idToken.subscribe(user => this.userChanged(), error => this.onAuthError(error));
+        this.authSubscription = this.auth.idToken.subscribe(user => this.userChanged(), error => this.onAuthError(error));
     }
 
     readonly admin = false;
@@ -33,7 +33,7 @@ export abstract class AngularAuth extends AbstractAuth {
 
     private async userChanged() {
 
-        let user = this.realAuth.auth.currentUser;
+        let user = this.auth.auth.currentUser;
         let changed = !this.authInitialized || (!this._user && user) || (this._user && !user) || (this._user && user && this._user.uid != user.uid) ? true : false;
 
         this._user = user;

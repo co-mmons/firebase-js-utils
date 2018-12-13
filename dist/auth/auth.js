@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var AbstractAuth = /** @class */ (function () {
-    function AbstractAuth() {
+var UniversalAuth = /** @class */ (function () {
+    function UniversalAuth() {
     }
-    return AbstractAuth;
+    return UniversalAuth;
 }());
-exports.AbstractAuth = AbstractAuth;
+exports.UniversalAuth = UniversalAuth;
 //# sourceMappingURL=auth.js.map
