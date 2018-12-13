@@ -55,58 +55,58 @@ var DocumentAngularWrapper = /** @class */ (function (_super) {
     return DocumentAngularWrapper;
 }(document_wrapper_1.DocumentWrapper));
 exports.DocumentAngularWrapper = DocumentAngularWrapper;
-var AngularFirestore = /** @class */ (function (_super) {
-    __extends(AngularFirestore, _super);
-    function AngularFirestore(realAngularFirestore) {
+var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
+    __extends(UniversalFirestoreAngularImpl, _super);
+    function UniversalFirestoreAngularImpl(realAngularFirestore) {
         var _this = _super.call(this) || this;
         _this.realAngularFirestore = realAngularFirestore;
         return _this;
     }
-    AngularFirestore.prototype.collection = function (collectionPath) {
+    UniversalFirestoreAngularImpl.prototype.collection = function (collectionPath) {
         return new CollectionOrQueryAngularWrapper(this, this.realAngularFirestore.collection(collectionPath));
     };
-    AngularFirestore.prototype.doc = function (documentPath) {
+    UniversalFirestoreAngularImpl.prototype.doc = function (documentPath) {
         return new DocumentAngularWrapper(this, this.realAngularFirestore.doc(documentPath));
     };
-    AngularFirestore.prototype.runTransaction = function (updateFunction) {
+    UniversalFirestoreAngularImpl.prototype.runTransaction = function (updateFunction) {
         return this.realAngularFirestore.firestore.runTransaction(updateFunction);
     };
     /**
      * Creates a write batch, used for performing multiple writes as a single
      * atomic operation.
      */
-    AngularFirestore.prototype.batch = function () {
+    UniversalFirestoreAngularImpl.prototype.batch = function () {
         return this.realAngularFirestore.firestore.batch();
     };
-    Object.defineProperty(AngularFirestore.prototype, "Timestamp", {
+    Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "Timestamp", {
         get: function () {
             return app_1.default.firestore.Timestamp;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(AngularFirestore.prototype, "GeoPoint", {
+    Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "GeoPoint", {
         get: function () {
             return app_1.default.firestore.GeoPoint;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(AngularFirestore.prototype, "FieldValue", {
+    Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "FieldValue", {
         get: function () {
             return app_1.default.firestore.FieldValue;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(AngularFirestore.prototype, "FieldPath", {
+    Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "FieldPath", {
         get: function () {
             return app_1.default.firestore.FieldPath;
         },
         enumerable: true,
         configurable: true
     });
-    return AngularFirestore;
-}(__1.AbstractFirestore));
-exports.AngularFirestore = AngularFirestore;
+    return UniversalFirestoreAngularImpl;
+}(__1.UniversalFirestore));
+exports.UniversalFirestoreAngularImpl = UniversalFirestoreAngularImpl;
 //# sourceMappingURL=firestore.js.map

@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { AbstractFirestore } from "../firestore";
+import { UniversalFirestore } from "../firestore";
 function docsObservable(collectionPathOrQuery, options) {
     if (typeof collectionPathOrQuery == "string") {
         return this.docsObservable(this.collection(collectionPathOrQuery), options);
@@ -10,5 +10,5 @@ function docsObservable(collectionPathOrQuery, options) {
         return function () { return unsubscribe(); };
     }).pipe(map(function (snapshot) { return snapshot.docs; }));
 }
-AbstractFirestore.prototype.docsObservable = docsObservable;
+UniversalFirestore.prototype.docsObservable = docsObservable;
 //# sourceMappingURL=docs-observable.js.map

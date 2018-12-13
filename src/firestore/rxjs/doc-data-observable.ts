@@ -1,10 +1,10 @@
 import {DocumentReference, GetOptions, SnapshotOptions} from "../types";
 import {Observable} from "rxjs";
-import {AbstractFirestore} from "../firestore";
+import {UniversalFirestore} from "../firestore";
 import {SerializationOptions} from "../serialization-options";
 import {map} from "rxjs/operators";
 
-function docDataObservable<V = any>(this: AbstractFirestore, doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V> {
+function docDataObservable<V = any>(this: UniversalFirestore, doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V> {
 
     if (typeof doc == "string") {
         return this.docDataObservable(this.doc(doc), options);
@@ -25,10 +25,10 @@ function docDataObservable<V = any>(this: AbstractFirestore, doc: string | Docum
 
 declare module "../firestore" {
 
-    interface AbstractFirestore {
+    interface UniversalFirestore {
         docDataObservable<V = any>(doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V>;
     }
 
 }
 
-AbstractFirestore.prototype.docDataObservable = docDataObservable;
+UniversalFirestore.prototype.docDataObservable = docDataObservable;

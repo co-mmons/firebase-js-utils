@@ -1,9 +1,9 @@
 import { DocumentReference, CollectionReference, DocumentData, SetOptions, GetOptions, DocumentSnapshot, FirebaseFirestore } from "./types";
-import { AbstractFirestore } from "./firestore";
+import { UniversalFirestore } from "./firestore";
 export declare class DocumentWrapper implements DocumentReference {
-    readonly fakeFirestore: AbstractFirestore;
+    readonly fakeFirestore: UniversalFirestore;
     private readonly ref;
-    constructor(fakeFirestore: AbstractFirestore, ref: DocumentReference);
+    constructor(fakeFirestore: UniversalFirestore, ref: DocumentReference);
     readonly firestore: FirebaseFirestore;
     readonly id: string;
     readonly parent: CollectionReference;

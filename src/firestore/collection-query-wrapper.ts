@@ -1,9 +1,9 @@
-import {AbstractFirestore} from "./firestore";
+import {UniversalFirestore} from "./firestore";
 import {CollectionReference, Query} from "./types";
 
 export class CollectionOrQueryWrapper implements CollectionReference {
 
-    constructor(public readonly fakeFirestore: AbstractFirestore, protected readonly ref: CollectionReference, protected readonly query?: Query) {
+    constructor(public readonly fakeFirestore: UniversalFirestore, protected readonly ref: CollectionReference, protected readonly query?: Query) {
     }
 
     get firestore() {

@@ -50,5 +50,5 @@ function docs(collectionPathOrQuery, options) {
         });
     });
 }
-firestore_1.AbstractFirestore.prototype.docs = docs;
+firestore_1.UniversalFirestore.prototype.docs = docs;
 //# sourceMappingURL=docs.js.map

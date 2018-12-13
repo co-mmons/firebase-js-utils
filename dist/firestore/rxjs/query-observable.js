@@ -11,6 +11,6 @@ function collectionOrQueryObservable(collectionPathOrQuery, options) {
         return function () { return unsubscribe(); };
     });
 }
-firestore_1.AbstractFirestore.prototype.collectionObservable = collectionOrQueryObservable;
-firestore_1.AbstractFirestore.prototype.queryObservable = collectionOrQueryObservable;
+firestore_1.UniversalFirestore.prototype.collectionObservable = collectionOrQueryObservable;
+firestore_1.UniversalFirestore.prototype.queryObservable = collectionOrQueryObservable;
 //# sourceMappingURL=query-observable.js.map

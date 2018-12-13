@@ -21,5 +21,5 @@ function docsDataObservable(collectionPathOrQuery, options) {
     }));
     return observable;
 }
-firestore_1.AbstractFirestore.prototype.docsDataObservable = docsDataObservable;
+firestore_1.UniversalFirestore.prototype.docsDataObservable = docsDataObservable;
 //# sourceMappingURL=docs-data-observable.js.map

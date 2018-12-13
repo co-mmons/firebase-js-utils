@@ -1,8 +1,8 @@
 import {Observable} from "rxjs";
-import {AbstractFirestore} from "../firestore";
+import {UniversalFirestore} from "../firestore";
 import {CollectionReference, GetOptions, Query, QuerySnapshot, SnapshotOptions, SnapshotListenOptions} from "../types";
 
-function collectionOrQueryObservable(this: AbstractFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QuerySnapshot> {
+function collectionOrQueryObservable(this: UniversalFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QuerySnapshot> {
 
     if (typeof collectionPathOrQuery == "string") {
         return this.collectionObservable(this.collection(collectionPathOrQuery), options);
@@ -16,12 +16,12 @@ function collectionOrQueryObservable(this: AbstractFirestore, collectionPathOrQu
 
 declare module "../firestore" {
 
-    interface AbstractFirestore {
+    interface UniversalFirestore {
         collectionObservable(collectionPathOrQuery: string | CollectionReference, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QuerySnapshot>;
         queryObservable(query: Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QuerySnapshot>;
     }
 
 }
 
-AbstractFirestore.prototype.collectionObservable = collectionOrQueryObservable;
-AbstractFirestore.prototype.queryObservable = collectionOrQueryObservable;
+UniversalFirestore.prototype.collectionObservable = collectionOrQueryObservable;
+UniversalFirestore.prototype.queryObservable = collectionOrQueryObservable;

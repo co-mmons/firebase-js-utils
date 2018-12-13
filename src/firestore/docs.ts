@@ -1,7 +1,7 @@
-import {AbstractFirestore} from "./firestore";
+import {UniversalFirestore} from "./firestore";
 import {GetOptions, Query, QueryDocumentSnapshot, SnapshotOptions} from "./types";
 
-async function docs(this: AbstractFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions): Promise<QueryDocumentSnapshot[]> {
+async function docs(this: UniversalFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions): Promise<QueryDocumentSnapshot[]> {
 
     if (typeof collectionPathOrQuery == "string") {
         return this.docs(this.collection(collectionPathOrQuery), options);
@@ -13,10 +13,10 @@ async function docs(this: AbstractFirestore, collectionPathOrQuery: string | Que
 
 declare module "./firestore" {
 
-    interface AbstractFirestore {
+    interface UniversalFirestore {
         docs(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions): Promise<QueryDocumentSnapshot[]>;
     }
 
 }
 
-AbstractFirestore.prototype.docs = docs;
+UniversalFirestore.prototype.docs = docs;

@@ -2,7 +2,7 @@ import {CollectionReference, DocumentReference, FirebaseFirestore, Transaction, 
 import {Type} from "@co.mmons/js-utils/core";
 import {Serializer, unserialize, SerializationOptions, serialize} from "@co.mmons/js-utils/json";
 
-export abstract class AbstractFirestore implements FirebaseFirestore {
+export abstract class UniversalFirestore implements FirebaseFirestore {
 
     /**
      * Gets a `CollectionReference` instance that refers to the collection at

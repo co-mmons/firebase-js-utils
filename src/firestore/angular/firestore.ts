@@ -1,18 +1,18 @@
 import {AngularFirestore as AngularFireFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from "@angular/fire/firestore";
 import firebase from "firebase/app";
 import {first} from "rxjs/operators";
-import {AbstractFirestore} from "../";
+import {UniversalFirestore} from "../";
 import {CollectionOrQueryWrapper} from "../collection-query-wrapper";
 import {DocumentWrapper} from "../document-wrapper";
 import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, Query, TimestampStatic, Transaction, WriteBatch} from "../types";
 
 export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
 
-    constructor(firestore: AngularFirestore, private readonly collection: AngularFirestoreCollection, query?: Query) {
+    constructor(firestore: UniversalFirestoreAngularImpl, private readonly collection: AngularFirestoreCollection, query?: Query) {
         super(firestore, collection.ref, query);
     }
 
-    public readonly fakeFirestore: AngularFirestore;
+    public readonly fakeFirestore: UniversalFirestoreAngularImpl;
 
     doc(documentPath?: string) {
         return new DocumentAngularWrapper(this.fakeFirestore, this.collection.doc(documentPath));
@@ -30,11 +30,11 @@ export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
 
 export class DocumentAngularWrapper extends DocumentWrapper {
 
-    constructor(firestore: AngularFirestore, private readonly doc: AngularFirestoreDocument) {
+    constructor(firestore: UniversalFirestoreAngularImpl, private readonly doc: AngularFirestoreDocument) {
         super(firestore, doc.ref);
     }
 
-    public readonly fakeFirestore: AngularFirestore;
+    public readonly fakeFirestore: UniversalFirestoreAngularImpl;
 
     collection(collectionPath: string): CollectionReference {
         return new CollectionOrQueryAngularWrapper(this.fakeFirestore, this.doc.collection(collectionPath));
@@ -46,7 +46,7 @@ export class DocumentAngularWrapper extends DocumentWrapper {
 
 }
 
-export class AngularFirestore extends AbstractFirestore {
+export class UniversalFirestoreAngularImpl extends UniversalFirestore {
 
     constructor(public readonly realAngularFirestore: AngularFireFirestore) {
         super();

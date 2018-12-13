@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { AbstractFirestore } from "../firestore";
+import { UniversalFirestore } from "../firestore";
 function collectionOrQueryObservable(collectionPathOrQuery, options) {
     if (typeof collectionPathOrQuery == "string") {
         return this.collectionObservable(this.collection(collectionPathOrQuery), options);
@@ -9,6 +9,6 @@ function collectionOrQueryObservable(collectionPathOrQuery, options) {
         return function () { return unsubscribe(); };
     });
 }
-AbstractFirestore.prototype.collectionObservable = collectionOrQueryObservable;
-AbstractFirestore.prototype.queryObservable = collectionOrQueryObservable;
+UniversalFirestore.prototype.collectionObservable = collectionOrQueryObservable;
+UniversalFirestore.prototype.queryObservable = collectionOrQueryObservable;
 //# sourceMappingURL=query-observable.js.map

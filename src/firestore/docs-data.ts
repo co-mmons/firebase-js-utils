@@ -1,9 +1,9 @@
 import {ArraySerializer} from "@co.mmons/js-utils/json";
-import {AbstractFirestore} from "./firestore";
+import {UniversalFirestore} from "./firestore";
 import {SerializationOptions} from "./serialization-options";
 import {GetOptions, Query, SnapshotOptions} from "./types";
 
-async function docsData<V = any>(this: AbstractFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Promise<V[]> {
+async function docsData<V = any>(this: UniversalFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Promise<V[]> {
 
     let data: V[] = [];
 
@@ -20,10 +20,10 @@ async function docsData<V = any>(this: AbstractFirestore, collectionPathOrQuery:
 
 declare module "./firestore" {
 
-    interface AbstractFirestore {
+    interface UniversalFirestore {
         docsData<V = any>(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Promise<V[]>;
     }
 
 }
 
-AbstractFirestore.prototype.docsData = docsData;
+UniversalFirestore.prototype.docsData = docsData;

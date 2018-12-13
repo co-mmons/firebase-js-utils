@@ -1,4 +1,4 @@
-import { AngularFirestore } from "../firestore";
+import { UniversalFirestoreAngularImpl } from "../firestore";
 import { map } from "rxjs/operators";
 function docDataObservable(doc, options) {
     var _this = this;
@@ -12,5 +12,5 @@ function docDataObservable(doc, options) {
         return data;
     }));
 }
-AngularFirestore.prototype.docDataObservable = docDataObservable;
+UniversalFirestoreAngularImpl.prototype.docDataObservable = docDataObservable;
 //# sourceMappingURL=doc-data-observable.js.map

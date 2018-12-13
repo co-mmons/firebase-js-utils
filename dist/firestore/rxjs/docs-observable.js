@@ -12,5 +12,5 @@ function docsObservable(collectionPathOrQuery, options) {
         return function () { return unsubscribe(); };
     }).pipe(operators_1.map(function (snapshot) { return snapshot.docs; }));
 }
-firestore_1.AbstractFirestore.prototype.docsObservable = docsObservable;
+firestore_1.UniversalFirestore.prototype.docsObservable = docsObservable;
 //# sourceMappingURL=docs-observable.js.map

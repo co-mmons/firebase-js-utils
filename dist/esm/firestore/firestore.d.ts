@@ -1,7 +1,7 @@
 import { CollectionReference, DocumentReference, FirebaseFirestore, Transaction, WriteBatch, TimestampStatic, GeoPointStatic, FieldValueStatic, FieldPathStatic } from "./types";
 import { Type } from "@co.mmons/js-utils/core";
 import { Serializer, SerializationOptions } from "@co.mmons/js-utils/json";
-export declare abstract class AbstractFirestore implements FirebaseFirestore {
+export declare abstract class UniversalFirestore implements FirebaseFirestore {
     /**
      * Gets a `CollectionReference` instance that refers to the collection at
      * the specified path.

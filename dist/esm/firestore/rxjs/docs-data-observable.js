@@ -1,6 +1,6 @@
 import { ArraySerializer } from "@co.mmons/js-utils/json";
 import { map } from "rxjs/operators";
-import { AbstractFirestore } from "../firestore";
+import { UniversalFirestore } from "../firestore";
 function docsDataObservable(collectionPathOrQuery, options) {
     var _this = this;
     if (typeof collectionPathOrQuery == "string") {
@@ -19,5 +19,5 @@ function docsDataObservable(collectionPathOrQuery, options) {
     }));
     return observable;
 }
-AbstractFirestore.prototype.docsDataObservable = docsDataObservable;
+UniversalFirestore.prototype.docsDataObservable = docsDataObservable;
 //# sourceMappingURL=docs-data-observable.js.map

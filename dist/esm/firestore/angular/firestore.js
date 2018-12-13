@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import firebase from "firebase/app";
 import { first } from "rxjs/operators";
-import { AbstractFirestore } from "../";
+import { UniversalFirestore } from "../";
 import { CollectionOrQueryWrapper } from "../collection-query-wrapper";
 import { DocumentWrapper } from "../document-wrapper";
 var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
@@ -53,58 +53,58 @@ var DocumentAngularWrapper = /** @class */ (function (_super) {
     return DocumentAngularWrapper;
 }(DocumentWrapper));
 export { DocumentAngularWrapper };
-var AngularFirestore = /** @class */ (function (_super) {
-    __extends(AngularFirestore, _super);
-    function AngularFirestore(realAngularFirestore) {
+var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
+    __extends(UniversalFirestoreAngularImpl, _super);
+    function UniversalFirestoreAngularImpl(realAngularFirestore) {
         var _this = _super.call(this) || this;
         _this.realAngularFirestore = realAngularFirestore;
         return _this;
     }
-    AngularFirestore.prototype.collection = function (collectionPath) {
+    UniversalFirestoreAngularImpl.prototype.collection = function (collectionPath) {
         return new CollectionOrQueryAngularWrapper(this, this.realAngularFirestore.collection(collectionPath));
     };
-    AngularFirestore.prototype.doc = function (documentPath) {
+    UniversalFirestoreAngularImpl.prototype.doc = function (documentPath) {
         return new DocumentAngularWrapper(this, this.realAngularFirestore.doc(documentPath));
     };
-    AngularFirestore.prototype.runTransaction = function (updateFunction) {
+    UniversalFirestoreAngularImpl.prototype.runTransaction = function (updateFunction) {
         return this.realAngularFirestore.firestore.runTransaction(updateFunction);
     };
     /**
      * Creates a write batch, used for performing multiple writes as a single
      * atomic operation.
      */
-    AngularFirestore.prototype.batch = function () {
+    UniversalFirestoreAngularImpl.prototype.batch = function () {
         return this.realAngularFirestore.firestore.batch();
     };
-    Object.defineProperty(AngularFirestore.prototype, "Timestamp", {
+    Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "Timestamp", {
         get: function () {
             return firebase.firestore.Timestamp;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(AngularFirestore.prototype, "GeoPoint", {
+    Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "GeoPoint", {
         get: function () {
             return firebase.firestore.GeoPoint;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(AngularFirestore.prototype, "FieldValue", {
+    Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "FieldValue", {
         get: function () {
             return firebase.firestore.FieldValue;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(AngularFirestore.prototype, "FieldPath", {
+    Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "FieldPath", {
         get: function () {
             return firebase.firestore.FieldPath;
         },
         enumerable: true,
         configurable: true
     });
-    return AngularFirestore;
-}(AbstractFirestore));
-export { AngularFirestore };
+    return UniversalFirestoreAngularImpl;
+}(UniversalFirestore));
+export { UniversalFirestoreAngularImpl };
 //# sourceMappingURL=firestore.js.map

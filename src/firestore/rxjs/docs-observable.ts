@@ -1,9 +1,9 @@
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {AbstractFirestore} from "../firestore";
+import {UniversalFirestore} from "../firestore";
 import {GetOptions, Query, QueryDocumentSnapshot, QuerySnapshot, SnapshotOptions, SnapshotListenOptions} from "../types";
 
-function docsObservable(this: AbstractFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QueryDocumentSnapshot[]> {
+function docsObservable(this: UniversalFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QueryDocumentSnapshot[]> {
 
     if (typeof collectionPathOrQuery == "string") {
         return this.docsObservable(this.collection(collectionPathOrQuery), options);
@@ -17,10 +17,10 @@ function docsObservable(this: AbstractFirestore, collectionPathOrQuery: string |
 
 declare module "../firestore" {
 
-    interface AbstractFirestore {
+    interface UniversalFirestore {
         docsObservable(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QueryDocumentSnapshot[]>;
     }
 
 }
 
-AbstractFirestore.prototype.docsObservable = docsObservable;
+UniversalFirestore.prototype.docsObservable = docsObservable;
