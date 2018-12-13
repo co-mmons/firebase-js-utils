@@ -16,5 +16,7 @@ export declare abstract class UniversalAuthAngularImpl extends UniversalAuth {
     private userChanged;
     readonly offline: boolean;
     protected abstract onAuthError(error: any): any;
+    signInWithEmailAndPassword(email: string, password: string): Promise<void>;
+    signOut(): Promise<void>;
     ngOnDestroy(): void;
 }

@@ -6,4 +6,6 @@ export declare abstract class UniversalAuth {
     readonly userObservable: Observable<UserInfo>;
     readonly userIdObservable: Observable<string>;
     readonly admin: boolean;
+    abstract signInWithEmailAndPassword(email: string, password: string): Promise<void>;
+    abstract signOut(): Promise<void>;
 }

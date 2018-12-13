@@ -13,4 +13,8 @@ export abstract class UniversalAuth {
 
     readonly admin: boolean;
 
+    abstract signInWithEmailAndPassword(email: string, password: string): Promise<void>;
+
+    abstract signOut(): Promise<void>;
+
 }

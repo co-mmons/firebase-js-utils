@@ -108,6 +108,21 @@ var UniversalAuthAngularImpl = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
+    UniversalAuthAngularImpl.prototype.signInWithEmailAndPassword = function (email, password) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.auth.auth.signInWithEmailAndPassword(email, password)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UniversalAuthAngularImpl.prototype.signOut = function () {
+        return this.auth.auth.signOut();
+    };
     UniversalAuthAngularImpl.prototype.ngOnDestroy = function () {
         this.authSubscription.unsubscribe();
     };

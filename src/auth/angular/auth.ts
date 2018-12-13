@@ -61,6 +61,14 @@ export abstract class UniversalAuthAngularImpl extends UniversalAuth {
 
     protected abstract onAuthError(error: any);
 
+    async signInWithEmailAndPassword(email: string, password: string) {
+        await this.auth.auth.signInWithEmailAndPassword(email, password);
+    }
+
+    signOut() {
+        return this.auth.auth.signOut();
+    }
+
     ngOnDestroy() {
         this.authSubscription.unsubscribe();
     }
