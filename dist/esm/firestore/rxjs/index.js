@@ -3,4 +3,5 @@ import "./doc-observable";
 import "./docs-data-observable";
 import "./docs-observable";
 import "./query-observable";
+export * from "../";
 //# sourceMappingURL=index.js.map
