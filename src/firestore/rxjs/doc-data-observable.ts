@@ -10,7 +10,7 @@ function docDataObservable<V = any>(this: UniversalFirestore, doc: string | Docu
         return this.docDataObservable(this.doc(doc), options);
     }
 
-    let observable = this.docObservable(doc).pipe(map(snapshot => {
+    let observable = this.docSnapshotObservable(doc).pipe(map(snapshot => {
         let data = snapshot.data() as V;
 
         if (options && options.serializer) {

@@ -5,7 +5,7 @@ function docDataObservable(doc, options) {
     if (typeof doc == "string") {
         return this.docDataObservable(this.doc(doc), options);
     }
-    var observable = this.docObservable(doc).pipe(map(function (snapshot) {
+    var observable = this.docSnapshotObservable(doc).pipe(map(function (snapshot) {
         var data = snapshot.data();
         if (options && options.serializer) {
             return _this.unserialize(data, options.serializer, options.serializationOptions);

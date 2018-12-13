@@ -3,10 +3,10 @@ import {map} from "rxjs/operators";
 import {UniversalFirestore} from "../firestore";
 import {GetOptions, Query, QueryDocumentSnapshot, QuerySnapshot, SnapshotOptions, SnapshotListenOptions} from "../types";
 
-function docsObservable(this: UniversalFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QueryDocumentSnapshot[]> {
+function docsSnapshotsObservable(this: UniversalFirestore, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QueryDocumentSnapshot[]> {
 
     if (typeof collectionPathOrQuery == "string") {
-        return this.docsObservable(this.collection(collectionPathOrQuery), options);
+        return this.docsSnapshotsObservable(this.collection(collectionPathOrQuery), options);
     }
 
     return new Observable(subscriber => {
@@ -18,9 +18,9 @@ function docsObservable(this: UniversalFirestore, collectionPathOrQuery: string 
 declare module "../firestore" {
 
     interface UniversalFirestore {
-        docsObservable(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QueryDocumentSnapshot[]>;
+        docsSnapshotsObservable(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<QueryDocumentSnapshot[]>;
     }
 
 }
 
-UniversalFirestore.prototype.docsObservable = docsObservable;
+UniversalFirestore.prototype.docsSnapshotsObservable = docsSnapshotsObservable;

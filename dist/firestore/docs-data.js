@@ -45,7 +45,7 @@ function docsData(collectionPathOrQuery, options) {
                 case 0:
                     data = [];
                     _i = 0;
-                    return [4 /*yield*/, this.docs(collectionPathOrQuery)];
+                    return [4 /*yield*/, this.docsSnapshots(collectionPathOrQuery)];
                 case 1:
                     _a = (_b.sent());
                     _b.label = 2;

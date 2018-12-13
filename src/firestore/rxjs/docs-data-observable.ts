@@ -11,7 +11,7 @@ function docsDataObservable<V = any>(this: UniversalFirestore, collectionPathOrQ
         return this.docDataObservable(this.doc(collectionPathOrQuery), options);
     }
 
-    let observable = this.docsObservable(collectionPathOrQuery).pipe(map(snapshots => {
+    let observable = this.docsSnapshotsObservable(collectionPathOrQuery).pipe(map(snapshots => {
         let data: V[] = [];
 
         for (let snapshot of snapshots) {

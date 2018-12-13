@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -34,15 +33,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var firestore_1 = require("./firestore");
-function docs(collectionPathOrQuery, options) {
+import { UniversalFirestore } from "./firestore";
+function docsSnapshots(collectionPathOrQuery, options) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (typeof collectionPathOrQuery == "string") {
-                        return [2 /*return*/, this.docs(this.collection(collectionPathOrQuery), options)];
+                        return [2 /*return*/, this.docsSnapshots(this.collection(collectionPathOrQuery), options)];
                     }
                     return [4 /*yield*/, collectionPathOrQuery.get(options)];
                 case 1: return [2 /*return*/, (_a.sent()).docs];
@@ -50,5 +48,5 @@ function docs(collectionPathOrQuery, options) {
         });
     });
 }
-firestore_1.UniversalFirestore.prototype.docs = docs;
-//# sourceMappingURL=docs.js.map
+UniversalFirestore.prototype.docsSnapshots = docsSnapshots;
+//# sourceMappingURL=docs-snapshots.js.map

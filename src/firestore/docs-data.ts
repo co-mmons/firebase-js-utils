@@ -7,7 +7,7 @@ async function docsData<V = any>(this: UniversalFirestore, collectionPathOrQuery
 
     let data: V[] = [];
 
-    for (let d of (await this.docs(collectionPathOrQuery))) {
+    for (let d of (await this.docsSnapshots(collectionPathOrQuery))) {
         data.push(d.data(options) as V);
     }
 

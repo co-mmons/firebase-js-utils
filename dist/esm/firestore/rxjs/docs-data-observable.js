@@ -6,7 +6,7 @@ function docsDataObservable(collectionPathOrQuery, options) {
     if (typeof collectionPathOrQuery == "string") {
         return this.docDataObservable(this.doc(collectionPathOrQuery), options);
     }
-    var observable = this.docsObservable(collectionPathOrQuery).pipe(map(function (snapshots) {
+    var observable = this.docsSnapshotsObservable(collectionPathOrQuery).pipe(map(function (snapshots) {
         var data = [];
         for (var _i = 0, snapshots_1 = snapshots; _i < snapshots_1.length; _i++) {
             var snapshot = snapshots_1[_i];
