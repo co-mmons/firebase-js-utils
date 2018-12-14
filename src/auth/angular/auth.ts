@@ -33,7 +33,7 @@ export abstract class UniversalAuthAngularImpl extends UniversalAuth {
     }
     
     get userId() {
-        return this._user.uid;
+        return (this._user && this._user.uid) || null;
     }
 
     readonly userObservable: ReplaySubject<UserInfo> = new ReplaySubject<UserInfo>(1);

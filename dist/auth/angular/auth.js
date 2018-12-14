@@ -80,7 +80,7 @@ var UniversalAuthAngularImpl = /** @class */ (function (_super) {
     });
     Object.defineProperty(UniversalAuthAngularImpl.prototype, "userId", {
         get: function () {
-            return this._user.uid;
+            return (this._user && this._user.uid) || null;
         },
         enumerable: true,
         configurable: true
