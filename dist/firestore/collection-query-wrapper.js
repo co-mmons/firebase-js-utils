@@ -41,56 +41,50 @@ var CollectionOrQueryWrapper = /** @class */ (function () {
         return this.ref.add(data);
     };
     CollectionOrQueryWrapper.prototype.where = function (fieldPath, opStr, value) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.where(fieldPath, opStr, value));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).where(fieldPath, opStr, value));
     };
     CollectionOrQueryWrapper.prototype.orderBy = function (fieldPath, directionStr) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.orderBy(fieldPath, directionStr));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).orderBy(fieldPath, directionStr));
     };
     CollectionOrQueryWrapper.prototype.get = function (options) {
-        if (this.query) {
-            return this.query.get(options);
-        }
-        return this.ref.get(options);
+        return (this.query || this.ref).get(options);
     };
     CollectionOrQueryWrapper.prototype.limit = function (limit) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.limit(limit));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).limit(limit));
     };
     CollectionOrQueryWrapper.prototype.startAt = function (snapshot) {
         var rest = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             rest[_i - 1] = arguments[_i];
         }
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.startAt(snapshot, rest));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAt(snapshot, rest));
     };
     CollectionOrQueryWrapper.prototype.startAfter = function (snapshot) {
         var rest = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             rest[_i - 1] = arguments[_i];
         }
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.startAfter(snapshot, rest));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAfter(snapshot, rest));
     };
     CollectionOrQueryWrapper.prototype.endBefore = function (snapshot) {
         var rest = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             rest[_i - 1] = arguments[_i];
         }
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.endBefore(snapshot, rest));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endBefore(snapshot, rest));
     };
     CollectionOrQueryWrapper.prototype.endAt = function (snapshot) {
         var rest = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             rest[_i - 1] = arguments[_i];
         }
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.endAt(snapshot, rest));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endAt(snapshot, rest));
     };
     CollectionOrQueryWrapper.prototype.isEqual = function (other) {
-        return this.query.isEqual(other);
+        return (this.query || this.ref).isEqual(other);
     };
     CollectionOrQueryWrapper.prototype.onSnapshot = function (options, onNext, onError, onCompletion) {
-        if (this.query) {
-            return this.query.onSnapshot(options, onNext, onError, onCompletion);
-        }
-        return this.ref.onSnapshot(options, onNext, onError, onCompletion);
+        return (this.query || this.ref).onSnapshot(options, onNext, onError, onCompletion);
     };
     return CollectionOrQueryWrapper;
 }());

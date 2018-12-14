@@ -31,51 +31,41 @@ export class CollectionOrQueryWrapper implements CollectionReference {
     }
 
     where(fieldPath: any, opStr: any, value: any) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.where(fieldPath, opStr, value));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).where(fieldPath, opStr, value));
     }
 
     orderBy(fieldPath: any, directionStr?: any) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.orderBy(fieldPath, directionStr));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).orderBy(fieldPath, directionStr));
     }
 
     get(options?: any) {
-
-        if (this.query) {
-            return this.query.get(options);
-        }
-
-        return this.ref.get(options);
+        return (this.query || this.ref).get(options);
     }
 
     limit(limit: number): Query {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.limit(limit));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).limit(limit));
     }
 
     startAt(snapshot?: any, ...rest: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.startAt(snapshot, rest));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAt(snapshot, rest));
     }
 
     startAfter(snapshot?: any, ...rest: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.startAfter(snapshot, rest));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAfter(snapshot, rest));
     }
 
     endBefore(snapshot?: any, ...rest: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.endBefore(snapshot, rest));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endBefore(snapshot, rest));
     }
 
     endAt(snapshot?: any, ...rest: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, this.query.endAt(snapshot, rest));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endAt(snapshot, rest));
     }
 
     isEqual(other: any): boolean {
-        return this.query.isEqual(other);
+        return (this.query || this.ref).isEqual(other);
     }
 
     onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any) {
-
-        if (this.query) {
-            return this.query.onSnapshot(options, onNext, onError, onCompletion);
-        }
-
-        return this.ref.onSnapshot(options, onNext, onError, onCompletion);
+        return (this.query || this.ref).onSnapshot(options, onNext, onError, onCompletion);
     }}
