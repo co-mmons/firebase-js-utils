@@ -3,15 +3,17 @@ import {Observable} from "rxjs";
 
 export abstract class UniversalAuth {
 
-    readonly user: UserInfo;
+    abstract readonly initialized: boolean;
 
-    readonly userId: string;
+    abstract readonly user: UserInfo;
 
-    readonly userObservable: Observable<UserInfo>;
+    abstract readonly userId: string;
 
-    readonly userIdObservable: Observable<string>;
+    abstract readonly userObservable: Observable<UserInfo>;
 
-    readonly admin: boolean;
+    abstract readonly userIdObservable: Observable<string>;
+
+    abstract readonly admin: boolean;
 
     abstract signInWithEmailAndPassword(email: string, password: string): Promise<void>;
 
