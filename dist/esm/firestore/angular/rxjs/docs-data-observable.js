@@ -4,7 +4,7 @@ import { UniversalFirestoreAngularImpl } from "../firestore";
 function docsDataObservable(collectionPathOrQuery, options) {
     var _this = this;
     if (typeof collectionPathOrQuery == "string") {
-        return this.docDataObservable(this.doc(collectionPathOrQuery), options);
+        return this.docsDataObservable(this.collection(collectionPathOrQuery), options);
     }
     if (!collectionPathOrQuery["path"]) {
         throw new Error("Not supported object: " + collectionPathOrQuery);

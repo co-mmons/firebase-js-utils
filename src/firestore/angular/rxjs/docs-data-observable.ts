@@ -8,7 +8,7 @@ import {GetOptions, Query, SnapshotOptions} from "../../types";
 function docsDataObservable<V = any>(this: UniversalFirestoreAngularImpl, collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V[]> {
 
     if (typeof collectionPathOrQuery == "string") {
-        return this.docDataObservable(this.doc(collectionPathOrQuery), options);
+        return this.docsDataObservable(this.collection(collectionPathOrQuery), options);
     }
 
     if (!collectionPathOrQuery["path"]) {
