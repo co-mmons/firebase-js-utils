@@ -6,7 +6,7 @@ var firestore_1 = require("../firestore");
 function docsDataObservable(collectionPathOrQuery, options) {
     var _this = this;
     if (typeof collectionPathOrQuery == "string") {
-        return this.docDataObservable(this.doc(collectionPathOrQuery), options);
+        return this.docsDataObservable(this.collection(collectionPathOrQuery), options);
     }
     var observable = this.docsSnapshotsObservable(collectionPathOrQuery).pipe(operators_1.map(function (snapshots) {
         var data = [];

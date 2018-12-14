@@ -4,7 +4,7 @@ import { UniversalFirestore } from "../firestore";
 function docsDataObservable(collectionPathOrQuery, options) {
     var _this = this;
     if (typeof collectionPathOrQuery == "string") {
-        return this.docDataObservable(this.doc(collectionPathOrQuery), options);
+        return this.docsDataObservable(this.collection(collectionPathOrQuery), options);
     }
     var observable = this.docsSnapshotsObservable(collectionPathOrQuery).pipe(map(function (snapshots) {
         var data = [];
