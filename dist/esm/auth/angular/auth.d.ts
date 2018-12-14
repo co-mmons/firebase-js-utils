@@ -8,6 +8,7 @@ export declare abstract class UniversalAuthAngularImpl extends UniversalAuth {
     readonly admin = false;
     private authSubscription;
     private authInitialized;
+    initialized(): Promise<boolean>;
     private _user;
     readonly user: import("firebase").User;
     readonly userId: string;

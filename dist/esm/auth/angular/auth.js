@@ -48,6 +48,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { UniversalAuth } from "../auth";
 import { ReplaySubject } from "rxjs";
+import { first, map } from "rxjs/operators";
 var UniversalAuthAngularImpl = /** @class */ (function (_super) {
     __extends(UniversalAuthAngularImpl, _super);
     function UniversalAuthAngularImpl(auth) {
@@ -60,6 +61,14 @@ var UniversalAuthAngularImpl = /** @class */ (function (_super) {
         _this.authSubscription = _this.auth.idToken.subscribe(function (user) { return _this.userChanged(); }, function (error) { return _this.onAuthError(error); });
         return _this;
     }
+    UniversalAuthAngularImpl.prototype.initialized = function () {
+        if (this.authInitialized) {
+            return Promise.resolve(true);
+        }
+        else {
+            return this.userIdObservable.pipe(first(), map(function (id) { return true; })).toPromise();
+        }
+    };
     Object.defineProperty(UniversalAuthAngularImpl.prototype, "user", {
         get: function () {
             return this._user;

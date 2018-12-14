@@ -2,6 +2,7 @@ import {UniversalAuth} from "../auth";
 import {UserInfo} from "../user-info";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {Subscription, ReplaySubject} from "rxjs";
+import {first, map} from "rxjs/operators";
 
 export abstract class UniversalAuthAngularImpl extends UniversalAuth {
 
@@ -16,6 +17,14 @@ export abstract class UniversalAuthAngularImpl extends UniversalAuth {
     private authSubscription: Subscription;
 
     private authInitialized: boolean = false;
+
+    initialized(): Promise<boolean> {
+        if (this.authInitialized) {
+            return Promise.resolve(true);
+        } else {
+            return this.userIdObservable.pipe(first(), map(id => true)).toPromise();
+        }
+    }
 
     private _user: firebase.User;
     

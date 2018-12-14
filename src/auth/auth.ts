@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 
 export abstract class UniversalAuth {
 
-    abstract readonly initialized: boolean;
+    abstract initialized(): Promise<boolean>;
 
     abstract readonly user: UserInfo;
 
