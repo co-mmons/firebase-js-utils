@@ -1,7 +1,7 @@
 import {UniversalAuth} from "../auth";
 import {UserInfo} from "../user-info";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {Subscription, ReplaySubject} from "rxjs";
+import {Subscription, ReplaySubject, Observable} from "rxjs";
 import {first, map} from "rxjs/operators";
 
 export abstract class UniversalAuthAngularImpl extends UniversalAuth {
@@ -39,6 +39,14 @@ export abstract class UniversalAuthAngularImpl extends UniversalAuth {
     readonly userObservable: ReplaySubject<UserInfo> = new ReplaySubject<UserInfo>(1);
 
     readonly userIdObservable: ReplaySubject<string> = new ReplaySubject<string>(1);
+
+    get userIdTokenObservable(): Observable<string> {
+        return this.auth.idToken;
+    }
+
+    get userIdToken(): Promise<string> {
+        return this.auth.auth.currentUser.getIdToken();
+    }
 
     private async userChanged() {
 

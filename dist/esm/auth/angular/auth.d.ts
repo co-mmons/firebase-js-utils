@@ -1,7 +1,7 @@
 import { UniversalAuth } from "../auth";
 import { UserInfo } from "../user-info";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { ReplaySubject } from "rxjs";
+import { ReplaySubject, Observable } from "rxjs";
 export declare abstract class UniversalAuthAngularImpl extends UniversalAuth {
     readonly auth: AngularFireAuth;
     constructor(auth: AngularFireAuth);
@@ -14,6 +14,8 @@ export declare abstract class UniversalAuthAngularImpl extends UniversalAuth {
     readonly userId: string;
     readonly userObservable: ReplaySubject<UserInfo>;
     readonly userIdObservable: ReplaySubject<string>;
+    readonly userIdTokenObservable: Observable<string>;
+    readonly userIdToken: Promise<string>;
     private userChanged;
     readonly offline: boolean;
     protected abstract onAuthError(error: any): any;

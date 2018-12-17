@@ -85,6 +85,20 @@ var UniversalAuthAngularImpl = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(UniversalAuthAngularImpl.prototype, "userIdTokenObservable", {
+        get: function () {
+            return this.auth.idToken;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(UniversalAuthAngularImpl.prototype, "userIdToken", {
+        get: function () {
+            return this.auth.auth.currentUser.getIdToken();
+        },
+        enumerable: true,
+        configurable: true
+    });
     UniversalAuthAngularImpl.prototype.userChanged = function () {
         return __awaiter(this, void 0, void 0, function () {
             var user, changed;
