@@ -4,6 +4,9 @@ var json_1 = require("@co.mmons/js-utils/json");
 var UniversalFirestore = /** @class */ (function () {
     function UniversalFirestore() {
     }
+    UniversalFirestore.prototype.createId = function () {
+        return this.collection("_").doc().id;
+    };
     UniversalFirestore.prototype.serialize = function (data, options) {
         return json_1.serialize(data, options);
     };

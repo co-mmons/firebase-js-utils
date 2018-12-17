@@ -21,7 +21,7 @@ declare module "./firestore" {
 
     interface UniversalFirestore {
 
-        docData<V = any>(doc: string | DocumentReference, options?: GetOptions & SnapshotOptions): Promise<V>;
+        docData<V = any>(doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Promise<V>;
     }
 
 }

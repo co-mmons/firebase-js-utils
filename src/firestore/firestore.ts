@@ -54,6 +54,10 @@ export abstract class UniversalFirestore implements FirebaseFirestore {
 
     abstract readonly FieldPath: FieldPathStatic;
 
+    createId(): string {
+        return this.collection("_").doc().id;
+    }
+
     serialize(data: any, options?: SerializationOptions & {level?: number}) {
         return serialize(data, options);
     }

@@ -2,6 +2,9 @@ import { Serializer, unserialize, serialize } from "@co.mmons/js-utils/json";
 var UniversalFirestore = /** @class */ (function () {
     function UniversalFirestore() {
     }
+    UniversalFirestore.prototype.createId = function () {
+        return this.collection("_").doc().id;
+    };
     UniversalFirestore.prototype.serialize = function (data, options) {
         return serialize(data, options);
     };
