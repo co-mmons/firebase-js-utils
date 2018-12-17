@@ -4,6 +4,9 @@ var json_1 = require("@co.mmons/js-utils/json");
 var UniversalFirestore = /** @class */ (function () {
     function UniversalFirestore() {
     }
+    /**
+     * Creates new, randomly generated id.s
+     */
     UniversalFirestore.prototype.createId = function () {
         return this.collection("_").doc().id;
     };

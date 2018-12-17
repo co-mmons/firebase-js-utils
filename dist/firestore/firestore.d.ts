@@ -42,6 +42,9 @@ export declare abstract class UniversalFirestore implements FirebaseFirestore {
     abstract readonly GeoPoint: GeoPointStatic;
     abstract readonly FieldValue: FieldValueStatic;
     abstract readonly FieldPath: FieldPathStatic;
+    /**
+     * Creates new, randomly generated id.s
+     */
     createId(): string;
     serialize(data: any, options?: SerializationOptions & {
         level?: number;

@@ -53,7 +53,10 @@ export abstract class UniversalFirestore implements FirebaseFirestore {
     abstract readonly FieldValue: FieldValueStatic;
 
     abstract readonly FieldPath: FieldPathStatic;
-
+    
+    /**
+     * Creates new, randomly generated id.s
+     */
     createId(): string {
         return this.collection("_").doc().id;
     }
