@@ -16,6 +16,7 @@ import { first } from "rxjs/operators";
 import { UniversalFirestore } from "../";
 import { CollectionOrQueryWrapper } from "../collection-query-wrapper";
 import { DocumentWrapper } from "../document-wrapper";
+import "./rxjs";
 var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
     __extends(CollectionOrQueryAngularWrapper, _super);
     function CollectionOrQueryAngularWrapper(firestore, collection, query) {

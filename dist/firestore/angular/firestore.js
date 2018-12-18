@@ -18,6 +18,7 @@ var operators_1 = require("rxjs/operators");
 var __1 = require("../");
 var collection_query_wrapper_1 = require("../collection-query-wrapper");
 var document_wrapper_1 = require("../document-wrapper");
+require("./rxjs");
 var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
     __extends(CollectionOrQueryAngularWrapper, _super);
     function CollectionOrQueryAngularWrapper(firestore, collection, query) {

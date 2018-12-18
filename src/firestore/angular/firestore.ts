@@ -5,6 +5,7 @@ import {UniversalFirestore} from "../";
 import {CollectionOrQueryWrapper} from "../collection-query-wrapper";
 import {DocumentWrapper} from "../document-wrapper";
 import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, Query, TimestampStatic, Transaction, WriteBatch} from "../types";
+import "./rxjs";
 
 export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
 
