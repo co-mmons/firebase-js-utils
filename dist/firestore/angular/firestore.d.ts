@@ -25,11 +25,8 @@ export declare class UniversalFirestoreAngularImpl extends UniversalFirestore {
     collection(collectionPath: string): CollectionReference;
     doc(documentPath: string): DocumentReference;
     runTransaction<T>(updateFunction: (transaction: Transaction) => Promise<T>): Promise<T>;
-    /**
-     * Creates a write batch, used for performing multiple writes as a single
-     * atomic operation.
-     */
     batch(): WriteBatch;
+    createId(): string;
     readonly Timestamp: TimestampStatic;
     readonly GeoPoint: GeoPointStatic;
     readonly FieldValue: FieldValueStatic;

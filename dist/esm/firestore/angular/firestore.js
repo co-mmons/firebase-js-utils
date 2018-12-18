@@ -69,12 +69,11 @@ var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
     UniversalFirestoreAngularImpl.prototype.runTransaction = function (updateFunction) {
         return this.realAngularFirestore.firestore.runTransaction(updateFunction);
     };
-    /**
-     * Creates a write batch, used for performing multiple writes as a single
-     * atomic operation.
-     */
     UniversalFirestoreAngularImpl.prototype.batch = function () {
         return this.realAngularFirestore.firestore.batch();
+    };
+    UniversalFirestoreAngularImpl.prototype.createId = function () {
+        return this.realAngularFirestore.createId();
     };
     Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "Timestamp", {
         get: function () {

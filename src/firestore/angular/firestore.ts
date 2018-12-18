@@ -63,12 +63,12 @@ export class UniversalFirestoreAngularImpl extends UniversalFirestore {
         return this.realAngularFirestore.firestore.runTransaction(updateFunction);
     }
 
-    /**
-     * Creates a write batch, used for performing multiple writes as a single
-     * atomic operation.
-     */
     batch(): WriteBatch {
         return this.realAngularFirestore.firestore.batch();
+    }
+
+    createId(): string {
+        return this.realAngularFirestore.createId();
     }
 
     get Timestamp(): TimestampStatic {
