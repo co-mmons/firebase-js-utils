@@ -11,11 +11,14 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+import { ArraySerializer } from "@co.mmons/js-utils/json";
 import firebase from "firebase/app";
-import { first } from "rxjs/operators";
+import { first, map } from "rxjs/operators";
 import { UniversalFirestore } from "../";
 import { CollectionOrQueryWrapper } from "../collection-query-wrapper";
 import { DocumentWrapper } from "../document-wrapper";
+import { injectUniversalFirestoreRxjs } from "../rxjs";
+injectUniversalFirestoreRxjs();
 var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
     __extends(CollectionOrQueryAngularWrapper, _super);
     function CollectionOrQueryAngularWrapper(firestore, collection, query) {
@@ -24,7 +27,7 @@ var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
         return _this;
     }
     CollectionOrQueryAngularWrapper.prototype.doc = function (documentPath) {
-        return new DocumentAngularWrapper(this.fakeFirestore, this.collection.doc(documentPath));
+        return new DocumentAngularWrapper(this.fakeFirestore, this.collection.doc(documentPath ? documentPath : this.fakeFirestore.createId()));
     };
     CollectionOrQueryAngularWrapper.prototype.get = function (options) {
         var _this = this;
@@ -74,6 +77,33 @@ var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
     };
     UniversalFirestoreAngularImpl.prototype.createId = function () {
         return this.realAngularFirestore.createId();
+    };
+    UniversalFirestoreAngularImpl.prototype.docsDataObservable = function (collectionPathOrQuery, options) {
+        var _this = this;
+        if (typeof collectionPathOrQuery == "string") {
+            return this.docsDataObservable(this.collection(collectionPathOrQuery), options);
+        }
+        if (!collectionPathOrQuery["path"]) {
+            throw new Error("Not supported object: " + collectionPathOrQuery);
+        }
+        return this.realAngularFirestore.collection(collectionPathOrQuery["path"], function () { return collectionPathOrQuery; }).valueChanges().pipe(map(function (data) {
+            if (options && options.serializer) {
+                return _this.unserialize(data, new ArraySerializer(options.serializer), options.serializationOptions);
+            }
+            return data;
+        }));
+    };
+    UniversalFirestoreAngularImpl.prototype.docDataObservable = function (doc, options) {
+        var _this = this;
+        if (typeof doc == "string") {
+            return this.docDataObservable(this.doc(doc), options);
+        }
+        return this.realAngularFirestore.doc(doc.path).valueChanges().pipe(map(function (data) {
+            if (options && options.serializer) {
+                return _this.unserialize(data, options.serializer, options.serializationOptions);
+            }
+            return data;
+        }));
     };
     Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "Timestamp", {
         get: function () {

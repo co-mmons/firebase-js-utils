@@ -1,9 +1,11 @@
-import { AngularFirestore as AngularFireFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
+import { AngularFirestore as AngularFireFirestore, AngularFirestoreCollection, AngularFirestoreDocument, SnapshotOptions } from "@angular/fire/firestore";
 import firebase from "firebase/app";
+import { Observable } from "rxjs";
 import { UniversalFirestore } from "../";
 import { CollectionOrQueryWrapper } from "../collection-query-wrapper";
 import { DocumentWrapper } from "../document-wrapper";
-import { CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, Query, TimestampStatic, Transaction, WriteBatch } from "../types";
+import { SerializationOptions } from "../serialization-options";
+import { CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, GetOptions, Query, TimestampStatic, Transaction, WriteBatch } from "../types";
 export declare class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
     private readonly collection;
     constructor(firestore: UniversalFirestoreAngularImpl, collection: AngularFirestoreCollection, query?: Query);
@@ -27,6 +29,8 @@ export declare class UniversalFirestoreAngularImpl extends UniversalFirestore {
     runTransaction<T>(updateFunction: (transaction: Transaction) => Promise<T>): Promise<T>;
     batch(): WriteBatch;
     createId(): string;
+    docsDataObservable<V = any>(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V[]>;
+    docDataObservable<V = any>(doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V>;
     readonly Timestamp: TimestampStatic;
     readonly GeoPoint: GeoPointStatic;
     readonly FieldValue: FieldValueStatic;

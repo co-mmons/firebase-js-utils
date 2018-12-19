@@ -1,10 +1,16 @@
-import {AngularFirestore as AngularFireFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from "@angular/fire/firestore";
+import {AngularFirestore as AngularFireFirestore, AngularFirestoreCollection, AngularFirestoreDocument, SnapshotOptions} from "@angular/fire/firestore";
+import {ArraySerializer} from "@co.mmons/js-utils/json";
 import firebase from "firebase/app";
-import {first} from "rxjs/operators";
+import {Observable} from "rxjs";
+import {first, map} from "rxjs/operators";
 import {UniversalFirestore} from "../";
 import {CollectionOrQueryWrapper} from "../collection-query-wrapper";
 import {DocumentWrapper} from "../document-wrapper";
-import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, Query, TimestampStatic, Transaction, WriteBatch} from "../types";
+import {injectUniversalFirestoreRxjs} from "../rxjs";
+import {SerializationOptions} from "../serialization-options";
+import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, GetOptions, Query, TimestampStatic, Transaction, WriteBatch} from "../types";
+
+injectUniversalFirestoreRxjs();
 
 export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
 
@@ -15,7 +21,7 @@ export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
     public readonly fakeFirestore: UniversalFirestoreAngularImpl;
 
     doc(documentPath?: string) {
-        return new DocumentAngularWrapper(this.fakeFirestore, this.collection.doc(documentPath));
+        return new DocumentAngularWrapper(this.fakeFirestore, this.collection.doc(documentPath ? documentPath : this.fakeFirestore.createId()));
     }
 
     get(options?: any) {
@@ -23,7 +29,7 @@ export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
     }
 
     onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any): () => void {
-       return this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, () => <any>this.query).ref.onSnapshot(options, onNext, onError, onCompletion);
+        return this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, () => <any>this.query).ref.onSnapshot(options, onNext, onError, onCompletion);
     }
 }
 
@@ -69,6 +75,43 @@ export class UniversalFirestoreAngularImpl extends UniversalFirestore {
 
     createId(): string {
         return this.realAngularFirestore.createId();
+    }
+
+    docsDataObservable<V = any>(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V[]> {
+
+        if (typeof collectionPathOrQuery == "string") {
+            return this.docsDataObservable(this.collection(collectionPathOrQuery), options);
+        }
+
+        if (!collectionPathOrQuery["path"]) {
+            throw new Error("Not supported object: " + collectionPathOrQuery);
+        }
+
+        return this.realAngularFirestore.collection(collectionPathOrQuery["path"], () => <any>collectionPathOrQuery).valueChanges().pipe(map(data => {
+
+            if (options && options.serializer) {
+                return this.unserialize(data, new ArraySerializer(options.serializer), options.serializationOptions);
+            }
+
+            return data;
+        }));
+    }
+
+    docDataObservable<V = any>(doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V> {
+
+        if (typeof doc == "string") {
+            return this.docDataObservable(this.doc(doc), options);
+        }
+
+        return this.realAngularFirestore.doc(doc.path).valueChanges().pipe(map(data => {
+
+            if (options && options.serializer) {
+                return this.unserialize(data, options.serializer, options.serializationOptions);
+            }
+
+            return data;
+
+        }));
     }
 
     get Timestamp(): TimestampStatic {

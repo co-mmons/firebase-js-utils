@@ -1,6 +1,9 @@
-import {CollectionReference, DocumentReference, FirebaseFirestore, Transaction, WriteBatch, Timestamp, TimestampStatic, GeoPointStatic, FieldValueStatic, FieldPathStatic} from "./types";
+import {SnapshotOptions} from "@angular/fire/firestore";
 import {Type} from "@co.mmons/js-utils/core";
-import {Serializer, unserialize, SerializationOptions, serialize} from "@co.mmons/js-utils/json";
+import {ArraySerializer, SerializationOptions, serialize, Serializer, unserialize} from "@co.mmons/js-utils/json";
+import {extractGetOptions} from "./extract-get-options";
+import {extractSnapshotOptions} from "./extract-snapshot-options";
+import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, FirebaseFirestore, GeoPointStatic, GetOptions, Query, TimestampStatic, Transaction, WriteBatch, QueryDocumentSnapshot} from "./types";
 
 export abstract class UniversalFirestore implements FirebaseFirestore {
 
@@ -72,6 +75,44 @@ export abstract class UniversalFirestore implements FirebaseFirestore {
         }
 
         return unserialize(json, targetClassOrSerializer, options);
+    }
+    
+    async docData<V = any>(doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Promise<V> {
+        
+        if (typeof doc == "string") {
+            return this.docData<V>(this.doc(doc), options);
+        }
+
+        let data = (await doc.get(extractGetOptions(options))).data(extractSnapshotOptions(options));
+
+        if (options && options.serializer) {
+            return this.unserialize(data, options.serializer, options.serializationOptions);
+        }
+
+        return data as V;
+    }
+
+    async docsData<V = any>(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Promise<V[]> {
+        let data: V[] = [];
+
+        for (let d of (await this.docsSnapshots(collectionPathOrQuery, options))) {
+            data.push(d.data(extractSnapshotOptions(options)) as V);
+        }
+
+        if (options && options.serializer) {
+            return this.unserialize(data, new ArraySerializer(options.serializer), options.serializationOptions);
+        }
+
+        return data;
+       
+    }
+
+    async docsSnapshots(collectionPathOrQuery: string | Query, options?: GetOptions): Promise<QueryDocumentSnapshot[]> {
+        if (typeof collectionPathOrQuery == "string") {
+            return this.docsSnapshots(this.collection(collectionPathOrQuery), options);
+        }
+
+        return (await collectionPathOrQuery.get(extractGetOptions(options))).docs;        
     }
 
 }

@@ -1,6 +1,7 @@
-import { CollectionReference, DocumentReference, FirebaseFirestore, Transaction, WriteBatch, TimestampStatic, GeoPointStatic, FieldValueStatic, FieldPathStatic } from "./types";
+import { SnapshotOptions } from "@angular/fire/firestore";
 import { Type } from "@co.mmons/js-utils/core";
-import { Serializer, SerializationOptions } from "@co.mmons/js-utils/json";
+import { SerializationOptions, Serializer } from "@co.mmons/js-utils/json";
+import { CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, FirebaseFirestore, GeoPointStatic, GetOptions, Query, TimestampStatic, Transaction, WriteBatch, QueryDocumentSnapshot } from "./types";
 export declare abstract class UniversalFirestore implements FirebaseFirestore {
     /**
      * Gets a `CollectionReference` instance that refers to the collection at
@@ -50,4 +51,7 @@ export declare abstract class UniversalFirestore implements FirebaseFirestore {
         level?: number;
     }): any;
     unserialize(json: any, targetClassOrSerializer: Type<any> | Serializer, options?: SerializationOptions): any;
+    docData<V = any>(doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Promise<V>;
+    docsData<V = any>(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Promise<V[]>;
+    docsSnapshots(collectionPathOrQuery: string | Query, options?: GetOptions): Promise<QueryDocumentSnapshot[]>;
 }

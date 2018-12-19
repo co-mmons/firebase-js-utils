@@ -1,15 +1,16 @@
 import {Observable} from "rxjs";
+import {extractSnapshotListenOptions} from "../extract-snapshot-listen-options";
 import {UniversalFirestore} from "../firestore";
-import {DocumentReference, DocumentSnapshot, GetOptions, SnapshotOptions, SnapshotListenOptions} from "../types";
+import {DocumentReference, DocumentSnapshot, SnapshotListenOptions} from "../types";
 
-function docSnapshotObservable(this: UniversalFirestore, doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<DocumentSnapshot> {
+function docSnapshotObservable(this: UniversalFirestore, doc: string | DocumentReference, options?: SnapshotListenOptions): Observable<DocumentSnapshot> {
 
     if (typeof doc == "string") {
         return this.docSnapshotObservable(this.doc(doc), options);
     }
 
     return new Observable(subscriber => {
-        let unsubscribe = doc.onSnapshot(options || {}, subscriber);
+        let unsubscribe = doc.onSnapshot(extractSnapshotListenOptions(options), subscriber);
         return () => unsubscribe();
     });
 }
@@ -17,9 +18,11 @@ function docSnapshotObservable(this: UniversalFirestore, doc: string | DocumentR
 declare module "../firestore" {
 
     interface UniversalFirestore {
-        docSnapshotObservable(doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SnapshotListenOptions): Observable<DocumentSnapshot>;
+        docSnapshotObservable(doc: string | DocumentReference, options?: SnapshotListenOptions): Observable<DocumentSnapshot>;
     }
 
 }
 
-UniversalFirestore.prototype.docSnapshotObservable = docSnapshotObservable;
+export function docSnapshotObservableInject() {
+    UniversalFirestore.prototype.docSnapshotObservable = docSnapshotObservable;
+}

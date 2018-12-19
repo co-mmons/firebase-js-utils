@@ -1,17 +1,18 @@
-import {DocumentReference, GetOptions, SnapshotOptions} from "../types";
 import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
+import {extractSnapshotOptions} from "../extract-snapshot-options";
 import {UniversalFirestore} from "../firestore";
 import {SerializationOptions} from "../serialization-options";
-import {map} from "rxjs/operators";
+import {DocumentReference, SnapshotListenOptions, SnapshotOptions} from "../types";
 
-function docDataObservable<V = any>(this: UniversalFirestore, doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V> {
+function docDataObservable<V = any>(this: UniversalFirestore, doc: string | DocumentReference, options?: SnapshotOptions & SnapshotListenOptions & SerializationOptions): Observable<V> {
 
     if (typeof doc == "string") {
         return this.docDataObservable(this.doc(doc), options);
     }
 
-    let observable = this.docSnapshotObservable(doc).pipe(map(snapshot => {
-        let data = snapshot.data() as V;
+    let observable = this.docSnapshotObservable(doc, options).pipe(map(snapshot => {
+        let data = snapshot.data(extractSnapshotOptions(options)) as V;
 
         if (options && options.serializer) {
             return this.unserialize(data, options.serializer, options.serializationOptions);
@@ -26,9 +27,11 @@ function docDataObservable<V = any>(this: UniversalFirestore, doc: string | Docu
 declare module "../firestore" {
 
     interface UniversalFirestore {
-        docDataObservable<V = any>(doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V>;
+        docDataObservable<V = any>(doc: string | DocumentReference, options?: SnapshotOptions & SnapshotListenOptions & SerializationOptions): Observable<V>;
     }
 
 }
 
-UniversalFirestore.prototype.docDataObservable = docDataObservable;
+export function docDataObservableInject() {
+    UniversalFirestore.prototype.docDataObservable = docDataObservable;
+}
