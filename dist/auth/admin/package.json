@@ -1,0 +1,5 @@
+{
+    "name": "@co.mmons/firebase-js-utils/auth/admin",
+    "main": "index.js",
+    "module": "../../esm/auth/admin/index.js"
+}
