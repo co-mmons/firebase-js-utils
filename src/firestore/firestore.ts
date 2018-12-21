@@ -1,9 +1,8 @@
-import {SnapshotOptions} from "@angular/fire/firestore";
 import {Type} from "@co.mmons/js-utils/core";
 import {ArraySerializer, SerializationOptions, serialize, Serializer, unserialize} from "@co.mmons/js-utils/json";
 import {extractGetOptions} from "./extract-get-options";
 import {extractSnapshotOptions} from "./extract-snapshot-options";
-import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, FirebaseFirestore, GeoPointStatic, GetOptions, Query, TimestampStatic, Transaction, WriteBatch, QueryDocumentSnapshot} from "./types";
+import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, FirebaseFirestore, GeoPointStatic, GetOptions, Query, QueryDocumentSnapshot, SnapshotOptions, TimestampStatic, Transaction, WriteBatch} from "./types";
 
 export abstract class UniversalFirestore implements FirebaseFirestore {
 
