@@ -43,11 +43,7 @@ var DocumentWrapper = /** @class */ (function () {
         return this.ref.set(data, options);
     };
     DocumentWrapper.prototype.update = function (data) {
-        var rest = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            rest[_i - 1] = arguments[_i];
-        }
-        return this.ref.update(data, rest);
+        return this.ref.update(data);
     };
     DocumentWrapper.prototype.delete = function () {
         return this.ref.delete();
