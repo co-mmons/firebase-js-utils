@@ -47,21 +47,21 @@ export class CollectionOrQueryWrapper implements CollectionReference {
     }
 
     startAt(...args: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAt(args));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAt(...args));
     }
 
     startAfter(snapshot?: DocumentSnapshot): Query;
 
     startAfter(...args: any[]): Query {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAfter(args));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAfter(...args));
     }
 
     endBefore(...args: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endBefore(args));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endBefore(...args));
     }
 
     endAt(...args: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endAt(args));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endAt(...args));
     }
 
     isEqual(other: any): boolean {

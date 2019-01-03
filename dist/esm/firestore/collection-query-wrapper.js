@@ -55,28 +55,32 @@ var CollectionOrQueryWrapper = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAt(args));
+        var _a;
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (_a = (this.query || this.ref)).startAt.apply(_a, args));
     };
     CollectionOrQueryWrapper.prototype.startAfter = function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAfter(args));
+        var _a;
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (_a = (this.query || this.ref)).startAfter.apply(_a, args));
     };
     CollectionOrQueryWrapper.prototype.endBefore = function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endBefore(args));
+        var _a;
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (_a = (this.query || this.ref)).endBefore.apply(_a, args));
     };
     CollectionOrQueryWrapper.prototype.endAt = function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endAt(args));
+        var _a;
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (_a = (this.query || this.ref)).endAt.apply(_a, args));
     };
     CollectionOrQueryWrapper.prototype.isEqual = function (other) {
         return (this.query || this.ref).isEqual(other);
