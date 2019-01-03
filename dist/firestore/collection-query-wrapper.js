@@ -52,33 +52,33 @@ var CollectionOrQueryWrapper = /** @class */ (function () {
     CollectionOrQueryWrapper.prototype.limit = function (limit) {
         return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).limit(limit));
     };
-    CollectionOrQueryWrapper.prototype.startAt = function (snapshot) {
-        var rest = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            rest[_i - 1] = arguments[_i];
+    CollectionOrQueryWrapper.prototype.startAt = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
         }
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAt(snapshot, rest));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAt(args));
     };
-    CollectionOrQueryWrapper.prototype.startAfter = function (snapshot) {
-        var rest = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            rest[_i - 1] = arguments[_i];
+    CollectionOrQueryWrapper.prototype.startAfter = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
         }
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAfter(snapshot, rest));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAfter(args));
     };
-    CollectionOrQueryWrapper.prototype.endBefore = function (snapshot) {
-        var rest = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            rest[_i - 1] = arguments[_i];
+    CollectionOrQueryWrapper.prototype.endBefore = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
         }
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endBefore(snapshot, rest));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endBefore(args));
     };
-    CollectionOrQueryWrapper.prototype.endAt = function (snapshot) {
-        var rest = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            rest[_i - 1] = arguments[_i];
+    CollectionOrQueryWrapper.prototype.endAt = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
         }
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endAt(snapshot, rest));
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endAt(args));
     };
     CollectionOrQueryWrapper.prototype.isEqual = function (other) {
         return (this.query || this.ref).isEqual(other);

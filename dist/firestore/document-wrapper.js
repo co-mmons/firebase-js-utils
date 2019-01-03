@@ -42,7 +42,11 @@ var DocumentWrapper = /** @class */ (function () {
     DocumentWrapper.prototype.set = function (data, options) {
         return this.ref.set(data, options);
     };
-    DocumentWrapper.prototype.update = function (data) {
+    DocumentWrapper.prototype.update = function () {
+        var data = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            data[_i] = arguments[_i];
+        }
         return this.ref.update(data);
     };
     DocumentWrapper.prototype.delete = function () {

@@ -1,5 +1,5 @@
 import { UniversalFirestore } from "./firestore";
-import { CollectionReference, Query } from "./types";
+import { CollectionReference, Query, DocumentSnapshot } from "./types";
 export declare class CollectionOrQueryWrapper implements CollectionReference {
     readonly fakeFirestore: UniversalFirestore;
     protected readonly ref: CollectionReference;
@@ -15,10 +15,10 @@ export declare class CollectionOrQueryWrapper implements CollectionReference {
     orderBy(fieldPath: any, directionStr?: any): CollectionOrQueryWrapper;
     get(options?: any): Promise<import("./types").QuerySnapshot>;
     limit(limit: number): Query;
-    startAt(snapshot?: any, ...rest: any[]): CollectionOrQueryWrapper;
-    startAfter(snapshot?: any, ...rest: any[]): CollectionOrQueryWrapper;
-    endBefore(snapshot?: any, ...rest: any[]): CollectionOrQueryWrapper;
-    endAt(snapshot?: any, ...rest: any[]): CollectionOrQueryWrapper;
+    startAt(...args: any[]): CollectionOrQueryWrapper;
+    startAfter(snapshot?: DocumentSnapshot): Query;
+    endBefore(...args: any[]): CollectionOrQueryWrapper;
+    endAt(...args: any[]): CollectionOrQueryWrapper;
     isEqual(other: any): boolean;
     onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any): () => void;
 }

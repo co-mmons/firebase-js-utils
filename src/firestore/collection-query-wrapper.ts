@@ -1,5 +1,5 @@
 import {UniversalFirestore} from "./firestore";
-import {CollectionReference, Query} from "./types";
+import {CollectionReference, Query, DocumentSnapshot} from "./types";
 
 export class CollectionOrQueryWrapper implements CollectionReference {
 
@@ -46,20 +46,22 @@ export class CollectionOrQueryWrapper implements CollectionReference {
         return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).limit(limit));
     }
 
-    startAt(snapshot?: any, ...rest: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAt(snapshot, rest));
+    startAt(...args: any[]) {
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAt(args));
     }
 
-    startAfter(snapshot?: any, ...rest: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAfter(snapshot, rest));
+    startAfter(snapshot?: DocumentSnapshot): Query;
+
+    startAfter(...args: any[]): Query {
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAfter(args));
     }
 
-    endBefore(snapshot?: any, ...rest: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endBefore(snapshot, rest));
+    endBefore(...args: any[]) {
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endBefore(args));
     }
 
-    endAt(snapshot?: any, ...rest: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endAt(snapshot, rest));
+    endAt(...args: any[]) {
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endAt(args));
     }
 
     isEqual(other: any): boolean {

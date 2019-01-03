@@ -34,7 +34,7 @@ export class DocumentWrapper implements DocumentReference {
         return this.ref.set(data, options);
     }
 
-    update(data: any) {
+    update(...data: any[]) {
         return this.ref.update(data);
     }
 
