@@ -20,5 +20,5 @@ export declare class CollectionOrQueryWrapper implements CollectionReference {
     endBefore(...args: any[]): CollectionOrQueryWrapper;
     endAt(...args: any[]): CollectionOrQueryWrapper;
     isEqual(other: any): boolean;
-    onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any): () => void;
+    onSnapshot(...args: any[]): any;
 }

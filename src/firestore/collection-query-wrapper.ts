@@ -68,6 +68,7 @@ export class CollectionOrQueryWrapper implements CollectionReference {
         return (this.query || this.ref).isEqual(other);
     }
 
-    onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any) {
-        return (this.query || this.ref).onSnapshot(options, onNext, onError, onCompletion);
+    onSnapshot(...args: any[]) {
+        // @ts-ignore
+        return (this.query || this.ref).onSnapshot(...args);
     }}

@@ -87,8 +87,14 @@ var CollectionOrQueryWrapper = /** @class */ (function () {
     CollectionOrQueryWrapper.prototype.isEqual = function (other) {
         return (this.query || this.ref).isEqual(other);
     };
-    CollectionOrQueryWrapper.prototype.onSnapshot = function (options, onNext, onError, onCompletion) {
-        return (this.query || this.ref).onSnapshot(options, onNext, onError, onCompletion);
+    CollectionOrQueryWrapper.prototype.onSnapshot = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var _a;
+        // @ts-ignore
+        return (_a = (this.query || this.ref)).onSnapshot.apply(_a, args);
     };
     return CollectionOrQueryWrapper;
 }());
