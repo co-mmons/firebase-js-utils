@@ -28,6 +28,9 @@ var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
         _this.collection = collection;
         return _this;
     }
+    CollectionOrQueryAngularWrapper.prototype.mutate = function (query) {
+        return new CollectionOrQueryAngularWrapper(this.fakeFirestore, this.collection, query);
+    };
     CollectionOrQueryAngularWrapper.prototype.doc = function (documentPath) {
         return new DocumentAngularWrapper(this.fakeFirestore, this.collection.doc(documentPath ? documentPath : this.fakeFirestore.createId()));
     };

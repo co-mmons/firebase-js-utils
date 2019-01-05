@@ -20,6 +20,10 @@ export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
 
     public readonly fakeFirestore: UniversalFirestoreAngularImpl;
 
+    protected mutate(query?: Query) {
+        return new CollectionOrQueryAngularWrapper(this.fakeFirestore, this.collection, query);
+    }
+
     doc(documentPath?: string) {
         return new DocumentAngularWrapper(this.fakeFirestore, this.collection.doc(documentPath ? documentPath : this.fakeFirestore.createId()));
     }

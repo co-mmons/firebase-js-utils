@@ -6,6 +6,10 @@ export class CollectionOrQueryWrapper implements CollectionReference {
     constructor(public readonly fakeFirestore: UniversalFirestore, protected readonly ref: CollectionReference, protected readonly query?: Query) {
     }
 
+    protected mutate(query?: Query) {
+        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, query);
+    }
+
     get firestore() {
         return this.ref.firestore;
     }
@@ -31,11 +35,11 @@ export class CollectionOrQueryWrapper implements CollectionReference {
     }
 
     where(fieldPath: any, opStr: any, value: any) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).where(fieldPath, opStr, value));
+        return this.mutate((this.query || this.ref).where(fieldPath, opStr, value));
     }
 
     orderBy(fieldPath: any, directionStr?: any) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).orderBy(fieldPath, directionStr));
+        return this.mutate((this.query || this.ref).orderBy(fieldPath, directionStr));
     }
 
     get(options?: any) {
@@ -43,25 +47,25 @@ export class CollectionOrQueryWrapper implements CollectionReference {
     }
 
     limit(limit: number): Query {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).limit(limit));
+        return this.mutate((this.query || this.ref).limit(limit));
     }
 
     startAt(...args: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAt(...args));
+        return this.mutate((this.query || this.ref).startAt(...args));
     }
 
     startAfter(snapshot?: DocumentSnapshot): Query;
 
     startAfter(...args: any[]): Query {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).startAfter(...args));
+        return this.mutate((this.query || this.ref).startAfter(...args));
     }
 
     endBefore(...args: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endBefore(...args));
+        return this.mutate((this.query || this.ref).endBefore(...args));
     }
 
     endAt(...args: any[]) {
-        return new CollectionOrQueryWrapper(this.fakeFirestore, this.ref, (this.query || this.ref).endAt(...args));
+        return this.mutate((this.query || this.ref).endAt(...args));
     }
 
     isEqual(other: any): boolean {
@@ -71,4 +75,5 @@ export class CollectionOrQueryWrapper implements CollectionReference {
     onSnapshot(...args: any[]) {
         // @ts-ignore
         return (this.query || this.ref).onSnapshot(...args);
-    }}
+    }
+}

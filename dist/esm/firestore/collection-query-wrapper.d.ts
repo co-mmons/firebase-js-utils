@@ -5,6 +5,7 @@ export declare class CollectionOrQueryWrapper implements CollectionReference {
     protected readonly ref: CollectionReference;
     protected readonly query?: Query;
     constructor(fakeFirestore: UniversalFirestore, ref: CollectionReference, query?: Query);
+    protected mutate(query?: Query): CollectionOrQueryWrapper;
     readonly firestore: import("./types").FirebaseFirestore;
     readonly id: string;
     readonly parent: import("./types").DocumentReference;
