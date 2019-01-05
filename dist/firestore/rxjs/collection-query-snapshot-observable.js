@@ -5,10 +5,10 @@ var extract_snapshot_listen_options_1 = require("../extract-snapshot-listen-opti
 var firestore_1 = require("../firestore");
 function collectionOrQuerySnapshotObservable(collectionPathOrQuery, options) {
     if (typeof collectionPathOrQuery == "string") {
-        return this.collectionSnapshotObservable(this.collection(collectionPathOrQuery), options);
+        return this.querySnapshotObservable(this.collection(collectionPathOrQuery), options);
     }
     return new rxjs_1.Observable(function (subscriber) {
-        var unsubscribe = collectionPathOrQuery.onSnapshot(extract_snapshot_listen_options_1.extractSnapshotListenOptions(options), subscriber);
+        var unsubscribe = collectionPathOrQuery.onSnapshot(extract_snapshot_listen_options_1.extractSnapshotListenOptions(options) || {}, subscriber);
         return function () { return unsubscribe(); };
     });
 }

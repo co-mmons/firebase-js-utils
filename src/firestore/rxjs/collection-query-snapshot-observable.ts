@@ -6,11 +6,11 @@ import {CollectionReference, Query, QuerySnapshot, SnapshotListenOptions} from "
 function collectionOrQuerySnapshotObservable(this: UniversalFirestore, collectionPathOrQuery: string | Query, options?: SnapshotListenOptions): Observable<QuerySnapshot> {
 
     if (typeof collectionPathOrQuery == "string") {
-        return this.collectionSnapshotObservable(this.collection(collectionPathOrQuery), options);
+        return this.querySnapshotObservable(this.collection(collectionPathOrQuery), options);
     }
 
     return new Observable(subscriber => {
-        let unsubscribe = collectionPathOrQuery.onSnapshot(extractSnapshotListenOptions(options), subscriber);
+        let unsubscribe = collectionPathOrQuery.onSnapshot(extractSnapshotListenOptions(options) || {}, subscriber);
         return () => unsubscribe();
     });
 }
