@@ -47,7 +47,9 @@ var DocumentWrapper = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             data[_i] = arguments[_i];
         }
-        return this.ref.update(data);
+        var _a;
+        //@ts-ignore
+        return (_a = this.ref).update.apply(_a, data);
     };
     DocumentWrapper.prototype.delete = function () {
         return this.ref.delete();

@@ -35,7 +35,8 @@ export class DocumentWrapper implements DocumentReference {
     }
 
     update(...data: any[]) {
-        return this.ref.update(data);
+        //@ts-ignore
+        return this.ref.update(...data);
     }
 
     delete(): Promise<void> {
