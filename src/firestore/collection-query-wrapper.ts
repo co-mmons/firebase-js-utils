@@ -3,7 +3,7 @@ import {CollectionReference, Query, DocumentSnapshot} from "./types";
 
 export class CollectionOrQueryWrapper implements CollectionReference {
 
-    constructor(public readonly fakeFirestore: UniversalFirestore, protected readonly ref: CollectionReference, protected readonly query?: Query) {
+    constructor(public readonly fakeFirestore: UniversalFirestore, public readonly ref: CollectionReference, protected readonly query?: Query) {
     }
 
     protected mutate(query?: Query) {

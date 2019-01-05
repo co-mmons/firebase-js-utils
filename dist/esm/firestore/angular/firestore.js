@@ -11,6 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+import { AngularFirestoreCollection } from "@angular/fire/firestore";
 import { ArraySerializer } from "@co.mmons/js-utils/json";
 import firebase from "firebase/app";
 import { first, map } from "rxjs/operators";
@@ -95,7 +96,9 @@ var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
         if (!collectionPathOrQuery["path"]) {
             throw new Error("Not supported object: " + collectionPathOrQuery);
         }
-        return this.realAngularFirestore.collection(collectionPathOrQuery["path"], function () { return collectionPathOrQuery; }).valueChanges().pipe(map(function (data) {
+        var ref = collectionPathOrQuery instanceof CollectionOrQueryWrapper ? collectionPathOrQuery.ref : collectionPathOrQuery;
+        var query = collectionPathOrQuery instanceof CollectionOrQueryWrapper ? collectionPathOrQuery["query"] : collectionPathOrQuery;
+        return new AngularFirestoreCollection(ref, query || ref, this.realAngularFirestore).valueChanges().pipe(map(function (data) {
             if (options && options.serializer) {
                 return _this.unserialize(data, new ArraySerializer(options.serializer), options.serializationOptions);
             }

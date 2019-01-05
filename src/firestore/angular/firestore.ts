@@ -92,7 +92,10 @@ export class UniversalFirestoreAngularImpl extends UniversalFirestore {
             throw new Error("Not supported object: " + collectionPathOrQuery);
         }
 
-        return this.realAngularFirestore.collection(collectionPathOrQuery["path"], () => <any>collectionPathOrQuery).valueChanges().pipe(map(data => {
+        let ref: firebase.firestore.CollectionReference = collectionPathOrQuery instanceof CollectionOrQueryWrapper ? <any>collectionPathOrQuery.ref : collectionPathOrQuery as CollectionReference;
+        let query: firebase.firestore.Query = collectionPathOrQuery instanceof CollectionOrQueryWrapper ? <any>collectionPathOrQuery["query"] : collectionPathOrQuery;
+
+        return new AngularFirestoreCollection(ref, query || ref, this.realAngularFirestore).valueChanges().pipe(map(data => {
 
             if (options && options.serializer) {
                 return this.unserialize(data, new ArraySerializer(options.serializer), options.serializationOptions);

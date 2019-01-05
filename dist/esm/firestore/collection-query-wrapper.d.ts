@@ -2,7 +2,7 @@ import { UniversalFirestore } from "./firestore";
 import { CollectionReference, Query, DocumentSnapshot } from "./types";
 export declare class CollectionOrQueryWrapper implements CollectionReference {
     readonly fakeFirestore: UniversalFirestore;
-    protected readonly ref: CollectionReference;
+    readonly ref: CollectionReference;
     protected readonly query?: Query;
     constructor(fakeFirestore: UniversalFirestore, ref: CollectionReference, query?: Query);
     protected mutate(query?: Query): CollectionOrQueryWrapper;
