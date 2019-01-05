@@ -12,7 +12,7 @@ export declare class CollectionOrQueryAngularWrapper extends CollectionOrQueryWr
     readonly fakeFirestore: UniversalFirestoreAngularImpl;
     doc(documentPath?: string): DocumentAngularWrapper;
     get(options?: any): Promise<firebase.firestore.QuerySnapshot>;
-    onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any): () => void;
+    onSnapshot(...args: any[]): () => void;
 }
 export declare class DocumentAngularWrapper extends DocumentWrapper {
     private readonly doc;

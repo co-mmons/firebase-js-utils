@@ -35,9 +35,15 @@ var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
         var _this = this;
         return this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, function () { return _this.query; }).get(options).pipe(operators_1.first()).toPromise();
     };
-    CollectionOrQueryAngularWrapper.prototype.onSnapshot = function (options, onNext, onError, onCompletion) {
+    CollectionOrQueryAngularWrapper.prototype.onSnapshot = function () {
         var _this = this;
-        return this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, function () { return _this.query; }).ref.onSnapshot(options, onNext, onError, onCompletion);
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var _a;
+        //@ts-ignore
+        return (_a = this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, function () { return _this.query; }).ref).onSnapshot.apply(_a, args);
     };
     return CollectionOrQueryAngularWrapper;
 }(collection_query_wrapper_1.CollectionOrQueryWrapper));

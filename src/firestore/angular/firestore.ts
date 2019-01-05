@@ -28,8 +28,9 @@ export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
         return this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, () => <any>this.query).get(options).pipe(first()).toPromise();
     }
 
-    onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any): () => void {
-        return this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, () => <any>this.query).ref.onSnapshot(options, onNext, onError, onCompletion);
+    onSnapshot(...args: any[]): () => void {
+        //@ts-ignore
+        return this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, () => <any>this.query).ref.onSnapshot(...args);
     }
 }
 
