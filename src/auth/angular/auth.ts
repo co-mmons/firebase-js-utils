@@ -9,7 +9,7 @@ export abstract class UniversalAuthAngularImpl extends UniversalAuth {
     constructor(public readonly auth: AngularFireAuth) {
         super();
 
-        this.authSubscription = this.auth.idToken.subscribe(user => this.userChanged(), error => this.onAuthError(error));
+        this.authSubscription = this.auth.idToken.subscribe(user => this.userChanged());
     }
 
     readonly admin = false;
@@ -56,27 +56,19 @@ export abstract class UniversalAuthAngularImpl extends UniversalAuth {
         this._user = user;
         this.authInitialized = true;
 
-        try {
+        if (!user && this.offline) {
+            this.userObservable.next(null);
+            this.userIdObservable.next(null);
 
-            if (!user && this.offline) {
-                this.userObservable.next(null);
-                this.userIdObservable.next(null);
-
-            } else if (changed) {
-                this.userObservable.next(this._user ? this._user : null);
-                this.userIdObservable.next(this._user ? this._user.uid : null);
-            }
-
-        } catch (e) {
-            this.onAuthError(e);
+        } else if (changed) {
+            this.userObservable.next(this._user ? this._user : null);
+            this.userIdObservable.next(this._user ? this._user.uid : null);
         }
     }
 
     get offline(): boolean {
         return false;
     }
-
-    protected abstract onAuthError(error: any);
 
     async signInWithEmailAndPassword(email: string, password: string) {
         await this.auth.auth.signInWithEmailAndPassword(email, password);

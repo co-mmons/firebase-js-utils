@@ -58,7 +58,7 @@ var UniversalAuthAngularImpl = /** @class */ (function (_super) {
         _this.authInitialized = false;
         _this.userObservable = new ReplaySubject(1);
         _this.userIdObservable = new ReplaySubject(1);
-        _this.authSubscription = _this.auth.idToken.subscribe(function (user) { return _this.userChanged(); }, function (error) { return _this.onAuthError(error); });
+        _this.authSubscription = _this.auth.idToken.subscribe(function (user) { return _this.userChanged(); });
         return _this;
     }
     UniversalAuthAngularImpl.prototype.initialized = function () {
@@ -105,18 +105,13 @@ var UniversalAuthAngularImpl = /** @class */ (function (_super) {
                 changed = !this.authInitialized || (!this._user && user) || (this._user && !user) || (this._user && user && this._user.uid != user.uid) ? true : false;
                 this._user = user;
                 this.authInitialized = true;
-                try {
-                    if (!user && this.offline) {
-                        this.userObservable.next(null);
-                        this.userIdObservable.next(null);
-                    }
-                    else if (changed) {
-                        this.userObservable.next(this._user ? this._user : null);
-                        this.userIdObservable.next(this._user ? this._user.uid : null);
-                    }
+                if (!user && this.offline) {
+                    this.userObservable.next(null);
+                    this.userIdObservable.next(null);
                 }
-                catch (e) {
-                    this.onAuthError(e);
+                else if (changed) {
+                    this.userObservable.next(this._user ? this._user : null);
+                    this.userIdObservable.next(this._user ? this._user.uid : null);
                 }
                 return [2 /*return*/];
             });
