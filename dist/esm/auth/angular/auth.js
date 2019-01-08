@@ -49,6 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import { UniversalAuth } from "../auth";
 import { ReplaySubject } from "rxjs";
 import { first, map } from "rxjs/operators";
+import { sleep } from "@co.mmons/js-utils/core";
 var UniversalAuthAngularImpl = /** @class */ (function (_super) {
     __extends(UniversalAuthAngularImpl, _super);
     function UniversalAuthAngularImpl(auth) {
@@ -137,7 +138,23 @@ var UniversalAuthAngularImpl = /** @class */ (function (_super) {
         });
     };
     UniversalAuthAngularImpl.prototype.signOut = function () {
-        return this.auth.auth.signOut();
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this._user = null;
+                        this.userObservable.next(null);
+                        this.userIdObservable.next(null);
+                        return [4 /*yield*/, sleep(1000)];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.auth.auth.signOut()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     UniversalAuthAngularImpl.prototype.ngOnDestroy = function () {
         this.authSubscription.unsubscribe();

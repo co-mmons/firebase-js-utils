@@ -3,6 +3,7 @@ import {UserInfo} from "../user-info";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {Subscription, ReplaySubject, Observable} from "rxjs";
 import {first, map} from "rxjs/operators";
+import {sleep} from "@co.mmons/js-utils/core";
 
 export abstract class UniversalAuthAngularImpl extends UniversalAuth {
 
@@ -74,8 +75,12 @@ export abstract class UniversalAuthAngularImpl extends UniversalAuth {
         await this.auth.auth.signInWithEmailAndPassword(email, password);
     }
 
-    signOut() {
-        return this.auth.auth.signOut();
+    async signOut() {
+        this._user = null;
+        this.userObservable.next(null);
+        this.userIdObservable.next(null);
+        await sleep(1000);
+        await this.auth.auth.signOut();
     }
 
     ngOnDestroy() {

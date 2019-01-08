@@ -51,6 +51,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var auth_1 = require("../auth");
 var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
+var core_1 = require("@co.mmons/js-utils/core");
 var UniversalAuthAngularImpl = /** @class */ (function (_super) {
     __extends(UniversalAuthAngularImpl, _super);
     function UniversalAuthAngularImpl(auth) {
@@ -139,7 +140,23 @@ var UniversalAuthAngularImpl = /** @class */ (function (_super) {
         });
     };
     UniversalAuthAngularImpl.prototype.signOut = function () {
-        return this.auth.auth.signOut();
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this._user = null;
+                        this.userObservable.next(null);
+                        this.userIdObservable.next(null);
+                        return [4 /*yield*/, core_1.sleep(1000)];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.auth.auth.signOut()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     UniversalAuthAngularImpl.prototype.ngOnDestroy = function () {
         this.authSubscription.unsubscribe();
