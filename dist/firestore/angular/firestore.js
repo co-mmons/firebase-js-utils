@@ -16,12 +16,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var firestore_1 = require("@angular/fire/firestore");
 var json_1 = require("@co.mmons/js-utils/json");
 var app_1 = require("firebase/app");
+var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
 var __1 = require("../");
 var collection_query_wrapper_1 = require("../collection-query-wrapper");
 var document_wrapper_1 = require("../document-wrapper");
-var rxjs_1 = require("../rxjs");
-rxjs_1.injectUniversalFirestoreRxjs();
+var rxjs_2 = require("../rxjs");
+rxjs_2.injectUniversalFirestoreRxjs();
 var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
     __extends(CollectionOrQueryAngularWrapper, _super);
     function CollectionOrQueryAngularWrapper(firestore, collection, query) {
@@ -36,8 +37,7 @@ var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
         return new DocumentAngularWrapper(this.fakeFirestore, this.collection.doc(documentPath ? documentPath : this.fakeFirestore.createId()));
     };
     CollectionOrQueryAngularWrapper.prototype.get = function (options) {
-        var _this = this;
-        return this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, function () { return _this.query; }).get(options).pipe(operators_1.first()).toPromise();
+        return new firestore_1.AngularFirestoreCollection(this.collection.ref, (this.query || this.collection.ref), this.fakeFirestore.realAngularFirestore).get(options).pipe(operators_1.first()).toPromise();
     };
     CollectionOrQueryAngularWrapper.prototype.onSnapshot = function () {
         var _this = this;
@@ -45,9 +45,25 @@ var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        var _a;
-        //@ts-ignore
-        return (_a = this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, function () { return _this.query; }).ref).onSnapshot.apply(_a, args);
+        var options = args.length > 1 && typeof args[0] != "function" ? args[0] : undefined;
+        var observable = new rxjs_1.Observable(function (subscriber) {
+            var unsubscribe = (_this.query || _this.ref).onSnapshot(options, subscriber);
+            return { unsubscribe: unsubscribe };
+        });
+        var scheduled = this.fakeFirestore.realAngularFirestore.scheduler.keepUnstableUntilFirst(this.fakeFirestore.realAngularFirestore.scheduler.runOutsideAngular(observable));
+        var subscription;
+        if (args.length > 1 && typeof args[0] != "function") {
+            if (typeof args[1] == "function") {
+                subscription = scheduled.subscribe(args[1], args.length > 2 ? args[2] : undefined, args.length > 3 ? args[3] : undefined);
+            }
+            else {
+                subscription = scheduled.subscribe(args[1]);
+            }
+        }
+        else {
+            subscription = scheduled.subscribe.apply(scheduled, args);
+        }
+        return function () { return subscription.unsubscribe(); };
     };
     return CollectionOrQueryAngularWrapper;
 }(collection_query_wrapper_1.CollectionOrQueryWrapper));

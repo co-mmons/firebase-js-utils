@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 import { AngularFirestoreCollection } from "@angular/fire/firestore";
 import { ArraySerializer } from "@co.mmons/js-utils/json";
 import firebase from "firebase/app";
+import { Observable } from "rxjs";
 import { first, map } from "rxjs/operators";
 import { UniversalFirestore } from "../";
 import { CollectionOrQueryWrapper } from "../collection-query-wrapper";
@@ -34,8 +35,7 @@ var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
         return new DocumentAngularWrapper(this.fakeFirestore, this.collection.doc(documentPath ? documentPath : this.fakeFirestore.createId()));
     };
     CollectionOrQueryAngularWrapper.prototype.get = function (options) {
-        var _this = this;
-        return this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, function () { return _this.query; }).get(options).pipe(first()).toPromise();
+        return new AngularFirestoreCollection(this.collection.ref, (this.query || this.collection.ref), this.fakeFirestore.realAngularFirestore).get(options).pipe(first()).toPromise();
     };
     CollectionOrQueryAngularWrapper.prototype.onSnapshot = function () {
         var _this = this;
@@ -43,9 +43,25 @@ var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        var _a;
-        //@ts-ignore
-        return (_a = this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, function () { return _this.query; }).ref).onSnapshot.apply(_a, args);
+        var options = args.length > 1 && typeof args[0] != "function" ? args[0] : undefined;
+        var observable = new Observable(function (subscriber) {
+            var unsubscribe = (_this.query || _this.ref).onSnapshot(options, subscriber);
+            return { unsubscribe: unsubscribe };
+        });
+        var scheduled = this.fakeFirestore.realAngularFirestore.scheduler.keepUnstableUntilFirst(this.fakeFirestore.realAngularFirestore.scheduler.runOutsideAngular(observable));
+        var subscription;
+        if (args.length > 1 && typeof args[0] != "function") {
+            if (typeof args[1] == "function") {
+                subscription = scheduled.subscribe(args[1], args.length > 2 ? args[2] : undefined, args.length > 3 ? args[3] : undefined);
+            }
+            else {
+                subscription = scheduled.subscribe(args[1]);
+            }
+        }
+        else {
+            subscription = scheduled.subscribe.apply(scheduled, args);
+        }
+        return function () { return subscription.unsubscribe(); };
     };
     return CollectionOrQueryAngularWrapper;
 }(CollectionOrQueryWrapper));

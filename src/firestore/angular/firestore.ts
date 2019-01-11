@@ -1,7 +1,7 @@
 import {AngularFirestore as AngularFireFirestore, AngularFirestoreCollection, AngularFirestoreDocument, SnapshotOptions} from "@angular/fire/firestore";
 import {ArraySerializer} from "@co.mmons/js-utils/json";
 import firebase from "firebase/app";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {first, map} from "rxjs/operators";
 import {UniversalFirestore} from "../";
 import {CollectionOrQueryWrapper} from "../collection-query-wrapper";
@@ -29,12 +29,33 @@ export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
     }
 
     get(options?: any) {
-        return this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, () => <any>this.query).get(options).pipe(first()).toPromise();
+        return new AngularFirestoreCollection(this.collection.ref, (this.query || this.collection.ref) as any, this.fakeFirestore.realAngularFirestore).get(options).pipe(first()).toPromise();
     }
 
     onSnapshot(...args: any[]): () => void {
-        //@ts-ignore
-        return this.fakeFirestore.realAngularFirestore.collection(this.collection.ref, () => <any>this.query).ref.onSnapshot(...args);
+
+        const options = args.length > 1 && typeof args[0] != "function" ? args[0] : undefined;
+
+        const observable = new Observable<firebase.firestore.QuerySnapshot>(subscriber => {
+            const unsubscribe = (this.query || this.ref).onSnapshot(options, subscriber);
+            return {unsubscribe};
+        });
+
+        const scheduled = this.fakeFirestore.realAngularFirestore.scheduler.keepUnstableUntilFirst(this.fakeFirestore.realAngularFirestore.scheduler.runOutsideAngular(observable));
+
+        let subscription: Subscription;
+
+        if (args.length > 1 && typeof args[0] != "function") {
+            if (typeof args[1] == "function") {
+                subscription = scheduled.subscribe(args[1], args.length > 2 ? args[2] : undefined, args.length > 3 ? args[3] : undefined);
+            } else {
+                subscription = scheduled.subscribe(args[1]);
+            }
+        } else {
+            subscription = scheduled.subscribe(...args);
+        }
+
+        return () => subscription.unsubscribe();
     }
 }
 
