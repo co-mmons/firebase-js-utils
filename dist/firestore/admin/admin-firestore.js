@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var firebase_admin_1 = require("firebase-admin");
 var __1 = require("../");
+var write_batch_wrapper_1 = require("../write-batch-wrapper");
 var UniversalFirestoreAdminImpl = /** @class */ (function (_super) {
     __extends(UniversalFirestoreAdminImpl, _super);
     function UniversalFirestoreAdminImpl(firestore) {
@@ -32,7 +33,7 @@ var UniversalFirestoreAdminImpl = /** @class */ (function (_super) {
         return this.firestore.runTransaction(updateFunction);
     };
     UniversalFirestoreAdminImpl.prototype.batch = function () {
-        return this.firestore.batch();
+        return new write_batch_wrapper_1.WriteBatchWrapper(this.firestore.batch());
     };
     Object.defineProperty(UniversalFirestoreAdminImpl.prototype, "Timestamp", {
         get: function () {

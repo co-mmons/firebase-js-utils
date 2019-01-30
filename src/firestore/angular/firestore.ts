@@ -9,6 +9,7 @@ import {DocumentWrapper} from "../document-wrapper";
 import {injectUniversalFirestoreRxjs} from "../rxjs";
 import {SerializationOptions} from "../serialization-options";
 import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, GetOptions, Query, TimestampStatic, Transaction, WriteBatch} from "../types";
+import {WriteBatchWrapper} from "../write-batch-wrapper";
 
 injectUniversalFirestoreRxjs();
 
@@ -96,7 +97,7 @@ export class UniversalFirestoreAngularImpl extends UniversalFirestore {
     }
 
     batch(): WriteBatch {
-        return this.realAngularFirestore.firestore.batch();
+        return new WriteBatchWrapper(this.realAngularFirestore.firestore.batch());
     }
 
     createId(): string {

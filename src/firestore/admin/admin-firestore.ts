@@ -1,6 +1,7 @@
 import {firestore} from "firebase-admin";
 import {UniversalFirestore} from "../";
 import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, TimestampStatic, Transaction, WriteBatch} from "../types";
+import {WriteBatchWrapper} from "../write-batch-wrapper";
 
 export class UniversalFirestoreAdminImpl extends UniversalFirestore {
 
@@ -21,7 +22,7 @@ export class UniversalFirestoreAdminImpl extends UniversalFirestore {
     }
 
     batch(): WriteBatch {
-        return <any>this.firestore.batch();
+        return new WriteBatchWrapper(<any>this.firestore.batch());
     }
 
     get Timestamp(): TimestampStatic {

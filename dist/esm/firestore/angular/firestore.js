@@ -20,6 +20,7 @@ import { UniversalFirestore } from "../";
 import { CollectionOrQueryWrapper } from "../collection-query-wrapper";
 import { DocumentWrapper } from "../document-wrapper";
 import { injectUniversalFirestoreRxjs } from "../rxjs";
+import { WriteBatchWrapper } from "../write-batch-wrapper";
 injectUniversalFirestoreRxjs();
 var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
     __extends(CollectionOrQueryAngularWrapper, _super);
@@ -99,7 +100,7 @@ var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
         return this.realAngularFirestore.firestore.runTransaction(updateFunction);
     };
     UniversalFirestoreAngularImpl.prototype.batch = function () {
-        return this.realAngularFirestore.firestore.batch();
+        return new WriteBatchWrapper(this.realAngularFirestore.firestore.batch());
     };
     UniversalFirestoreAngularImpl.prototype.createId = function () {
         return this.realAngularFirestore.createId();

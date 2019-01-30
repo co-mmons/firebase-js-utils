@@ -2,7 +2,7 @@ import { DocumentReference, CollectionReference, DocumentData, SetOptions, GetOp
 import { UniversalFirestore } from "./firestore";
 export declare class DocumentWrapper implements DocumentReference {
     readonly fakeFirestore: UniversalFirestore;
-    private readonly ref;
+    readonly ref: DocumentReference;
     constructor(fakeFirestore: UniversalFirestore, ref: DocumentReference);
     readonly firestore: FirebaseFirestore;
     readonly id: string;

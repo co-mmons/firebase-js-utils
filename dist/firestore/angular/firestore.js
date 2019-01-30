@@ -22,6 +22,7 @@ var __1 = require("../");
 var collection_query_wrapper_1 = require("../collection-query-wrapper");
 var document_wrapper_1 = require("../document-wrapper");
 var rxjs_2 = require("../rxjs");
+var write_batch_wrapper_1 = require("../write-batch-wrapper");
 rxjs_2.injectUniversalFirestoreRxjs();
 var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
     __extends(CollectionOrQueryAngularWrapper, _super);
@@ -101,7 +102,7 @@ var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
         return this.realAngularFirestore.firestore.runTransaction(updateFunction);
     };
     UniversalFirestoreAngularImpl.prototype.batch = function () {
-        return this.realAngularFirestore.firestore.batch();
+        return new write_batch_wrapper_1.WriteBatchWrapper(this.realAngularFirestore.firestore.batch());
     };
     UniversalFirestoreAngularImpl.prototype.createId = function () {
         return this.realAngularFirestore.createId();
