@@ -10,7 +10,7 @@ export abstract class UniversalAuthAngularImpl extends UniversalAuth {
     constructor(public readonly auth: AngularFireAuth) {
         super();
 
-        this.authSubscription = this.auth.idToken.subscribe(user => this.userChanged());
+        this.authSubscription = this.auth.user.subscribe(user => this.userChanged());
     }
 
     readonly admin = false;

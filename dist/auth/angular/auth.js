@@ -61,7 +61,7 @@ var UniversalAuthAngularImpl = /** @class */ (function (_super) {
         _this.authInitialized = false;
         _this.userObservable = new rxjs_1.ReplaySubject(1);
         _this.userIdObservable = new rxjs_1.ReplaySubject(1);
-        _this.authSubscription = _this.auth.idToken.subscribe(function (user) { return _this.userChanged(); });
+        _this.authSubscription = _this.auth.user.subscribe(function (user) { return _this.userChanged(); });
         return _this;
     }
     UniversalAuthAngularImpl.prototype.initialized = function () {
