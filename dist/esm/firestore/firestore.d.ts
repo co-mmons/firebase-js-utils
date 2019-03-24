@@ -53,5 +53,5 @@ export declare abstract class UniversalFirestore implements FirebaseFirestore {
     docData<V = any>(doc: string | DocumentReference, options?: GetOptions & SnapshotOptions & SerializationOptions): Promise<V>;
     docsData<V = any>(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Promise<V[]>;
     docsSnapshots(collectionPathOrQuery: string | Query, options?: GetOptions): Promise<QueryDocumentSnapshot[]>;
-    deleteQuery(query: firebase.firestore.Query, batchSize?: number): Promise<number>;
+    deleteQuery(query: Query, batchSize?: number): Promise<number>;
 }
