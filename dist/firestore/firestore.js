@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@co.mmons/js-utils/core");
 var json_1 = require("@co.mmons/js-utils/json");
 var extract_get_options_1 = require("./extract-get-options");
 var extract_snapshot_options_1 = require("./extract-snapshot-options");
@@ -115,6 +116,43 @@ var UniversalFirestore = /** @class */ (function () {
                         }
                         return [4 /*yield*/, collectionPathOrQuery.get(extract_get_options_1.extractGetOptions(options))];
                     case 1: return [2 /*return*/, (_a.sent()).docs];
+                }
+            });
+        });
+    };
+    UniversalFirestore.prototype.deleteQuery = function (query, batchSize) {
+        return __awaiter(this, void 0, void 0, function () {
+            var snapshot, batch, _i, _a, doc, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        if (batchSize < 1) {
+                            batchSize = 400;
+                        }
+                        return [4 /*yield*/, query.get()];
+                    case 1:
+                        snapshot = _c.sent();
+                        // when there are no documents left, we are done
+                        if (snapshot.size == 0) {
+                            return [2 /*return*/, 0];
+                        }
+                        batch = this.batch();
+                        for (_i = 0, _a = snapshot.docs; _i < _a.length; _i++) {
+                            doc = _a[_i];
+                            batch.delete(doc.ref);
+                        }
+                        return [4 /*yield*/, batch.commit()];
+                    case 2:
+                        _c.sent();
+                        if (snapshot.size <= batchSize) {
+                            return [2 /*return*/, snapshot.size];
+                        }
+                        return [4 /*yield*/, core_1.sleep(50)];
+                    case 3:
+                        _c.sent();
+                        _b = snapshot.size;
+                        return [4 /*yield*/, this.deleteQuery(query, batchSize)];
+                    case 4: return [2 /*return*/, _b + (_c.sent())];
                 }
             });
         });

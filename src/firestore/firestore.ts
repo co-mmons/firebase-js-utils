@@ -1,4 +1,4 @@
-import {Type} from "@co.mmons/js-utils/core";
+import {sleep, Type} from "@co.mmons/js-utils/core";
 import {ArraySerializer, SerializationOptions, serialize, Serializer, unserialize} from "@co.mmons/js-utils/json";
 import {extractGetOptions} from "./extract-get-options";
 import {extractSnapshotOptions} from "./extract-snapshot-options";
@@ -112,6 +112,36 @@ export abstract class UniversalFirestore implements FirebaseFirestore {
         }
 
         return (await collectionPathOrQuery.get(extractGetOptions(options))).docs;        
+    }
+
+    async deleteQuery(query: firebase.firestore.Query, batchSize?: number): Promise<number> {
+
+        if (batchSize < 1) {
+            batchSize = 400;
+        }
+
+        const snapshot = await query.get();
+
+        // when there are no documents left, we are done
+        if (snapshot.size == 0) {
+            return 0;
+        }
+
+        const batch = this.batch();
+
+        for (const doc of snapshot.docs) {
+            batch.delete(doc.ref);
+        }
+
+        await batch.commit();
+
+        if (snapshot.size <= batchSize) {
+            return snapshot.size;
+        }
+
+        await sleep(50);
+
+        return snapshot.size + (await this.deleteQuery(query, batchSize));
     }
 
 }
