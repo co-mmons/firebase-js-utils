@@ -126,10 +126,10 @@ var UniversalFirestore = /** @class */ (function () {
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        if (batchSize < 1) {
+                        if (!batchSize || batchSize < 1) {
                             batchSize = 400;
                         }
-                        return [4 /*yield*/, query.get()];
+                        return [4 /*yield*/, query.limit(batchSize).get()];
                     case 1:
                         snapshot = _c.sent();
                         // when there are no documents left, we are done

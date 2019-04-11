@@ -130,11 +130,11 @@ export abstract class UniversalFirestore implements FirebaseFirestore {
 
     async deleteQuery(query: Query, batchSize?: number): Promise<number> {
 
-        if (batchSize < 1) {
+        if (!batchSize || batchSize < 1) {
             batchSize = 400;
         }
 
-        const snapshot = await query.get();
+        const snapshot = await query.limit(batchSize).get();
 
         // when there are no documents left, we are done
         if (snapshot.size == 0) {
