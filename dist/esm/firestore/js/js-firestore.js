@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import { firestore } from "firebase/app";
 import { UniversalFirestore } from "../firestore";
+import { TransactionWrapper } from "../transaction-wrapper";
 import { WriteBatchWrapper } from "../write-batch-wrapper";
 var UniversalFirestoreJsImpl = /** @class */ (function (_super) {
     __extends(UniversalFirestoreJsImpl, _super);
@@ -28,7 +29,7 @@ var UniversalFirestoreJsImpl = /** @class */ (function (_super) {
         return this.firestore.doc(documentPath);
     };
     UniversalFirestoreJsImpl.prototype.runTransaction = function (updateFunction) {
-        return this.firestore.runTransaction(updateFunction);
+        return this.firestore.runTransaction(function (transaction) { return updateFunction(new TransactionWrapper(transaction)); });
     };
     UniversalFirestoreJsImpl.prototype.batch = function () {
         return new WriteBatchWrapper(this.firestore.batch());

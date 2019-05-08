@@ -1,5 +1,6 @@
 import {firestore} from "firebase/app";
 import {UniversalFirestore} from "../firestore";
+import {TransactionWrapper} from "../transaction-wrapper";
 import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, TimestampStatic, Transaction, WriteBatch} from "../types";
 import {WriteBatchWrapper} from "../write-batch-wrapper";
 
@@ -18,7 +19,7 @@ export class UniversalFirestoreJsImpl extends UniversalFirestore {
     }
 
     runTransaction<T>(updateFunction: (transaction: Transaction) => Promise<T>): Promise<T> {
-        return this.firestore.runTransaction(updateFunction);
+        return this.firestore.runTransaction((transaction) => updateFunction(new TransactionWrapper(transaction)));
     }
 
     batch(): WriteBatch {

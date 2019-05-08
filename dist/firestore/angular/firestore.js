@@ -22,6 +22,7 @@ var __1 = require("../");
 var collection_query_wrapper_1 = require("../collection-query-wrapper");
 var document_wrapper_1 = require("../document-wrapper");
 var rxjs_2 = require("../rxjs");
+var transaction_wrapper_1 = require("../transaction-wrapper");
 var write_batch_wrapper_1 = require("../write-batch-wrapper");
 rxjs_2.injectUniversalFirestoreRxjs();
 var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
@@ -99,7 +100,7 @@ var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
         return new DocumentAngularWrapper(this, this.realAngularFirestore.doc(documentPath));
     };
     UniversalFirestoreAngularImpl.prototype.runTransaction = function (updateFunction) {
-        return this.realAngularFirestore.firestore.runTransaction(updateFunction);
+        return this.realAngularFirestore.firestore.runTransaction(function (transaction) { return updateFunction(new transaction_wrapper_1.TransactionWrapper(transaction)); });
     };
     UniversalFirestoreAngularImpl.prototype.batch = function () {
         return new write_batch_wrapper_1.WriteBatchWrapper(this.realAngularFirestore.firestore.batch());

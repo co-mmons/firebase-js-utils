@@ -8,6 +8,7 @@ import {CollectionOrQueryWrapper} from "../collection-query-wrapper";
 import {DocumentWrapper} from "../document-wrapper";
 import {injectUniversalFirestoreRxjs} from "../rxjs";
 import {SerializationOptions} from "../serialization-options";
+import {TransactionWrapper} from "../transaction-wrapper";
 import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, GetOptions, Query, TimestampStatic, Transaction, WriteBatch} from "../types";
 import {WriteBatchWrapper} from "../write-batch-wrapper";
 
@@ -93,7 +94,7 @@ export class UniversalFirestoreAngularImpl extends UniversalFirestore {
     }
 
     runTransaction<T>(updateFunction: (transaction: Transaction) => Promise<T>): Promise<T> {
-        return this.realAngularFirestore.firestore.runTransaction(updateFunction);
+        return this.realAngularFirestore.firestore.runTransaction((transaction) => updateFunction(new TransactionWrapper(transaction)));
     }
 
     batch(): WriteBatch {
