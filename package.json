@@ -10,18 +10,17 @@
   },
   "dependencies": {
     "@co.mmons/js-utils": "git+https://github.com/co-mmons/js-utils.git",
-    "@co.mmons/node-utils": "git+https://github.com/co-mmons/node-utils.git",
-    "rxjs": "^6.3.3"
+    "@co.mmons/node-utils": "git+https://github.com/co-mmons/node-utils.git"
   },
   "peerDependencies": {
-    "rxjs": "^6.3.0"
+    "rxjs": "^6.5.2"
   },
   "devDependencies": {
-    "@angular/core": "^7.1.2",
-    "@angular/fire": "^5.1.1",
-    "firebase": "^5.7.0",
-    "firebase-admin": "^6.4.0",
-    "typescript": "~3.1.0"
+    "@angular/core": "^8.0.3",
+    "@angular/fire": "^5.2.1",
+    "firebase": "^6.2.4",
+    "firebase-admin": "^8.2.0",
+    "typescript": "~3.4.0"
   },
   "main": "index.js",
   "module": "./esm/index.js",

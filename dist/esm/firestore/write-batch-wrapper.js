@@ -11,11 +11,11 @@ var WriteBatchWrapper = /** @class */ (function () {
         return this;
     };
     WriteBatchWrapper.prototype.update = function () {
+        var _a;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        var _a;
         if (args[0] instanceof DocumentWrapper) {
             args[0] = args[0].ref;
         }

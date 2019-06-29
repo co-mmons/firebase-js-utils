@@ -54,46 +54,46 @@ var CollectionOrQueryWrapper = /** @class */ (function () {
         return this.mutate((this.query || this.ref).limit(limit));
     };
     CollectionOrQueryWrapper.prototype.startAt = function () {
+        var _a;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        var _a;
         return this.mutate((_a = (this.query || this.ref)).startAt.apply(_a, args));
     };
     CollectionOrQueryWrapper.prototype.startAfter = function () {
+        var _a;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        var _a;
         return this.mutate((_a = (this.query || this.ref)).startAfter.apply(_a, args));
     };
     CollectionOrQueryWrapper.prototype.endBefore = function () {
+        var _a;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        var _a;
         return this.mutate((_a = (this.query || this.ref)).endBefore.apply(_a, args));
     };
     CollectionOrQueryWrapper.prototype.endAt = function () {
+        var _a;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        var _a;
         return this.mutate((_a = (this.query || this.ref)).endAt.apply(_a, args));
     };
     CollectionOrQueryWrapper.prototype.isEqual = function (other) {
         return (this.query || this.ref).isEqual(other);
     };
     CollectionOrQueryWrapper.prototype.onSnapshot = function () {
+        var _a;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        var _a;
         // @ts-ignore
         return (_a = (this.query || this.ref)).onSnapshot.apply(_a, args);
     };
