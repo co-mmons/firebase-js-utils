@@ -37,7 +37,7 @@ var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
         return new DocumentAngularWrapper(this.fakeFirestore, this.collection.doc(documentPath ? documentPath : this.fakeFirestore.createId()));
     };
     CollectionOrQueryAngularWrapper.prototype.get = function (options) {
-        return new AngularFirestoreCollection(this.collection.ref, (this.query || this.collection.ref), this.fakeFirestore.realAngularFirestore).get(options).pipe(first()).toPromise();
+        return new AngularFirestoreCollection(this.collection.ref, (this.query || this.collection.ref), this.fakeFirestore.firestore).get(options).pipe(first()).toPromise();
     };
     CollectionOrQueryAngularWrapper.prototype.onSnapshot = function () {
         var _this = this;
@@ -50,7 +50,7 @@ var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
             var unsubscribe = (_this.query || _this.ref).onSnapshot(options, subscriber);
             return { unsubscribe: unsubscribe };
         });
-        var scheduled = this.fakeFirestore.realAngularFirestore.scheduler.keepUnstableUntilFirst(this.fakeFirestore.realAngularFirestore.scheduler.runOutsideAngular(observable));
+        var scheduled = this.fakeFirestore.firestore.scheduler.keepUnstableUntilFirst(this.fakeFirestore.firestore.scheduler.runOutsideAngular(observable));
         var subscription;
         if (args.length > 1 && typeof args[0] != "function") {
             if (typeof args[1] == "function") {
@@ -86,25 +86,25 @@ var DocumentAngularWrapper = /** @class */ (function (_super) {
 export { DocumentAngularWrapper };
 var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
     __extends(UniversalFirestoreAngularImpl, _super);
-    function UniversalFirestoreAngularImpl(realAngularFirestore) {
+    function UniversalFirestoreAngularImpl(firestore) {
         var _this = _super.call(this) || this;
-        _this.realAngularFirestore = realAngularFirestore;
+        _this.firestore = firestore;
         return _this;
     }
     UniversalFirestoreAngularImpl.prototype.collection = function (collectionPath) {
-        return new CollectionOrQueryAngularWrapper(this, this.realAngularFirestore.collection(collectionPath));
+        return new CollectionOrQueryAngularWrapper(this, this.firestore.collection(collectionPath));
     };
     UniversalFirestoreAngularImpl.prototype.doc = function (documentPath) {
-        return new DocumentAngularWrapper(this, this.realAngularFirestore.doc(documentPath));
+        return new DocumentAngularWrapper(this, this.firestore.doc(documentPath));
     };
     UniversalFirestoreAngularImpl.prototype.runTransaction = function (updateFunction) {
-        return this.realAngularFirestore.firestore.runTransaction(function (transaction) { return updateFunction(new TransactionWrapper(transaction)); });
+        return this.firestore.firestore.runTransaction(function (transaction) { return updateFunction(new TransactionWrapper(transaction)); });
     };
     UniversalFirestoreAngularImpl.prototype.batch = function () {
-        return new WriteBatchWrapper(this.realAngularFirestore.firestore.batch());
+        return new WriteBatchWrapper(this.firestore.firestore.batch());
     };
     UniversalFirestoreAngularImpl.prototype.createId = function () {
-        return this.realAngularFirestore.createId();
+        return this.firestore.createId();
     };
     UniversalFirestoreAngularImpl.prototype.docsDataObservable = function (collectionPathOrQuery, options) {
         var _this = this;
@@ -116,7 +116,7 @@ var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
         }
         var ref = collectionPathOrQuery instanceof CollectionOrQueryWrapper ? collectionPathOrQuery.ref : collectionPathOrQuery;
         var query = collectionPathOrQuery instanceof CollectionOrQueryWrapper ? collectionPathOrQuery["query"] : collectionPathOrQuery;
-        return new AngularFirestoreCollection(ref, query || ref, this.realAngularFirestore).valueChanges().pipe(map(function (data) {
+        return new AngularFirestoreCollection(ref, query || ref, this.firestore).valueChanges().pipe(map(function (data) {
             if (options && options.serializer) {
                 return _this.unserialize(data, new ArraySerializer(options.serializer), options.serializationOptions);
             }
@@ -128,7 +128,7 @@ var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
         if (typeof doc == "string") {
             return this.docDataObservable(this.doc(doc), options);
         }
-        return this.realAngularFirestore.doc(doc.path).valueChanges().pipe(map(function (data) {
+        return this.firestore.doc(doc.path).valueChanges().pipe(map(function (data) {
             if (options && options.serializer) {
                 return _this.unserialize(data, options.serializer, options.serializationOptions);
             }

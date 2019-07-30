@@ -22,9 +22,9 @@ export declare class DocumentAngularWrapper extends DocumentWrapper {
     collection(collectionPath: string): CollectionReference;
     get(options?: any): Promise<firebase.firestore.DocumentSnapshot>;
 }
-export declare class UniversalFirestoreAngularImpl extends UniversalFirestore {
-    readonly realAngularFirestore: AngularFireFirestore;
-    constructor(realAngularFirestore: AngularFireFirestore);
+export declare class UniversalFirestoreAngularImpl extends UniversalFirestore<AngularFireFirestore> {
+    readonly firestore: AngularFireFirestore;
+    constructor(firestore: AngularFireFirestore);
     collection(collectionPath: string): CollectionReference;
     doc(documentPath: string): DocumentReference;
     runTransaction<T>(updateFunction: (transaction: Transaction) => Promise<T>): Promise<T>;

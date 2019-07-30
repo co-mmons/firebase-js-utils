@@ -1,7 +1,7 @@
 import { firestore } from "firebase-admin";
 import { UniversalFirestore } from "../";
 import { CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, TimestampStatic, Transaction, WriteBatch } from "../types";
-export declare class UniversalFirestoreAdminImpl extends UniversalFirestore {
+export declare class UniversalFirestoreAdminImpl extends UniversalFirestore<firestore.Firestore> {
     readonly firestore: firestore.Firestore;
     constructor(firestore: firestore.Firestore);
     collection(collectionPath: string): CollectionReference;

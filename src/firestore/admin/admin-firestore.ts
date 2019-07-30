@@ -1,9 +1,10 @@
 import {firestore} from "firebase-admin";
 import {UniversalFirestore} from "../";
-import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, TimestampStatic, Transaction, WriteBatch} from "../types";
+import {CollectionOrQueryWrapper} from "../collection-query-wrapper";
+import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, Query, TimestampStatic, Transaction, WriteBatch} from "../types";
 import {WriteBatchWrapper} from "../write-batch-wrapper";
 
-export class UniversalFirestoreAdminImpl extends UniversalFirestore {
+export class UniversalFirestoreAdminImpl extends UniversalFirestore<firestore.Firestore> {
 
     constructor(public readonly firestore: firestore.Firestore) {
         super();

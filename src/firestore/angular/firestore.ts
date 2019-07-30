@@ -1,4 +1,4 @@
-import {AngularFirestore as AngularFireFirestore, AngularFirestoreCollection, AngularFirestoreDocument, SnapshotOptions} from "@angular/fire/firestore";
+import {AngularFirestore as AngularFireFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup, AngularFirestoreDocument, SnapshotOptions} from "@angular/fire/firestore";
 import {ArraySerializer} from "@co.mmons/js-utils/json";
 import firebase from "firebase/app";
 import {Observable, Subscription} from "rxjs";
@@ -31,7 +31,7 @@ export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
     }
 
     get(options?: any) {
-        return new AngularFirestoreCollection(this.collection.ref, (this.query || this.collection.ref) as any, this.fakeFirestore.realAngularFirestore).get(options).pipe(first()).toPromise();
+        return new AngularFirestoreCollection(this.collection.ref, (this.query || this.collection.ref) as any, this.fakeFirestore.firestore).get(options).pipe(first()).toPromise();
     }
 
     onSnapshot(...args: any[]): () => void {
@@ -43,7 +43,7 @@ export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
             return {unsubscribe};
         });
 
-        const scheduled = this.fakeFirestore.realAngularFirestore.scheduler.keepUnstableUntilFirst(this.fakeFirestore.realAngularFirestore.scheduler.runOutsideAngular(observable));
+        const scheduled = this.fakeFirestore.firestore.scheduler.keepUnstableUntilFirst(this.fakeFirestore.firestore.scheduler.runOutsideAngular(observable));
 
         let subscription: Subscription;
 
@@ -79,30 +79,30 @@ export class DocumentAngularWrapper extends DocumentWrapper {
 
 }
 
-export class UniversalFirestoreAngularImpl extends UniversalFirestore {
+export class UniversalFirestoreAngularImpl extends UniversalFirestore<AngularFireFirestore> {
 
-    constructor(public readonly realAngularFirestore: AngularFireFirestore) {
+    constructor(public readonly firestore: AngularFireFirestore) {
         super();
     }
 
     collection(collectionPath: string): CollectionReference {
-        return new CollectionOrQueryAngularWrapper(this, this.realAngularFirestore.collection(collectionPath));
+        return new CollectionOrQueryAngularWrapper(this, this.firestore.collection(collectionPath));
     }
 
     doc(documentPath: string): DocumentReference {
-        return new DocumentAngularWrapper(this, this.realAngularFirestore.doc(documentPath));
+        return new DocumentAngularWrapper(this, this.firestore.doc(documentPath));
     }
 
     runTransaction<T>(updateFunction: (transaction: Transaction) => Promise<T>): Promise<T> {
-        return this.realAngularFirestore.firestore.runTransaction((transaction) => updateFunction(new TransactionWrapper(transaction)));
+        return this.firestore.firestore.runTransaction((transaction) => updateFunction(new TransactionWrapper(transaction)));
     }
 
     batch(): WriteBatch {
-        return new WriteBatchWrapper(this.realAngularFirestore.firestore.batch());
+        return new WriteBatchWrapper(this.firestore.firestore.batch());
     }
 
     createId(): string {
-        return this.realAngularFirestore.createId();
+        return this.firestore.createId();
     }
 
     docsDataObservable<V = any>(collectionPathOrQuery: string | Query, options?: GetOptions & SnapshotOptions & SerializationOptions): Observable<V[]> {
@@ -118,7 +118,7 @@ export class UniversalFirestoreAngularImpl extends UniversalFirestore {
         let ref: firebase.firestore.CollectionReference = collectionPathOrQuery instanceof CollectionOrQueryWrapper ? <any>collectionPathOrQuery.ref : collectionPathOrQuery as CollectionReference;
         let query: firebase.firestore.Query = collectionPathOrQuery instanceof CollectionOrQueryWrapper ? <any>collectionPathOrQuery["query"] : collectionPathOrQuery;
 
-        return new AngularFirestoreCollection(ref, query || ref, this.realAngularFirestore).valueChanges().pipe(map(data => {
+        return new AngularFirestoreCollection(ref, query || ref, this.firestore).valueChanges().pipe(map(data => {
 
             if (options && options.serializer) {
                 return this.unserialize(data, new ArraySerializer(options.serializer), options.serializationOptions);
@@ -134,7 +134,7 @@ export class UniversalFirestoreAngularImpl extends UniversalFirestore {
             return this.docDataObservable(this.doc(doc), options);
         }
 
-        return this.realAngularFirestore.doc(doc.path).valueChanges().pipe(map(data => {
+        return this.firestore.doc(doc.path).valueChanges().pipe(map(data => {
 
             if (options && options.serializer) {
                 return this.unserialize(data, options.serializer, options.serializationOptions);

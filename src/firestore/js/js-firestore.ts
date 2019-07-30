@@ -4,9 +4,9 @@ import {TransactionWrapper} from "../transaction-wrapper";
 import {CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, TimestampStatic, Transaction, WriteBatch} from "../types";
 import {WriteBatchWrapper} from "../write-batch-wrapper";
 
-export class UniversalFirestoreJsImpl extends UniversalFirestore {
+export class UniversalFirestoreJsImpl extends UniversalFirestore<firestore.Firestore> {
 
-    constructor(private readonly firestore: firestore.Firestore) {
+    constructor(public readonly firestore: firestore.Firestore) {
         super();
     }
 

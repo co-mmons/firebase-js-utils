@@ -1,8 +1,8 @@
 import { firestore } from "firebase/app";
 import { UniversalFirestore } from "../firestore";
 import { CollectionReference, DocumentReference, FieldPathStatic, FieldValueStatic, GeoPointStatic, TimestampStatic, Transaction, WriteBatch } from "../types";
-export declare class UniversalFirestoreJsImpl extends UniversalFirestore {
-    private readonly firestore;
+export declare class UniversalFirestoreJsImpl extends UniversalFirestore<firestore.Firestore> {
+    readonly firestore: firestore.Firestore;
     constructor(firestore: firestore.Firestore);
     collection(collectionPath: string): CollectionReference;
     doc(documentPath: string): DocumentReference;

@@ -18,7 +18,9 @@ import {
     WriteBatch
 } from "./types";
 
-export abstract class UniversalFirestore implements FirebaseFirestore {
+export abstract class UniversalFirestore<FirestoreType = any> implements FirebaseFirestore {
+
+    abstract get firestore(): FirestoreType;
 
     /**
      * Gets a `CollectionReference` instance that refers to the collection at
