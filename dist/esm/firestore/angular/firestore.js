@@ -1,16 +1,4 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+import * as tslib_1 from "tslib";
 import { AngularFirestoreCollection } from "@angular/fire/firestore";
 import { ArraySerializer } from "@co.mmons/js-utils/json";
 import firebase from "firebase/app";
@@ -24,7 +12,7 @@ import { TransactionWrapper } from "../transaction-wrapper";
 import { WriteBatchWrapper } from "../write-batch-wrapper";
 injectUniversalFirestoreRxjs();
 var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
-    __extends(CollectionOrQueryAngularWrapper, _super);
+    tslib_1.__extends(CollectionOrQueryAngularWrapper, _super);
     function CollectionOrQueryAngularWrapper(firestore, collection, query) {
         var _this = _super.call(this, firestore, collection.ref, query) || this;
         _this.collection = collection;
@@ -69,7 +57,7 @@ var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
 }(CollectionOrQueryWrapper));
 export { CollectionOrQueryAngularWrapper };
 var DocumentAngularWrapper = /** @class */ (function (_super) {
-    __extends(DocumentAngularWrapper, _super);
+    tslib_1.__extends(DocumentAngularWrapper, _super);
     function DocumentAngularWrapper(firestore, doc) {
         var _this = _super.call(this, firestore, doc.ref) || this;
         _this.doc = doc;
@@ -85,7 +73,7 @@ var DocumentAngularWrapper = /** @class */ (function (_super) {
 }(DocumentWrapper));
 export { DocumentAngularWrapper };
 var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
-    __extends(UniversalFirestoreAngularImpl, _super);
+    tslib_1.__extends(UniversalFirestoreAngularImpl, _super);
     function UniversalFirestoreAngularImpl(firestore) {
         var _this = _super.call(this) || this;
         _this.firestore = firestore;

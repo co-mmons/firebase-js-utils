@@ -1,21 +1,9 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+import * as tslib_1 from "tslib";
 import { firestore } from "firebase-admin";
 import { UniversalFirestore } from "../";
 import { WriteBatchWrapper } from "../write-batch-wrapper";
 var UniversalFirestoreAdminImpl = /** @class */ (function (_super) {
-    __extends(UniversalFirestoreAdminImpl, _super);
+    tslib_1.__extends(UniversalFirestoreAdminImpl, _super);
     function UniversalFirestoreAdminImpl(firestore) {
         var _this = _super.call(this) || this;
         _this.firestore = firestore;
