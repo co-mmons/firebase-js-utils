@@ -1,13 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function extractSnapshotListenOptions(options) {
-    if (!options) {
-        return options;
-    }
-    if (options.includeMetadataChanges) {
+    if (options && options.includeMetadataChanges) {
         return { includeMetadataChanges: options.includeMetadataChanges };
     }
-    return undefined;
+    return {};
 }
 exports.extractSnapshotListenOptions = extractSnapshotListenOptions;
 //# sourceMappingURL=extract-snapshot-listen-options.js.map

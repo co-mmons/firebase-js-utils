@@ -1,13 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function extractSnapshotOptions(options) {
-    if (!options) {
-        return options;
-    }
-    if (options.serverTimestamps) {
+    if (options && options.serverTimestamps) {
         return { serverTimestamps: options.serverTimestamps };
     }
-    return undefined;
+    return {};
 }
 exports.extractSnapshotOptions = extractSnapshotOptions;
 //# sourceMappingURL=extract-snapshot-options.js.map
