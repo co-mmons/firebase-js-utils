@@ -1,13 +1,6 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
 const core_1 = require("@co.mmons/js-utils/core");
 const json_1 = require("@co.mmons/js-utils/json");
 const extract_get_options_1 = require("./extract-get-options");
@@ -29,7 +22,7 @@ class UniversalFirestore {
         return json_1.unserialize(json, targetClassOrSerializer, options);
     }
     docData(doc, options) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             if (typeof doc == "string") {
                 return this.docData(this.doc(doc), options);
             }
@@ -41,7 +34,7 @@ class UniversalFirestore {
         });
     }
     docsData(collectionPathOrQuery, options) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             let data = [];
             for (let d of (yield this.docsSnapshots(collectionPathOrQuery, options))) {
                 data.push(d.data(extract_snapshot_options_1.extractSnapshotOptions(options)));
@@ -53,7 +46,7 @@ class UniversalFirestore {
         });
     }
     docsSnapshots(collectionPathOrQuery, options) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             if (typeof collectionPathOrQuery == "string") {
                 return this.docsSnapshots(this.collection(collectionPathOrQuery), options);
             }
@@ -61,7 +54,7 @@ class UniversalFirestore {
         });
     }
     deleteQuery(query, batchSize) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             if (!batchSize || batchSize < 1) {
                 batchSize = 400;
             }
