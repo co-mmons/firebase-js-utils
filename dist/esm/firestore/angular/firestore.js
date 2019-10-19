@@ -1,4 +1,3 @@
-import * as tslib_1 from "tslib";
 import { AngularFirestoreCollection } from "@angular/fire/firestore";
 import { ArraySerializer } from "@co.mmons/js-utils/json";
 import firebase from "firebase/app";
@@ -11,35 +10,28 @@ import { injectUniversalFirestoreRxjs } from "../rxjs";
 import { TransactionWrapper } from "../transaction-wrapper";
 import { WriteBatchWrapper } from "../write-batch-wrapper";
 injectUniversalFirestoreRxjs();
-var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
-    tslib_1.__extends(CollectionOrQueryAngularWrapper, _super);
-    function CollectionOrQueryAngularWrapper(firestore, collection, query) {
-        var _this = _super.call(this, firestore, collection.ref, query) || this;
-        _this.collection = collection;
-        return _this;
+export class CollectionOrQueryAngularWrapper extends CollectionOrQueryWrapper {
+    constructor(firestore, collection, query) {
+        super(firestore, collection.ref, query);
+        this.collection = collection;
     }
-    CollectionOrQueryAngularWrapper.prototype.mutate = function (query) {
+    mutate(query) {
         return new CollectionOrQueryAngularWrapper(this.fakeFirestore, this.collection, query);
-    };
-    CollectionOrQueryAngularWrapper.prototype.doc = function (documentPath) {
+    }
+    doc(documentPath) {
         return new DocumentAngularWrapper(this.fakeFirestore, this.collection.doc(documentPath ? documentPath : this.fakeFirestore.createId()));
-    };
-    CollectionOrQueryAngularWrapper.prototype.get = function (options) {
+    }
+    get(options) {
         return new AngularFirestoreCollection(this.collection.ref, (this.query || this.collection.ref), this.fakeFirestore.firestore).get(options).pipe(first()).toPromise();
-    };
-    CollectionOrQueryAngularWrapper.prototype.onSnapshot = function () {
-        var _this = this;
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var options = args.length > 1 && typeof args[0] != "function" ? args[0] : undefined;
-        var observable = new Observable(function (subscriber) {
-            var unsubscribe = (_this.query || _this.ref).onSnapshot(options, subscriber);
-            return { unsubscribe: unsubscribe };
+    }
+    onSnapshot(...args) {
+        const options = args.length > 1 && typeof args[0] != "function" ? args[0] : undefined;
+        const observable = new Observable(subscriber => {
+            const unsubscribe = (this.query || this.ref).onSnapshot(options, subscriber);
+            return { unsubscribe };
         });
-        var scheduled = this.fakeFirestore.firestore.scheduler.keepUnstableUntilFirst(this.fakeFirestore.firestore.scheduler.runOutsideAngular(observable));
-        var subscription;
+        const scheduled = this.fakeFirestore.firestore.scheduler.keepUnstableUntilFirst(this.fakeFirestore.firestore.scheduler.runOutsideAngular(observable));
+        let subscription;
         if (args.length > 1 && typeof args[0] != "function") {
             if (typeof args[1] == "function") {
                 subscription = scheduled.subscribe(args[1], args.length > 2 ? args[2] : undefined, args.length > 3 ? args[3] : undefined);
@@ -49,109 +41,81 @@ var CollectionOrQueryAngularWrapper = /** @class */ (function (_super) {
             }
         }
         else {
-            subscription = scheduled.subscribe.apply(scheduled, args);
+            subscription = scheduled.subscribe(...args);
         }
-        return function () { return subscription.unsubscribe(); };
-    };
-    return CollectionOrQueryAngularWrapper;
-}(CollectionOrQueryWrapper));
-export { CollectionOrQueryAngularWrapper };
-var DocumentAngularWrapper = /** @class */ (function (_super) {
-    tslib_1.__extends(DocumentAngularWrapper, _super);
-    function DocumentAngularWrapper(firestore, doc) {
-        var _this = _super.call(this, firestore, doc.ref) || this;
-        _this.doc = doc;
-        return _this;
+        return () => subscription.unsubscribe();
     }
-    DocumentAngularWrapper.prototype.collection = function (collectionPath) {
+}
+export class DocumentAngularWrapper extends DocumentWrapper {
+    constructor(firestore, doc) {
+        super(firestore, doc.ref);
+        this.doc = doc;
+    }
+    collection(collectionPath) {
         return new CollectionOrQueryAngularWrapper(this.fakeFirestore, this.doc.collection(collectionPath));
-    };
-    DocumentAngularWrapper.prototype.get = function (options) {
-        return this.doc.get(options).pipe(first()).toPromise();
-    };
-    return DocumentAngularWrapper;
-}(DocumentWrapper));
-export { DocumentAngularWrapper };
-var UniversalFirestoreAngularImpl = /** @class */ (function (_super) {
-    tslib_1.__extends(UniversalFirestoreAngularImpl, _super);
-    function UniversalFirestoreAngularImpl(firestore) {
-        var _this = _super.call(this) || this;
-        _this.firestore = firestore;
-        return _this;
     }
-    UniversalFirestoreAngularImpl.prototype.collection = function (collectionPath) {
+    get(options) {
+        return this.doc.get(options).pipe(first()).toPromise();
+    }
+}
+export class UniversalFirestoreAngularImpl extends UniversalFirestore {
+    constructor(firestore) {
+        super();
+        this.firestore = firestore;
+    }
+    collection(collectionPath) {
         return new CollectionOrQueryAngularWrapper(this, this.firestore.collection(collectionPath));
-    };
-    UniversalFirestoreAngularImpl.prototype.doc = function (documentPath) {
+    }
+    doc(documentPath) {
         return new DocumentAngularWrapper(this, this.firestore.doc(documentPath));
-    };
-    UniversalFirestoreAngularImpl.prototype.runTransaction = function (updateFunction) {
-        return this.firestore.firestore.runTransaction(function (transaction) { return updateFunction(new TransactionWrapper(transaction)); });
-    };
-    UniversalFirestoreAngularImpl.prototype.batch = function () {
+    }
+    runTransaction(updateFunction) {
+        return this.firestore.firestore.runTransaction((transaction) => updateFunction(new TransactionWrapper(transaction)));
+    }
+    batch() {
         return new WriteBatchWrapper(this.firestore.firestore.batch());
-    };
-    UniversalFirestoreAngularImpl.prototype.createId = function () {
+    }
+    createId() {
         return this.firestore.createId();
-    };
-    UniversalFirestoreAngularImpl.prototype.docsDataObservable = function (collectionPathOrQuery, options) {
-        var _this = this;
+    }
+    docsDataObservable(collectionPathOrQuery, options) {
         if (typeof collectionPathOrQuery == "string") {
             return this.docsDataObservable(this.collection(collectionPathOrQuery), options);
         }
         if (!collectionPathOrQuery["path"]) {
             throw new Error("Not supported object: " + collectionPathOrQuery);
         }
-        var ref = collectionPathOrQuery instanceof CollectionOrQueryWrapper ? collectionPathOrQuery.ref : collectionPathOrQuery;
-        var query = collectionPathOrQuery instanceof CollectionOrQueryWrapper ? collectionPathOrQuery["query"] : collectionPathOrQuery;
-        return new AngularFirestoreCollection(ref, query || ref, this.firestore).valueChanges().pipe(map(function (data) {
+        let ref = collectionPathOrQuery instanceof CollectionOrQueryWrapper ? collectionPathOrQuery.ref : collectionPathOrQuery;
+        let query = collectionPathOrQuery instanceof CollectionOrQueryWrapper ? collectionPathOrQuery["query"] : collectionPathOrQuery;
+        return new AngularFirestoreCollection(ref, query || ref, this.firestore).valueChanges().pipe(map(data => {
             if (options && options.serializer) {
-                return _this.unserialize(data, new ArraySerializer(options.serializer), options.serializationOptions);
+                return this.unserialize(data, new ArraySerializer(options.serializer), options.serializationOptions);
             }
             return data;
         }));
-    };
-    UniversalFirestoreAngularImpl.prototype.docDataObservable = function (doc, options) {
-        var _this = this;
+    }
+    docDataObservable(doc, options) {
         if (typeof doc == "string") {
             return this.docDataObservable(this.doc(doc), options);
         }
-        return this.firestore.doc(doc.path).valueChanges().pipe(map(function (data) {
+        return this.firestore.doc(doc.path).valueChanges().pipe(map(data => {
             if (options && options.serializer) {
-                return _this.unserialize(data, options.serializer, options.serializationOptions);
+                return this.unserialize(data, options.serializer, options.serializationOptions);
             }
             return data;
         }));
-    };
-    Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "Timestamp", {
-        get: function () {
-            return firebase.firestore.Timestamp;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "GeoPoint", {
-        get: function () {
-            return firebase.firestore.GeoPoint;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "FieldValue", {
-        get: function () {
-            return firebase.firestore.FieldValue;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(UniversalFirestoreAngularImpl.prototype, "FieldPath", {
-        get: function () {
-            return firebase.firestore.FieldPath;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return UniversalFirestoreAngularImpl;
-}(UniversalFirestore));
-export { UniversalFirestoreAngularImpl };
+    }
+    get Timestamp() {
+        return firebase.firestore.Timestamp;
+    }
+    get GeoPoint() {
+        return firebase.firestore.GeoPoint;
+    }
+    get FieldValue() {
+        return firebase.firestore.FieldValue;
+    }
+    get FieldPath() {
+        return firebase.firestore.FieldPath;
+    }
+}
 //# sourceMappingURL=firestore.js.map

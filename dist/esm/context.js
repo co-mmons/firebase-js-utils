@@ -1,7 +1,3 @@
-var UniversalFirebaseContext = /** @class */ (function () {
-    function UniversalFirebaseContext() {
-    }
-    return UniversalFirebaseContext;
-}());
-export { UniversalFirebaseContext };
+export class UniversalFirebaseContext {
+}
 //# sourceMappingURL=context.js.map

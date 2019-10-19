@@ -5,9 +5,9 @@ function collectionOrQuerySnapshotObservable(collectionPathOrQuery, options) {
     if (typeof collectionPathOrQuery == "string") {
         return this.querySnapshotObservable(this.collection(collectionPathOrQuery), options);
     }
-    return new Observable(function (subscriber) {
-        var unsubscribe = collectionPathOrQuery.onSnapshot(extractSnapshotListenOptions(options) || {}, subscriber);
-        return function () { return unsubscribe(); };
+    return new Observable(subscriber => {
+        let unsubscribe = collectionPathOrQuery.onSnapshot(extractSnapshotListenOptions(options) || {}, subscriber);
+        return () => unsubscribe();
     });
 }
 export function collectionQuerySnapshotObservableInject() {

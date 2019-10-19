@@ -1,17 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var operators_1 = require("rxjs/operators");
-var extract_snapshot_options_1 = require("../extract-snapshot-options");
-var firestore_1 = require("../firestore");
+const operators_1 = require("rxjs/operators");
+const extract_snapshot_options_1 = require("../extract-snapshot-options");
+const firestore_1 = require("../firestore");
 function docDataObservable(doc, options) {
-    var _this = this;
     if (typeof doc == "string") {
         return this.docDataObservable(this.doc(doc), options);
     }
-    var observable = this.docSnapshotObservable(doc, options).pipe(operators_1.map(function (snapshot) {
-        var data = snapshot.data(extract_snapshot_options_1.extractSnapshotOptions(options));
+    let observable = this.docSnapshotObservable(doc, options).pipe(operators_1.map(snapshot => {
+        let data = snapshot.data(extract_snapshot_options_1.extractSnapshotOptions(options));
         if (options && options.serializer) {
-            return _this.unserialize(data, options.serializer, options.serializationOptions);
+            return this.unserialize(data, options.serializer, options.serializationOptions);
         }
         return data;
     }));

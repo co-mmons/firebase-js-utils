@@ -5,9 +5,9 @@ function docSnapshotObservable(doc, options) {
     if (typeof doc == "string") {
         return this.docSnapshotObservable(this.doc(doc), options);
     }
-    return new Observable(function (subscriber) {
-        var unsubscribe = doc.onSnapshot(extractSnapshotListenOptions(options), subscriber);
-        return function () { return unsubscribe(); };
+    return new Observable(subscriber => {
+        let unsubscribe = doc.onSnapshot(extractSnapshotListenOptions(options), subscriber);
+        return () => unsubscribe();
     });
 }
 export function docSnapshotObservableInject() {

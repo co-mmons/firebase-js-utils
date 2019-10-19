@@ -6,10 +6,10 @@ function docsSnapshotsObservable(collectionPathOrQuery, options) {
     if (typeof collectionPathOrQuery == "string") {
         return this.docsSnapshotsObservable(this.collection(collectionPathOrQuery), options);
     }
-    return new Observable(function (subscriber) {
-        var unsubscribe = collectionPathOrQuery.onSnapshot(extractSnapshotListenOptions(options), subscriber);
-        return function () { return unsubscribe(); };
-    }).pipe(map(function (snapshot) { return snapshot.docs; }));
+    return new Observable(subscriber => {
+        let unsubscribe = collectionPathOrQuery.onSnapshot(extractSnapshotListenOptions(options), subscriber);
+        return () => unsubscribe();
+    }).pipe(map((snapshot) => snapshot.docs));
 }
 export function docsSnapshotsObservableInject() {
     UniversalFirestore.prototype.docsSnapshotsObservable = docsSnapshotsObservable;
