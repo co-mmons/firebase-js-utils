@@ -617,7 +617,7 @@ export declare type OrderByDirection = 'desc' | 'asc';
  * Filter conditions in a `Query.where()` clause are specified using the
  * strings '<', '<=', '==', '>=', '>', and 'array-contains'.
  */
-export declare type WhereFilterOp = '<' | '<=' | '==' | '>=' | '>' | 'array-contains';
+export declare type WhereFilterOp = '<' | '<=' | '==' | '>=' | '>' | 'array-contains' | 'array-contains-any' | 'in';
 /**
  * A `Query` refers to a Query which you can read or listen to. You can also
  * construct refined `Query` objects by adding filters and ordering.
