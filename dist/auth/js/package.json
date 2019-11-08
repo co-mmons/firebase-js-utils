@@ -1,5 +1,10 @@
 {
     "name": "@co.mmons/firebase-js-utils/auth/js",
     "main": "index.js",
-    "module": "../../esm/auth/js/index.js"
+    "module": "../../esm5/auth/js/index.js",
+    "es5": "index.js",
+    "esm5": "../../esm5/auth/js/index.js",
+    "es2015": "../../es2015/auth/js/index.js",
+    "esm2015": "../../esm2015/auth/js/index.js",
+    "sideEffects": false
 }

@@ -1,0 +1,1 @@
+{"version":3,"file":"extract-snapshot-listen-options.js","sourceRoot":"","sources":["../../../src/firestore/extract-snapshot-listen-options.ts"],"names":[],"mappings":";;AAEA,SAAgB,4BAA4B,CAAC,OAAY;IAErD,IAAI,OAAO,IAAI,OAAO,CAAC,sBAAsB,EAAE;QAC3C,OAAO,EAAC,sBAAsB,EAAE,OAAO,CAAC,sBAAsB,EAAC,CAAC;KACnE;IAED,OAAO,EAAE,CAAC;AACd,CAAC;AAPD,oEAOC"}

@@ -1,5 +1,10 @@
 {
     "name": "@co.mmons/firebase-js-utils/firestore/admin",
     "main": "index.js",
-    "module": "../../esm/firestore/admin/index.js"
+    "module": "../../esm5/firestore/admin/index.js",
+    "es5": "index.js",
+    "esm5": "../../esm5/firestore/admin/index.js",
+    "es2015": "../../es2015/firestore/admin/index.js",
+    "esm2015": "../../esm2015/firestore/admin/index.js",
+    "sideEffects": false
 }
