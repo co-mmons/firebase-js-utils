@@ -2,7 +2,7 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import * as client from "@firebase/firestore-types";
 import * as admin from "@google-cloud/firestore";
-import {DocumentData} from "../types/shared";
+import {DocumentData} from "../shared-types";
 
 export function docsSnapshotsObservable<T = DocumentData>(query: client.Query<T>, options?: client.SnapshotListenOptions): Observable<Array<client.QueryDocumentSnapshot<T>>>;
 

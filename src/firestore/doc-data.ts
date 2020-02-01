@@ -1,6 +1,6 @@
 import * as client from "@firebase/firestore-types";
 import * as admin from "@google-cloud/firestore";
-import {DocumentData} from "./types/shared";
+import {DocumentData} from "./shared-types";
 
 export async function docData<T = DocumentData>(doc: admin.DocumentReference<T>): Promise<T>;
 

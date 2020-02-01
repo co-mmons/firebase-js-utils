@@ -1,5 +1,5 @@
 import { Type } from "@co.mmons/js-utils/core";
-import { DocumentData, FirestoreDataConverter } from "./types/shared";
+import { DocumentData, FirestoreDataConverter } from "./shared-types";
 export declare class DataConverter<T> implements FirestoreDataConverter<T> {
     private readonly type;
     constructor(type: Type<T>);

@@ -1,7 +1,7 @@
 import * as client from "@firebase/firestore-types";
 import * as admin from "@google-cloud/firestore";
-import { UpdateData } from "./types/shared";
-import { DocumentReference, Firestore } from "./types/unions";
+import { UpdateData } from "./shared-types";
+import { DocumentReference, Firestore } from "./union-types";
 export declare abstract class WriteBatch {
     private readonly firestore;
     protected constructor(firestore: Firestore);

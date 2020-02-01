@@ -1,6 +1,6 @@
 import {Type} from "@co.mmons/js-utils/core";
 import {serialize, unserialize} from "@co.mmons/js-utils/json";
-import {DocumentData, FirestoreDataConverter} from "./types/shared";
+import {DocumentData, FirestoreDataConverter} from "./shared-types";
 
 export class DataConverter<T> implements FirestoreDataConverter<T> {
 

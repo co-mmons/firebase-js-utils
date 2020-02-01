@@ -1,7 +1,7 @@
 import * as client from "@firebase/firestore-types";
 import * as admin from "@google-cloud/firestore";
 import {docsSnapshots} from "./docs-snapshots";
-import {DocumentData} from "./types/shared";
+import {DocumentData} from "./shared-types";
 
 export async function docsData<T = DocumentData>(query: admin.Query<T>): Promise<T[]>;
 
