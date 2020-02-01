@@ -6,6 +6,7 @@ tslib_1.__exportStar(require("./delete-query"), exports);
 tslib_1.__exportStar(require("./doc-data"), exports);
 tslib_1.__exportStar(require("./docs-data"), exports);
 tslib_1.__exportStar(require("./docs-snapshots"), exports);
+tslib_1.__exportStar(require("./run-transaction"), exports);
 tslib_1.__exportStar(require("./types"), exports);
 tslib_1.__exportStar(require("./write-batch"), exports);
 //# sourceMappingURL=index.js.map

@@ -1,7 +1,8 @@
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
+import {firestoreClient, firestoreAdmin} from "./types";
 import {DocumentData} from "./shared-types";
 
-export type Firestore = client.FirebaseFirestore | admin.Firestore;
+export type Firestore = firestoreClient.FirebaseFirestore | firestoreAdmin.Firestore;
 
-export type DocumentReference<T = DocumentData> = client.DocumentReference<T> | admin.DocumentReference<T>;
+export type DocumentReference<T = DocumentData> = firestoreClient.DocumentReference<T> | firestoreAdmin.DocumentReference<T>;
+
+export type Transaction = firestoreClient.Transaction | firestoreAdmin.Transaction;
