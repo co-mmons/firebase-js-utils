@@ -1,4 +1,4 @@
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
-export { client, admin };
+import * as firestoreClient from "@firebase/firestore-types";
+import * as firestoreAdmin from "@google-cloud/firestore";
+export { firestoreClient, firestoreAdmin };
 //# sourceMappingURL=types.js.map
