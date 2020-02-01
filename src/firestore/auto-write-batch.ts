@@ -3,7 +3,7 @@ import * as admin from "@google-cloud/firestore";
 import {UpdateData} from "./shared-types";
 import {DocumentReference, Firestore} from "./union-types";
 
-export abstract class WriteBatch {
+export abstract class AutoWriteBatch {
 
     protected constructor(private readonly firestore: Firestore) {
     }
@@ -112,13 +112,13 @@ export abstract class WriteBatch {
 
 }
 
-interface WriteBatchClientExtensions {
+interface AutoWriteBatchClientMethods {
     commit(): Promise<{count: number}>;
     set<T = any>(documentRef: client.DocumentReference<T>, data: T, options?: client.SetOptions): this;
     update(documentRef: client.DocumentReference<any>, dataOrField: UpdateData | string | client.FieldPath, value?: any, ...moreFieldsAndValues: any[]): this;
 }
 
-export class WriteBatchClient extends WriteBatch implements WriteBatchClientExtensions {
+export class AutoWriteBatchClient extends AutoWriteBatch implements AutoWriteBatchClientMethods {
 
     constructor(firestore: client.FirebaseFirestore) {
         super(firestore);
@@ -126,7 +126,7 @@ export class WriteBatchClient extends WriteBatch implements WriteBatchClientExte
 
 }
 
-interface WriteBatchAdminExtensions {
+interface AutoWriteBatchAdminMethods {
 
     /**
      * Update fields of the document referred to by the provided
@@ -157,7 +157,7 @@ interface WriteBatchAdminExtensions {
 
 }
 
-export class WriteBatchAdmin extends WriteBatch implements WriteBatchAdminExtensions {
+export class AutoWriteBatchAdmin extends AutoWriteBatch implements AutoWriteBatchAdminMethods {
 
     constructor(firestore: admin.Firestore) {
         super(firestore);
@@ -165,14 +165,14 @@ export class WriteBatchAdmin extends WriteBatch implements WriteBatchAdminExtens
 
 }
 
-export function writeBatch(firestore: client.FirebaseFirestore): WriteBatchClient;
+export function autoWriteBatch(firestore: client.FirebaseFirestore): AutoWriteBatchClient;
 
-export function writeBatch(firestore: admin.Firestore): WriteBatchAdmin;
+export function autoWriteBatch(firestore: admin.Firestore): AutoWriteBatchAdmin;
 
-export function writeBatch(firestore: Firestore): WriteBatchClient | WriteBatchAdmin {
+export function autoWriteBatch(firestore: Firestore): AutoWriteBatchClient | AutoWriteBatchAdmin {
     if (firestore instanceof client.FirebaseFirestore) {
-        return new WriteBatchClient(firestore);
+        return new AutoWriteBatchClient(firestore);
     } else if (firestore instanceof admin.Firestore) {
-        return new WriteBatchAdmin(firestore);
+        return new AutoWriteBatchAdmin(firestore);
     }
 }
