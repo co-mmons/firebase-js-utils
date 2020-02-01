@@ -1,0 +1,1 @@
+{"version":3,"file":"guards.js","sourceRoot":"","sources":["../../../src/firestore/guards.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,cAAc,EAAE,eAAe,EAAC,MAAM,SAAS,CAAC;AAGxD,MAAM,UAAU,gBAAgB,CAAC,SAAoB;IACjD,OAAO,SAAS,YAAY,cAAc,CAAC,SAAS,CAAC;AACzD,CAAC;AAED,MAAM,UAAU,iBAAiB,CAAC,SAAoB;IAClD,OAAO,SAAS,YAAY,eAAe,CAAC,iBAAiB,CAAC;AAClE,CAAC"}

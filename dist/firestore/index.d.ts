@@ -3,7 +3,7 @@ export * from "./delete-query";
 export * from "./doc-data";
 export * from "./docs-data";
 export * from "./docs-snapshots";
-export * from "./run-transaction";
+export * from "./guards";
 export * from "./shared-types";
 export * from "./types";
 export * from "./write-batch";
