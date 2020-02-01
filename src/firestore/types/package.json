@@ -1,0 +1,10 @@
+{
+    "name": "@co.mmons/firebase-js-utils/firestore/types",
+    "main": "index.js",
+    "module": "../../esm5/firestore/types/index.js",
+    "es5": "index.js",
+    "esm5": "../../esm5/firestore/types/index.js",
+    "es2015": "../../es2015/firestore/types/index.js",
+    "esm2015": "../../esm2015/firestore/types/index.js",
+    "sideEffects": false
+}

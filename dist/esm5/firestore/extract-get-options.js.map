@@ -1,1 +1,0 @@
-{"version":3,"file":"extract-get-options.js","sourceRoot":"","sources":["../../../src/firestore/extract-get-options.ts"],"names":[],"mappings":"AAEA,MAAM,UAAU,iBAAiB,CAAC,OAAY;IAE1C,IAAI,CAAC,OAAO,EAAE;QACV,OAAO,OAAO,CAAC;KAClB;IAED,IAAI,OAAO,CAAC,MAAM,EAAE;QAChB,OAAO,EAAC,MAAM,EAAE,OAAO,CAAC,MAAM,EAAC,CAAC;KACnC;IAED,OAAO,SAAS,CAAC;AACrB,CAAC"}

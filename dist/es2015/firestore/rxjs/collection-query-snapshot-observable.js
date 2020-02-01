@@ -1,20 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const client = require("@firebase/firestore-types");
+const admin = require("@google-cloud/firestore");
 const rxjs_1 = require("rxjs");
-const extract_snapshot_listen_options_1 = require("../extract-snapshot-listen-options");
-const firestore_1 = require("../firestore");
-function collectionOrQuerySnapshotObservable(collectionPathOrQuery, options) {
-    if (typeof collectionPathOrQuery == "string") {
-        return this.querySnapshotObservable(this.collection(collectionPathOrQuery), options);
-    }
+function querySnapshotObservable(query) {
     return new rxjs_1.Observable(subscriber => {
-        let unsubscribe = collectionPathOrQuery.onSnapshot(extract_snapshot_listen_options_1.extractSnapshotListenOptions(options) || {}, subscriber);
+        const unsubscribe = query.onSnapshot(snapshot => subscriber.next(snapshot), error => subscriber.error(error));
         return () => unsubscribe();
     });
 }
-function collectionQuerySnapshotObservableInject() {
-    firestore_1.UniversalFirestore.prototype.collectionSnapshotObservable = collectionOrQuerySnapshotObservable;
-    firestore_1.UniversalFirestore.prototype.querySnapshotObservable = collectionOrQuerySnapshotObservable;
+exports.querySnapshotObservable = querySnapshotObservable;
+function collectionSnapshotObservable(collection) {
+    if (collection instanceof client.CollectionReference) {
+        return querySnapshotObservable(collection);
+    }
+    else if (collection instanceof admin.CollectionReference) {
+        return querySnapshotObservable(collection);
+    }
+    else {
+        throw new Error("Invalid collection");
+    }
 }
-exports.collectionQuerySnapshotObservableInject = collectionQuerySnapshotObservableInject;
+exports.collectionSnapshotObservable = collectionSnapshotObservable;
 //# sourceMappingURL=collection-query-snapshot-observable.js.map

@@ -1,11 +1,13 @@
-import {UniversalAuth} from "./auth";
-import {UniversalFirestore} from "./firestore";
+import * as client from "@firebase/firestore-types";
+import * as admin from "@google-cloud/firestore";
+import {AuthUser} from "./auth";
 
-export abstract class UniversalFirebaseContext {
+export interface FirebaseContext {
+    firestore?: client.FirebaseFirestore | admin.Firestore;
+    authUser?: AuthUser;
+    functionUrl?: (name: string) => string;
+}
 
-    readonly auth: UniversalAuth;
-
-    readonly firestore: UniversalFirestore;
-
-    abstract functionUrl(name: string): string;
+export interface FirebaseContextFirestore<Firestore extends client.FirebaseFirestore | admin.Firestore> {
+    firestore?: Firestore;
 }

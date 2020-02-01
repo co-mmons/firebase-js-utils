@@ -1,17 +1,21 @@
+import * as client from "@firebase/firestore-types";
+import * as admin from "@google-cloud/firestore";
 import { Observable } from "rxjs";
-import { extractSnapshotListenOptions } from "../extract-snapshot-listen-options";
-import { UniversalFirestore } from "../firestore";
-function collectionOrQuerySnapshotObservable(collectionPathOrQuery, options) {
-    if (typeof collectionPathOrQuery == "string") {
-        return this.querySnapshotObservable(this.collection(collectionPathOrQuery), options);
-    }
+export function querySnapshotObservable(query) {
     return new Observable(function (subscriber) {
-        var unsubscribe = collectionPathOrQuery.onSnapshot(extractSnapshotListenOptions(options) || {}, subscriber);
+        var unsubscribe = query.onSnapshot(function (snapshot) { return subscriber.next(snapshot); }, function (error) { return subscriber.error(error); });
         return function () { return unsubscribe(); };
     });
 }
-export function collectionQuerySnapshotObservableInject() {
-    UniversalFirestore.prototype.collectionSnapshotObservable = collectionOrQuerySnapshotObservable;
-    UniversalFirestore.prototype.querySnapshotObservable = collectionOrQuerySnapshotObservable;
+export function collectionSnapshotObservable(collection) {
+    if (collection instanceof client.CollectionReference) {
+        return querySnapshotObservable(collection);
+    }
+    else if (collection instanceof admin.CollectionReference) {
+        return querySnapshotObservable(collection);
+    }
+    else {
+        throw new Error("Invalid collection");
+    }
 }
 //# sourceMappingURL=collection-query-snapshot-observable.js.map

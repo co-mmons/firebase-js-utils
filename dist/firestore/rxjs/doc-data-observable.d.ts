@@ -1,9 +1,6 @@
+import * as client from "@firebase/firestore-types";
+import * as admin from "@google-cloud/firestore";
 import { Observable } from "rxjs";
-import { SerializationOptions } from "../serialization-options";
-import { DocumentReference, SnapshotListenOptions, SnapshotOptions } from "../types";
-declare module "../firestore" {
-    interface UniversalFirestore {
-        docDataObservable<V = any>(doc: string | DocumentReference, options?: SnapshotOptions & SnapshotListenOptions & SerializationOptions): Observable<V>;
-    }
-}
-export declare function docDataObservableInject(): void;
+import { DocumentData } from "../types/shared";
+export declare function docDataObservable<T = DocumentData>(doc: client.DocumentReference<T>, options?: client.SnapshotOptions & client.SnapshotListenOptions): Observable<T>;
+export declare function docDataObservable<T = DocumentData>(doc: admin.DocumentReference<T>): Observable<T>;

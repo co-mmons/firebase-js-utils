@@ -2,19 +2,24 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const rxjs_1 = require("rxjs");
 const operators_1 = require("rxjs/operators");
-const extract_snapshot_listen_options_1 = require("../extract-snapshot-listen-options");
-const firestore_1 = require("../firestore");
-function docsSnapshotsObservable(collectionPathOrQuery, options) {
-    if (typeof collectionPathOrQuery == "string") {
-        return this.docsSnapshotsObservable(this.collection(collectionPathOrQuery), options);
+const client = require("@firebase/firestore-types");
+const admin = require("@google-cloud/firestore");
+function docsSnapshotsObservable(query, options) {
+    if (query instanceof client.Query) {
+        return new rxjs_1.Observable(subscriber => {
+            const unsubscribe = query.onSnapshot(options, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            return () => unsubscribe();
+        }).pipe(operators_1.map(snapshot => snapshot.docs));
     }
-    return new rxjs_1.Observable(subscriber => {
-        let unsubscribe = collectionPathOrQuery.onSnapshot(extract_snapshot_listen_options_1.extractSnapshotListenOptions(options), subscriber);
-        return () => unsubscribe();
-    }).pipe(operators_1.map((snapshot) => snapshot.docs));
+    else if (query instanceof admin.Query) {
+        return new rxjs_1.Observable(subscriber => {
+            const unsubscribe = query.onSnapshot(snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            return () => unsubscribe();
+        }).pipe(operators_1.map(snapshot => snapshot.docs));
+    }
+    else {
+        throw new Error("Invalid query");
+    }
 }
-function docsSnapshotsObservableInject() {
-    firestore_1.UniversalFirestore.prototype.docsSnapshotsObservable = docsSnapshotsObservable;
-}
-exports.docsSnapshotsObservableInject = docsSnapshotsObservableInject;
+exports.docsSnapshotsObservable = docsSnapshotsObservable;
 //# sourceMappingURL=docs-snapshots-observable.js.map

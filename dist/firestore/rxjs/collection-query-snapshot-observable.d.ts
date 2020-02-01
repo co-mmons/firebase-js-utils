@@ -1,9 +1,8 @@
+import * as client from "@firebase/firestore-types";
+import * as admin from "@google-cloud/firestore";
 import { Observable } from "rxjs";
-import { CollectionReference, Query, QuerySnapshot, SnapshotListenOptions } from "../types";
-declare module "../firestore" {
-    interface UniversalFirestore {
-        collectionSnapshotObservable(collectionPathOrQuery: string | CollectionReference, options?: SnapshotListenOptions): Observable<QuerySnapshot>;
-        querySnapshotObservable(query: Query, options?: SnapshotListenOptions): Observable<QuerySnapshot>;
-    }
-}
-export declare function collectionQuerySnapshotObservableInject(): void;
+import { DocumentData } from "../types/shared";
+export declare function querySnapshotObservable<T = DocumentData>(query: client.Query<T>): Observable<client.QuerySnapshot<T>>;
+export declare function querySnapshotObservable<T = DocumentData>(query: admin.Query<T>): Observable<admin.QuerySnapshot<T>>;
+export declare function collectionSnapshotObservable<T = DocumentData>(collection: client.CollectionReference<T>): Observable<client.QuerySnapshot>;
+export declare function collectionSnapshotObservable<T = DocumentData>(collection: admin.CollectionReference<T>): Observable<admin.QuerySnapshot>;

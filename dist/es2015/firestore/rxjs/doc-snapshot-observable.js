@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const client = require("@firebase/firestore-types");
+const admin = require("@google-cloud/firestore");
 const rxjs_1 = require("rxjs");
-const extract_snapshot_listen_options_1 = require("../extract-snapshot-listen-options");
-const firestore_1 = require("../firestore");
 function docSnapshotObservable(doc, options) {
-    if (typeof doc == "string") {
-        return this.docSnapshotObservable(this.doc(doc), options);
-    }
     return new rxjs_1.Observable(subscriber => {
-        let unsubscribe = doc.onSnapshot(extract_snapshot_listen_options_1.extractSnapshotListenOptions(options), subscriber);
-        return () => unsubscribe();
+        if (doc instanceof client.DocumentReference) {
+            const unsubscribe = doc.onSnapshot(options, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            return () => unsubscribe();
+        }
+        else if (doc instanceof admin.DocumentReference) {
+            const unsubscribe = doc.onSnapshot(snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            return () => unsubscribe();
+        }
     });
 }
-function docSnapshotObservableInject() {
-    firestore_1.UniversalFirestore.prototype.docSnapshotObservable = docSnapshotObservable;
-}
-exports.docSnapshotObservableInject = docSnapshotObservableInject;
+exports.docSnapshotObservable = docSnapshotObservable;
 //# sourceMappingURL=doc-snapshot-observable.js.map

@@ -1,42 +1,21 @@
-import {ArraySerializer} from "@co.mmons/js-utils/json";
+import * as client from "@firebase/firestore-types";
+import * as admin from "@google-cloud/firestore";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {extractSnapshotOptions} from "../extract-snapshot-options";
-import {UniversalFirestore} from "../firestore";
-import {SerializationOptions} from "../serialization-options";
-import {Query, SnapshotListenOptions, SnapshotOptions} from "../types";
+import {DocumentData} from "../types/shared";
+import {docsSnapshotsObservable} from "./docs-snapshots-observable";
 
-function docsDataObservable<V = any>(this: UniversalFirestore, collectionPathOrQuery: string | Query, options?: SnapshotOptions & SnapshotListenOptions & SerializationOptions): Observable<V[]> {
+export function docsDataObservable<T = DocumentData>(query: client.Query<T>, options?: client.SnapshotOptions & client.SnapshotListenOptions): Observable<T[]>;
 
-    if (typeof collectionPathOrQuery == "string") {
-        return this.docsDataObservable(this.collection(collectionPathOrQuery), options);
+export function docsDataObservable<T = DocumentData>(query: admin.Query<T>): Observable<T[]>;
+
+export function docsDataObservable<T = DocumentData>(query: client.Query<T> | admin.Query<T>, options?: client.SnapshotOptions & client.SnapshotListenOptions): Observable<T[]> {
+
+    if (query instanceof client.Query) {
+        return docsSnapshotsObservable(query, options).pipe(map(snapshots => snapshots.map(snapshot => snapshot.data(options))));
+    } else if (query instanceof admin.Query) {
+        return docsSnapshotsObservable(query).pipe(map(snapshots => snapshots.map(snapshot => snapshot.data())));
+    } else {
+        throw new Error("Invalid query");
     }
-
-    let observable = this.docsSnapshotsObservable(collectionPathOrQuery, options).pipe(map(snapshots => {
-        let data: V[] = [];
-
-        for (let snapshot of snapshots) {
-            data.push(snapshot.data(extractSnapshotOptions(options)) as V);
-        }
-
-        if (options && options.serializer) {
-            return this.unserialize(data, new ArraySerializer(options.serializer), options.serializationOptions);
-        }
-
-        return data;
-    }));
-
-    return observable;
-}
-
-declare module "../firestore" {
-
-    interface UniversalFirestore {
-        docsDataObservable<V = any>(collectionPathOrQuery: string | Query, options?: SnapshotOptions & SnapshotListenOptions & SerializationOptions): Observable<V[]>;
-    }
-
-}
-
-export function docsDataObservableInject() {
-    UniversalFirestore.prototype.docsDataObservable = docsDataObservable;
 }

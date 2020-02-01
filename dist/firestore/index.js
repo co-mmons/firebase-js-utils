@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-tslib_1.__exportStar(require("./firestore"), exports);
+tslib_1.__exportStar(require("./write-batch"), exports);
+tslib_1.__exportStar(require("./delete-query"), exports);
+tslib_1.__exportStar(require("./doc-data"), exports);
 //# sourceMappingURL=index.js.map

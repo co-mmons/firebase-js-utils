@@ -1,29 +1,30 @@
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {extractSnapshotListenOptions} from "../extract-snapshot-listen-options";
-import {UniversalFirestore} from "../firestore";
-import {Query, QueryDocumentSnapshot, QuerySnapshot, SnapshotListenOptions} from "../types";
+import * as client from "@firebase/firestore-types";
+import * as admin from "@google-cloud/firestore";
+import {DocumentData} from "../types/shared";
 
-function docsSnapshotsObservable(this: UniversalFirestore, collectionPathOrQuery: string | Query, options?: SnapshotListenOptions): Observable<QueryDocumentSnapshot[]> {
+export function docsSnapshotsObservable<T = DocumentData>(query: client.Query<T>, options?: client.SnapshotListenOptions): Observable<Array<client.QueryDocumentSnapshot<T>>>;
 
-    if (typeof collectionPathOrQuery == "string") {
-        return this.docsSnapshotsObservable(this.collection(collectionPathOrQuery), options);
+export function docsSnapshotsObservable<T = DocumentData>(query: admin.Query<T>): Observable<Array<admin.QueryDocumentSnapshot<T>>>;
+
+export function docsSnapshotsObservable<T = DocumentData>(query: client.Query<T> | admin.Query<T>, options?: client.SnapshotListenOptions): Observable<Array<client.QueryDocumentSnapshot<T> | admin.QueryDocumentSnapshot<T>>> {
+
+    if (query instanceof client.Query) {
+
+        return new Observable<client.QuerySnapshot<T>>(subscriber => {
+            const unsubscribe = query.onSnapshot(options,snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            return () => unsubscribe();
+        }).pipe(map(snapshot => snapshot.docs));
+
+    } else if (query instanceof admin.Query) {
+
+        return new Observable<admin.QuerySnapshot<T>>(subscriber => {
+            const unsubscribe = query.onSnapshot(snapshot => subscriber.next(snapshot as any), error => subscriber.error(error));
+            return () => unsubscribe();
+        }).pipe(map(snapshot => snapshot.docs));
+
+    } else {
+        throw new Error("Invalid query");
     }
-
-    return new Observable(subscriber => {
-        let unsubscribe = collectionPathOrQuery.onSnapshot(extractSnapshotListenOptions(options), subscriber);
-        return () => unsubscribe();
-    }).pipe(map((snapshot: QuerySnapshot) => snapshot.docs));
-}
-
-declare module "../firestore" {
-
-    interface UniversalFirestore {
-        docsSnapshotsObservable(collectionPathOrQuery: string | Query, options?: SnapshotListenOptions): Observable<QueryDocumentSnapshot[]>;
-    }
-
-}
-
-export function docsSnapshotsObservableInject() {
-    UniversalFirestore.prototype.docsSnapshotsObservable = docsSnapshotsObservable;
 }

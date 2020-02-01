@@ -1,30 +1,31 @@
+import * as client from "@firebase/firestore-types";
+import * as admin from "@google-cloud/firestore";
 import {Observable} from "rxjs";
-import {extractSnapshotListenOptions} from "../extract-snapshot-listen-options";
-import {UniversalFirestore} from "../firestore";
-import {CollectionReference, Query, QuerySnapshot, SnapshotListenOptions} from "../types";
+import {DocumentData} from "../types/shared";
 
-function collectionOrQuerySnapshotObservable(this: UniversalFirestore, collectionPathOrQuery: string | Query, options?: SnapshotListenOptions): Observable<QuerySnapshot> {
+export function querySnapshotObservable<T = DocumentData>(query: client.Query<T>): Observable<client.QuerySnapshot<T>>;
 
-    if (typeof collectionPathOrQuery == "string") {
-        return this.querySnapshotObservable(this.collection(collectionPathOrQuery), options);
-    }
+export function querySnapshotObservable<T = DocumentData>(query: admin.Query<T>): Observable<admin.QuerySnapshot<T>>;
+
+export function querySnapshotObservable<T = DocumentData>(query: client.Query<T> | admin.Query<T>): Observable<client.QuerySnapshot<T> | admin.QuerySnapshot<T>> {
 
     return new Observable(subscriber => {
-        let unsubscribe = collectionPathOrQuery.onSnapshot(extractSnapshotListenOptions(options) || {}, subscriber);
+        const unsubscribe = query.onSnapshot(snapshot => subscriber.next(snapshot), error => subscriber.error(error));
         return () => unsubscribe();
     });
 }
 
-declare module "../firestore" {
+export function collectionSnapshotObservable<T = DocumentData>(collection: client.CollectionReference<T> ): Observable<client.QuerySnapshot>;
 
-    interface UniversalFirestore {
-        collectionSnapshotObservable(collectionPathOrQuery: string | CollectionReference, options?: SnapshotListenOptions): Observable<QuerySnapshot>;
-        querySnapshotObservable(query: Query, options?: SnapshotListenOptions): Observable<QuerySnapshot>;
+export function collectionSnapshotObservable<T = DocumentData>(collection: admin.CollectionReference<T> ): Observable<admin.QuerySnapshot>;
+
+export function collectionSnapshotObservable<T = DocumentData>(collection: client.CollectionReference<T> | admin.CollectionReference<T>): Observable<client.QuerySnapshot | admin.QuerySnapshot> {
+
+    if (collection instanceof client.CollectionReference) {
+        return querySnapshotObservable(collection);
+    } else if (collection instanceof admin.CollectionReference) {
+        return querySnapshotObservable(collection);
+    } else {
+        throw new Error("Invalid collection");
     }
-
-}
-
-export function collectionQuerySnapshotObservableInject() {
-    UniversalFirestore.prototype.collectionSnapshotObservable = collectionOrQuerySnapshotObservable;
-    UniversalFirestore.prototype.querySnapshotObservable = collectionOrQuerySnapshotObservable;
 }
