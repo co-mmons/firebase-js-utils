@@ -1,3 +1,5 @@
+import {firestoreClient, firestoreAdmin} from "./types";
+
 /**
  * Document data (for use with `DocumentReference.set()`) consists of fields
  * mapped to values.
@@ -53,18 +55,15 @@ export type UpdateData = {
  *   post.someNonExistentProperty; // TS error
  * }
  */
-export interface FirestoreDataConverter<T> {
+export interface FirestoreDataConverter<T> extends firestoreAdmin.FirestoreDataConverter<T>, firestoreClient.FirestoreDataConverter<T> {
 
     /**
-     * Called by the Firestore SDK to convert a custom model object of type T
-     * into a plain Javascript object (suitable for writing directly to the
-     * Firestore database).
+     * @inheritDoc
      */
     toFirestore(modelObject: T): DocumentData;
 
     /**
-     * Called by the Firestore SDK to convert Firestore data into an object of
-     * type T.
+     * @inheritDoc
      */
     fromFirestore(data: DocumentData): T;
 
