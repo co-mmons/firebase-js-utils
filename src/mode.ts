@@ -4,10 +4,10 @@ export function setFirebaseMode(mode: "admin" | "client") {
     _mode = mode;
 }
 
-export function isFirebaseAdminMode() {
+export function isFirebaseAdmin() {
     return _mode === "admin";
 }
 
-export function isFirebaseClientMode() {
+export function isFirebaseClient() {
     return _mode === "client";
 }

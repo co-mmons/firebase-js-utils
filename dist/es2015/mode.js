@@ -5,12 +5,12 @@ function setFirebaseMode(mode) {
     _mode = mode;
 }
 exports.setFirebaseMode = setFirebaseMode;
-function isFirebaseAdminMode() {
+function isFirebaseAdmin() {
     return _mode === "admin";
 }
-exports.isFirebaseAdminMode = isFirebaseAdminMode;
-function isFirebaseClientMode() {
+exports.isFirebaseAdmin = isFirebaseAdmin;
+function isFirebaseClient() {
     return _mode === "client";
 }
-exports.isFirebaseClientMode = isFirebaseClientMode;
+exports.isFirebaseClient = isFirebaseClient;
 //# sourceMappingURL=mode.js.map
