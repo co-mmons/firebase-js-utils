@@ -2,16 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const rxjs_1 = require("rxjs");
 const operators_1 = require("rxjs/operators");
-const client = require("@firebase/firestore-types");
-const admin = require("@google-cloud/firestore");
+const union_types_1 = require("../union-types");
 function docsSnapshotsObservable(query, options) {
-    if (query instanceof client.Query) {
+    if (union_types_1.Query.isClient(query)) {
         return new rxjs_1.Observable(subscriber => {
             const unsubscribe = query.onSnapshot(options, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
             return () => unsubscribe();
         }).pipe(operators_1.map(snapshot => snapshot.docs));
     }
-    else if (query instanceof admin.Query) {
+    else if (union_types_1.Query.isAdmin(query)) {
         return new rxjs_1.Observable(subscriber => {
             const unsubscribe = query.onSnapshot(snapshot => subscriber.next(snapshot), error => subscriber.error(error));
             return () => unsubscribe();

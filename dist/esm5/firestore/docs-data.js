@@ -1,6 +1,6 @@
 import { __awaiter, __generator } from "tslib";
-import * as client from "@firebase/firestore-types";
 import { docsSnapshots } from "./docs-snapshots";
+import { Query } from "./union-types";
 export function docsData(query, options) {
     return __awaiter(this, void 0, void 0, function () {
         var data, _i, _a, snapshot;
@@ -9,7 +9,7 @@ export function docsData(query, options) {
                 case 0:
                     data = [];
                     _i = 0;
-                    return [4 /*yield*/, (query instanceof client.Query ? docsSnapshots(query, options) : docsSnapshots(query))];
+                    return [4 /*yield*/, (Query.isClient(query) ? docsSnapshots(query, options) : docsSnapshots(query))];
                 case 1:
                     _a = _b.sent();
                     _b.label = 2;

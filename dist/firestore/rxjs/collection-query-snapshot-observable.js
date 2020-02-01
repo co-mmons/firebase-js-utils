@@ -1,20 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const client = require("@firebase/firestore-types");
-const admin = require("@google-cloud/firestore");
 const rxjs_1 = require("rxjs");
-function querySnapshotObservable(query) {
-    return new rxjs_1.Observable(subscriber => {
-        const unsubscribe = query.onSnapshot(snapshot => subscriber.next(snapshot), error => subscriber.error(error));
-        return () => unsubscribe();
-    });
+const union_types_1 = require("../union-types");
+function querySnapshotObservable(query, options) {
+    if (union_types_1.Query.isClient(query)) {
+        return new rxjs_1.Observable(subscriber => {
+            const unsubscribe = query.onSnapshot(options, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            return () => unsubscribe();
+        });
+    }
+    else if (union_types_1.Query.isAdmin(query)) {
+        return new rxjs_1.Observable(subscriber => {
+            const unsubscribe = query.onSnapshot(snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            return () => unsubscribe();
+        });
+    }
 }
 exports.querySnapshotObservable = querySnapshotObservable;
-function collectionSnapshotObservable(collection) {
-    if (collection instanceof client.CollectionReference) {
-        return querySnapshotObservable(collection);
+function collectionSnapshotObservable(collection, options) {
+    if (union_types_1.CollectionReference.isClient(collection)) {
+        return querySnapshotObservable(collection, options);
     }
-    else if (collection instanceof admin.CollectionReference) {
+    else if (union_types_1.CollectionReference.isAdmin(collection)) {
         return querySnapshotObservable(collection);
     }
     else {

@@ -1,16 +1,16 @@
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
 import {docsSnapshots} from "./docs-snapshots";
 import {DocumentData} from "./shared-types";
+import {firestoreAdmin, firestoreClient} from "./types";
+import {Query} from "./union-types";
 
-export async function docsData<T = DocumentData>(query: admin.Query<T>): Promise<T[]>;
+export async function docsData<T = DocumentData>(query: firestoreAdmin.Query<T>): Promise<T[]>;
 
-export async function docsData<T = DocumentData>(query: client.Query<T>, options?: client.GetOptions & client.SnapshotOptions): Promise<T[]>;
+export async function docsData<T = DocumentData>(query: firestoreClient.Query<T>, options?: firestoreClient.GetOptions & firestoreClient.SnapshotOptions): Promise<T[]>;
 
-export async function docsData<T = DocumentData>(query: client.Query<T> | admin.Query<T>, options?: client.GetOptions & client.SnapshotOptions): Promise<T[]> {
+export async function docsData<T = DocumentData>(query: Query<T>, options?: firestoreClient.GetOptions & firestoreClient.SnapshotOptions): Promise<T[]> {
     const data: T[] = [];
 
-    for (const snapshot of await (query instanceof client.Query ? docsSnapshots(query, options) : docsSnapshots(query))) {
+    for (const snapshot of await (Query.isClient(query) ? docsSnapshots(query, options) : docsSnapshots(query))) {
         data.push(snapshot.data());
     }
 

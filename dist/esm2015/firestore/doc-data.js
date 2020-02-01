@@ -1,13 +1,12 @@
 import { __awaiter } from "tslib";
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
+import { DocumentReference } from "./union-types";
 export function docData(doc, options) {
     return __awaiter(this, void 0, void 0, function* () {
         let data;
-        if (doc instanceof client.DocumentReference) {
+        if (DocumentReference.isClient(doc)) {
             data = (yield doc.get(options)).data(options);
         }
-        else if (doc instanceof admin.DocumentReference) {
+        else if (DocumentReference.isAdmin(doc)) {
             data = (yield doc.get()).data();
         }
         else {

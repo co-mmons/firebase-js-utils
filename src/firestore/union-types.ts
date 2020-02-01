@@ -20,11 +20,11 @@ export type DocumentReference<T = DocumentData> = firestoreClient.DocumentRefere
 
 export namespace DocumentReference {
 
-    export function isClient(documentRef: DocumentReference): documentRef is firestoreClient.DocumentReference {
+    export function isClient<T>(documentRef: DocumentReference<T>): documentRef is firestoreClient.DocumentReference<T> {
         return documentRef instanceof firestoreClient.DocumentReference;
     }
 
-    export function isAdmin(documentRef: DocumentReference): documentRef is firestoreAdmin.DocumentReference {
+    export function isAdmin<T>(documentRef: DocumentReference<T>): documentRef is firestoreAdmin.DocumentReference<T> {
         return documentRef instanceof firestoreAdmin.DocumentReference;
     }
 
@@ -35,11 +35,11 @@ export type CollectionReference<T = DocumentData> = firestoreClient.CollectionRe
 
 export namespace CollectionReference {
 
-    export function isClient(collectionRef: CollectionReference): collectionRef is firestoreClient.CollectionReference {
+    export function isClient<T>(collectionRef: CollectionReference<T>): collectionRef is firestoreClient.CollectionReference<T> {
         return collectionRef instanceof firestoreClient.CollectionReference;
     }
 
-    export function isAdmin(collectionRef: CollectionReference): collectionRef is firestoreAdmin.CollectionReference {
+    export function isAdmin<T>(collectionRef: CollectionReference<T>): collectionRef is firestoreAdmin.CollectionReference<T> {
         return collectionRef instanceof firestoreAdmin.CollectionReference;
     }
 
@@ -50,11 +50,11 @@ export type Query<T = DocumentData> = firestoreClient.Query<T> | firestoreAdmin.
 
 export namespace Query {
 
-    export function isClient(query: Query): query is firestoreClient.Query {
+    export function isClient<T>(query: Query<T>): query is firestoreClient.Query<T> {
         return query instanceof firestoreClient.Query;
     }
 
-    export function isAdmin(query: Query): query is firestoreAdmin.Query {
+    export function isAdmin<T>(query: Query<T>): query is firestoreAdmin.Query<T> {
         return query instanceof firestoreAdmin.Query;
     }
 
@@ -75,15 +75,15 @@ export namespace Transaction {
 }
 
 
-export type DocumentSnapshot = firestoreClient.DocumentSnapshot | firestoreAdmin.DocumentSnapshot;
+export type DocumentSnapshot<T = DocumentData> = firestoreClient.DocumentSnapshot<T> | firestoreAdmin.DocumentSnapshot<T>;
 
 export namespace DocumentSnapshot {
 
-    export function isClient(snapshot: DocumentSnapshot): snapshot is firestoreClient.DocumentSnapshot {
+    export function isClient<T>(snapshot: DocumentSnapshot<T>): snapshot is firestoreClient.DocumentSnapshot<T> {
         return snapshot instanceof firestoreClient.Transaction;
     }
 
-    export function isAdmin(snapshot: DocumentSnapshot): snapshot is firestoreAdmin.DocumentSnapshot {
+    export function isAdmin<T>(snapshot: DocumentSnapshot<T>): snapshot is firestoreAdmin.DocumentSnapshot<T> {
         return snapshot instanceof firestoreAdmin.Transaction;
     }
 }

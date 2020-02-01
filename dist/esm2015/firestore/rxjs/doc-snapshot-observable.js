@@ -1,13 +1,12 @@
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
 import { Observable } from "rxjs";
+import { DocumentReference } from "../union-types";
 export function docSnapshotObservable(doc, options) {
     return new Observable(subscriber => {
-        if (doc instanceof client.DocumentReference) {
+        if (DocumentReference.isClient(doc)) {
             const unsubscribe = doc.onSnapshot(options, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
             return () => unsubscribe();
         }
-        else if (doc instanceof admin.DocumentReference) {
+        else if (DocumentReference.isAdmin(doc)) {
             const unsubscribe = doc.onSnapshot(snapshot => subscriber.next(snapshot), error => subscriber.error(error));
             return () => unsubscribe();
         }

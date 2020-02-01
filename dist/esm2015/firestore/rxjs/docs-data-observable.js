@@ -1,12 +1,11 @@
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
 import { map } from "rxjs/operators";
+import { Query } from "../union-types";
 import { docsSnapshotsObservable } from "./docs-snapshots-observable";
 export function docsDataObservable(query, options) {
-    if (query instanceof client.Query) {
+    if (Query.isClient(query)) {
         return docsSnapshotsObservable(query, options).pipe(map(snapshots => snapshots.map(snapshot => snapshot.data(options))));
     }
-    else if (query instanceof admin.Query) {
+    else if (Query.isAdmin(query)) {
         return docsSnapshotsObservable(query).pipe(map(snapshots => snapshots.map(snapshot => snapshot.data())));
     }
     else {

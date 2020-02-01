@@ -1,5 +1,4 @@
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
 import { DocumentData } from "./shared-types";
-export declare function docsData<T = DocumentData>(query: admin.Query<T>): Promise<T[]>;
-export declare function docsData<T = DocumentData>(query: client.Query<T>, options?: client.GetOptions & client.SnapshotOptions): Promise<T[]>;
+import { firestoreAdmin, firestoreClient } from "./types";
+export declare function docsData<T = DocumentData>(query: firestoreAdmin.Query<T>): Promise<T[]>;
+export declare function docsData<T = DocumentData>(query: firestoreClient.Query<T>, options?: firestoreClient.GetOptions & firestoreClient.SnapshotOptions): Promise<T[]>;

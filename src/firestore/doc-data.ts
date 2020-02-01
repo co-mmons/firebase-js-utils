@@ -1,17 +1,17 @@
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
 import {DocumentData} from "./shared-types";
+import {firestoreAdmin, firestoreClient} from "./types";
+import {DocumentReference} from "./union-types";
 
-export async function docData<T = DocumentData>(doc: admin.DocumentReference<T>): Promise<T>;
+export async function docData<T = DocumentData>(doc: firestoreAdmin.DocumentReference<T>): Promise<T>;
 
-export async function docData<T = DocumentData>(doc: client.DocumentReference<T>, options?: client.GetOptions & client.SnapshotOptions): Promise<T>;
+export async function docData<T = DocumentData>(doc: firestoreClient.DocumentReference<T>, options?: firestoreClient.GetOptions & firestoreClient.SnapshotOptions): Promise<T>;
 
-export async function docData<T = DocumentData>(doc: client.DocumentReference<T> | admin.DocumentReference<T>, options?: client.GetOptions & client.SnapshotOptions): Promise<T> {
+export async function docData<T = DocumentData>(doc: DocumentReference<T>, options?: firestoreClient.GetOptions & firestoreClient.SnapshotOptions): Promise<T> {
 
     let data: any;
-    if (doc instanceof client.DocumentReference) {
+    if (DocumentReference.isClient(doc)) {
         data = (await doc.get(options)).data(options);
-    } else if (doc instanceof admin.DocumentReference) {
+    } else if (DocumentReference.isAdmin(doc)) {
         data = (await doc.get()).data();
     } else {
         throw new Error("Invalid document reference");

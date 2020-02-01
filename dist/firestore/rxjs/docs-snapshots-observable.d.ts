@@ -1,6 +1,7 @@
 import { Observable } from "rxjs";
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
 import { DocumentData } from "../shared-types";
-export declare function docsSnapshotsObservable<T = DocumentData>(query: client.Query<T>, options?: client.SnapshotListenOptions): Observable<Array<client.QueryDocumentSnapshot<T>>>;
-export declare function docsSnapshotsObservable<T = DocumentData>(query: admin.Query<T>): Observable<Array<admin.QueryDocumentSnapshot<T>>>;
+import { firestoreAdmin, firestoreClient } from "../types";
+import { Query } from "../union-types";
+export declare function docsSnapshotsObservable<T = DocumentData>(query: firestoreClient.Query<T>, options?: firestoreClient.SnapshotListenOptions): Observable<Array<firestoreClient.QueryDocumentSnapshot<T>>>;
+export declare function docsSnapshotsObservable<T = DocumentData>(query: firestoreAdmin.Query<T>): Observable<Array<firestoreAdmin.QueryDocumentSnapshot<T>>>;
+export declare function docsSnapshotsObservable<T = DocumentData>(query: Query<T>): Observable<Array<firestoreClient.QueryDocumentSnapshot<T> | firestoreAdmin.QueryDocumentSnapshot<T>>>;
