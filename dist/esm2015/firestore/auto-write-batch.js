@@ -1,7 +1,7 @@
 import { __awaiter } from "tslib";
 import * as client from "@firebase/firestore-types";
 import * as admin from "@google-cloud/firestore";
-export class WriteBatch {
+export class AutoWriteBatch {
     constructor(firestore) {
         this.firestore = firestore;
         this.limit$ = 499;
@@ -89,22 +89,22 @@ export class WriteBatch {
         return this;
     }
 }
-export class WriteBatchClient extends WriteBatch {
+export class AutoWriteBatchClient extends AutoWriteBatch {
     constructor(firestore) {
         super(firestore);
     }
 }
-export class WriteBatchAdmin extends WriteBatch {
+export class AutoWriteBatchAdmin extends AutoWriteBatch {
     constructor(firestore) {
         super(firestore);
     }
 }
-export function writeBatch(firestore) {
+export function autoWriteBatch(firestore) {
     if (firestore instanceof client.FirebaseFirestore) {
-        return new WriteBatchClient(firestore);
+        return new AutoWriteBatchClient(firestore);
     }
     else if (firestore instanceof admin.Firestore) {
-        return new WriteBatchAdmin(firestore);
+        return new AutoWriteBatchAdmin(firestore);
     }
 }
-//# sourceMappingURL=write-batch.js.map
+//# sourceMappingURL=auto-write-batch.js.map

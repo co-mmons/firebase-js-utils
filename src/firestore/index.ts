@@ -6,3 +6,4 @@ export * from "./docs-data";
 export * from "./docs-snapshots"
 export * from "./shared-types";
 export * from "./types";
+export * from "./union-types";

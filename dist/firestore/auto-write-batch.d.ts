@@ -2,7 +2,7 @@ import * as client from "@firebase/firestore-types";
 import * as admin from "@google-cloud/firestore";
 import { UpdateData } from "./shared-types";
 import { DocumentReference, Firestore } from "./union-types";
-export declare abstract class WriteBatch {
+export declare abstract class AutoWriteBatch {
     private readonly firestore;
     protected constructor(firestore: Firestore);
     private batch$;
@@ -27,17 +27,17 @@ export declare abstract class WriteBatch {
     set<T = any>(documentRef: DocumentReference<T>, data: T, options?: any): this;
     update(documentRef: DocumentReference<any>, dataOrField: UpdateData | string | client.FieldPath | admin.FieldPath, value?: any, ...moreFieldsAndValues: any[]): this;
 }
-interface WriteBatchClientExtensions {
+interface AutoWriteBatchClientMethods {
     commit(): Promise<{
         count: number;
     }>;
     set<T = any>(documentRef: client.DocumentReference<T>, data: T, options?: client.SetOptions): this;
     update(documentRef: client.DocumentReference<any>, dataOrField: UpdateData | string | client.FieldPath, value?: any, ...moreFieldsAndValues: any[]): this;
 }
-export declare class WriteBatchClient extends WriteBatch implements WriteBatchClientExtensions {
+export declare class AutoWriteBatchClient extends AutoWriteBatch implements AutoWriteBatchClientMethods {
     constructor(firestore: client.FirebaseFirestore);
 }
-interface WriteBatchAdminExtensions {
+interface AutoWriteBatchAdminMethods {
     /**
      * Update fields of the document referred to by the provided
      * `DocumentReference`. If the document doesn't yet exist, the update fails
@@ -66,9 +66,9 @@ interface WriteBatchAdminExtensions {
         results?: admin.WriteResult[];
     }>;
 }
-export declare class WriteBatchAdmin extends WriteBatch implements WriteBatchAdminExtensions {
+export declare class AutoWriteBatchAdmin extends AutoWriteBatch implements AutoWriteBatchAdminMethods {
     constructor(firestore: admin.Firestore);
 }
-export declare function writeBatch(firestore: client.FirebaseFirestore): WriteBatchClient;
-export declare function writeBatch(firestore: admin.Firestore): WriteBatchAdmin;
+export declare function autoWriteBatch(firestore: client.FirebaseFirestore): AutoWriteBatchClient;
+export declare function autoWriteBatch(firestore: admin.Firestore): AutoWriteBatchAdmin;
 export {};

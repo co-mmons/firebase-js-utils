@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const client = require("@firebase/firestore-types");
 const admin = require("@google-cloud/firestore");
-class WriteBatch {
+class AutoWriteBatch {
     constructor(firestore) {
         this.firestore = firestore;
         this.limit$ = 499;
@@ -91,26 +91,26 @@ class WriteBatch {
         return this;
     }
 }
-exports.WriteBatch = WriteBatch;
-class WriteBatchClient extends WriteBatch {
+exports.AutoWriteBatch = AutoWriteBatch;
+class AutoWriteBatchClient extends AutoWriteBatch {
     constructor(firestore) {
         super(firestore);
     }
 }
-exports.WriteBatchClient = WriteBatchClient;
-class WriteBatchAdmin extends WriteBatch {
+exports.AutoWriteBatchClient = AutoWriteBatchClient;
+class AutoWriteBatchAdmin extends AutoWriteBatch {
     constructor(firestore) {
         super(firestore);
     }
 }
-exports.WriteBatchAdmin = WriteBatchAdmin;
-function writeBatch(firestore) {
+exports.AutoWriteBatchAdmin = AutoWriteBatchAdmin;
+function autoWriteBatch(firestore) {
     if (firestore instanceof client.FirebaseFirestore) {
-        return new WriteBatchClient(firestore);
+        return new AutoWriteBatchClient(firestore);
     }
     else if (firestore instanceof admin.Firestore) {
-        return new WriteBatchAdmin(firestore);
+        return new AutoWriteBatchAdmin(firestore);
     }
 }
-exports.writeBatch = writeBatch;
-//# sourceMappingURL=write-batch.js.map
+exports.autoWriteBatch = autoWriteBatch;
+//# sourceMappingURL=auto-write-batch.js.map

@@ -15,6 +15,7 @@ export namespace Firestore {
 
 }
 
+
 export type DocumentReference<T = DocumentData> = firestoreClient.DocumentReference<T> | firestoreAdmin.DocumentReference<T>;
 
 export namespace DocumentReference {
@@ -28,6 +29,37 @@ export namespace DocumentReference {
     }
 
 }
+
+
+export type CollectionReference<T = DocumentData> = firestoreClient.CollectionReference<T> | firestoreAdmin.CollectionReference<T>;
+
+export namespace CollectionReference {
+
+    export function isClient(collectionRef: CollectionReference): collectionRef is firestoreClient.CollectionReference {
+        return collectionRef instanceof firestoreClient.CollectionReference;
+    }
+
+    export function isAdmin(collectionRef: CollectionReference): collectionRef is firestoreAdmin.CollectionReference {
+        return collectionRef instanceof firestoreAdmin.CollectionReference;
+    }
+
+}
+
+
+export type Query<T = DocumentData> = firestoreClient.Query<T> | firestoreAdmin.Query<T>;
+
+export namespace Query {
+
+    export function isClient(query: Query): query is firestoreClient.Query {
+        return query instanceof firestoreClient.Query;
+    }
+
+    export function isAdmin(query: Query): query is firestoreAdmin.Query {
+        return query instanceof firestoreAdmin.Query;
+    }
+
+}
+
 
 export type Transaction = firestoreClient.Transaction | firestoreAdmin.Transaction;
 
