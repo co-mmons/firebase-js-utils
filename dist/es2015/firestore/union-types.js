@@ -89,4 +89,26 @@ var FieldPath;
     }
     FieldPath.isAdmin = isAdmin;
 })(FieldPath = exports.FieldPath || (exports.FieldPath = {}));
+var Timestamp;
+(function (Timestamp) {
+    function isClient(value) {
+        return value instanceof types_1.firestoreClient.Timestamp;
+    }
+    Timestamp.isClient = isClient;
+    function isAdmin(value) {
+        return value instanceof types_1.firestoreAdmin.Timestamp;
+    }
+    Timestamp.isAdmin = isAdmin;
+})(Timestamp = exports.Timestamp || (exports.Timestamp = {}));
+var GeoPoint;
+(function (GeoPoint) {
+    function isClient(value) {
+        return value instanceof types_1.firestoreClient.GeoPoint;
+    }
+    GeoPoint.isClient = isClient;
+    function isAdmin(value) {
+        return value instanceof types_1.firestoreAdmin.GeoPoint;
+    }
+    GeoPoint.isAdmin = isAdmin;
+})(GeoPoint = exports.GeoPoint || (exports.GeoPoint = {}));
 //# sourceMappingURL=union-types.js.map

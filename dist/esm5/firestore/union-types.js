@@ -87,4 +87,26 @@ export var FieldPath;
     }
     FieldPath.isAdmin = isAdmin;
 })(FieldPath || (FieldPath = {}));
+export var Timestamp;
+(function (Timestamp) {
+    function isClient(value) {
+        return value instanceof firestoreClient.Timestamp;
+    }
+    Timestamp.isClient = isClient;
+    function isAdmin(value) {
+        return value instanceof firestoreAdmin.Timestamp;
+    }
+    Timestamp.isAdmin = isAdmin;
+})(Timestamp || (Timestamp = {}));
+export var GeoPoint;
+(function (GeoPoint) {
+    function isClient(value) {
+        return value instanceof firestoreClient.GeoPoint;
+    }
+    GeoPoint.isClient = isClient;
+    function isAdmin(value) {
+        return value instanceof firestoreAdmin.GeoPoint;
+    }
+    GeoPoint.isAdmin = isAdmin;
+})(GeoPoint || (GeoPoint = {}));
 //# sourceMappingURL=union-types.js.map

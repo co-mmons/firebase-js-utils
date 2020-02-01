@@ -115,3 +115,31 @@ export namespace FieldPath {
         return value instanceof firestoreAdmin.FieldPath;
     }
 }
+
+
+export type Timestamp = firestoreClient.Timestamp | firestoreAdmin.Timestamp;
+
+export namespace Timestamp {
+
+    export function isClient(value: Timestamp): value is firestoreClient.Timestamp {
+        return value instanceof firestoreClient.Timestamp;
+    }
+
+    export function isAdmin(value: Timestamp): value is firestoreAdmin.Timestamp {
+        return value instanceof firestoreAdmin.Timestamp;
+    }
+}
+
+
+export type GeoPoint = firestoreClient.GeoPoint | firestoreAdmin.GeoPoint;
+
+export namespace GeoPoint {
+
+    export function isClient(value: GeoPoint): value is firestoreClient.GeoPoint {
+        return value instanceof firestoreClient.GeoPoint;
+    }
+
+    export function isAdmin(value: GeoPoint): value is firestoreAdmin.GeoPoint {
+        return value instanceof firestoreAdmin.GeoPoint;
+    }
+}

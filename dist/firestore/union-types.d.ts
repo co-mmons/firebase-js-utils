@@ -40,3 +40,13 @@ export declare namespace FieldPath {
     function isClient(value: FieldPath): value is firestoreClient.FieldPath;
     function isAdmin(value: FieldPath): value is firestoreAdmin.FieldPath;
 }
+export declare type Timestamp = firestoreClient.Timestamp | firestoreAdmin.Timestamp;
+export declare namespace Timestamp {
+    function isClient(value: Timestamp): value is firestoreClient.Timestamp;
+    function isAdmin(value: Timestamp): value is firestoreAdmin.Timestamp;
+}
+export declare type GeoPoint = firestoreClient.GeoPoint | firestoreAdmin.GeoPoint;
+export declare namespace GeoPoint {
+    function isClient(value: GeoPoint): value is firestoreClient.GeoPoint;
+    function isAdmin(value: GeoPoint): value is firestoreAdmin.GeoPoint;
+}
