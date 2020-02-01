@@ -54,4 +54,37 @@ export var Transaction;
     }
     Transaction.isAdmin = isAdmin;
 })(Transaction || (Transaction = {}));
+export var DocumentSnapshot;
+(function (DocumentSnapshot) {
+    function isClient(snapshot) {
+        return snapshot instanceof firestoreClient.Transaction;
+    }
+    DocumentSnapshot.isClient = isClient;
+    function isAdmin(snapshot) {
+        return snapshot instanceof firestoreAdmin.Transaction;
+    }
+    DocumentSnapshot.isAdmin = isAdmin;
+})(DocumentSnapshot || (DocumentSnapshot = {}));
+export var FieldValue;
+(function (FieldValue) {
+    function isClient(value) {
+        return value instanceof firestoreClient.FieldValue;
+    }
+    FieldValue.isClient = isClient;
+    function isAdmin(value) {
+        return value instanceof firestoreAdmin.FieldValue;
+    }
+    FieldValue.isAdmin = isAdmin;
+})(FieldValue || (FieldValue = {}));
+export var FieldPath;
+(function (FieldPath) {
+    function isClient(value) {
+        return value instanceof firestoreClient.FieldPath;
+    }
+    FieldPath.isClient = isClient;
+    function isAdmin(value) {
+        return value instanceof firestoreAdmin.FieldPath;
+    }
+    FieldPath.isAdmin = isAdmin;
+})(FieldPath || (FieldPath = {}));
 //# sourceMappingURL=union-types.js.map

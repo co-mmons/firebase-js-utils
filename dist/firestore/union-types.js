@@ -56,4 +56,37 @@ var Transaction;
     }
     Transaction.isAdmin = isAdmin;
 })(Transaction = exports.Transaction || (exports.Transaction = {}));
+var DocumentSnapshot;
+(function (DocumentSnapshot) {
+    function isClient(snapshot) {
+        return snapshot instanceof types_1.firestoreClient.Transaction;
+    }
+    DocumentSnapshot.isClient = isClient;
+    function isAdmin(snapshot) {
+        return snapshot instanceof types_1.firestoreAdmin.Transaction;
+    }
+    DocumentSnapshot.isAdmin = isAdmin;
+})(DocumentSnapshot = exports.DocumentSnapshot || (exports.DocumentSnapshot = {}));
+var FieldValue;
+(function (FieldValue) {
+    function isClient(value) {
+        return value instanceof types_1.firestoreClient.FieldValue;
+    }
+    FieldValue.isClient = isClient;
+    function isAdmin(value) {
+        return value instanceof types_1.firestoreAdmin.FieldValue;
+    }
+    FieldValue.isAdmin = isAdmin;
+})(FieldValue = exports.FieldValue || (exports.FieldValue = {}));
+var FieldPath;
+(function (FieldPath) {
+    function isClient(value) {
+        return value instanceof types_1.firestoreClient.FieldPath;
+    }
+    FieldPath.isClient = isClient;
+    function isAdmin(value) {
+        return value instanceof types_1.firestoreAdmin.FieldPath;
+    }
+    FieldPath.isAdmin = isAdmin;
+})(FieldPath = exports.FieldPath || (exports.FieldPath = {}));
 //# sourceMappingURL=union-types.js.map

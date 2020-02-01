@@ -73,3 +73,45 @@ export namespace Transaction {
         return transaction instanceof firestoreAdmin.Transaction;
     }
 }
+
+
+export type DocumentSnapshot = firestoreClient.DocumentSnapshot | firestoreAdmin.DocumentSnapshot;
+
+export namespace DocumentSnapshot {
+
+    export function isClient(snapshot: DocumentSnapshot): snapshot is firestoreClient.DocumentSnapshot {
+        return snapshot instanceof firestoreClient.Transaction;
+    }
+
+    export function isAdmin(snapshot: DocumentSnapshot): snapshot is firestoreAdmin.DocumentSnapshot {
+        return snapshot instanceof firestoreAdmin.Transaction;
+    }
+}
+
+
+export type FieldValue = firestoreClient.FieldValue | firestoreAdmin.FieldValue;
+
+export namespace FieldValue {
+
+    export function isClient(value: FieldValue): value is firestoreClient.FieldValue {
+        return value instanceof firestoreClient.FieldValue;
+    }
+
+    export function isAdmin(value: FieldValue): value is firestoreAdmin.FieldValue {
+        return value instanceof firestoreAdmin.FieldValue;
+    }
+}
+
+
+export type FieldPath = firestoreClient.FieldPath | firestoreAdmin.FieldPath;
+
+export namespace FieldPath {
+
+    export function isClient(value: FieldPath): value is firestoreClient.FieldPath {
+        return value instanceof firestoreClient.FieldPath;
+    }
+
+    export function isAdmin(value: FieldPath): value is firestoreAdmin.FieldPath {
+        return value instanceof firestoreAdmin.FieldPath;
+    }
+}

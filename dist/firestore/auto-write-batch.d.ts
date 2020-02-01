@@ -69,6 +69,5 @@ interface AutoWriteBatchAdminMethods {
 export declare class AutoWriteBatchAdmin extends AutoWriteBatch implements AutoWriteBatchAdminMethods {
     constructor(firestore: admin.Firestore);
 }
-export declare function autoWriteBatch(firestore: client.FirebaseFirestore): AutoWriteBatchClient;
-export declare function autoWriteBatch(firestore: admin.Firestore): AutoWriteBatchAdmin;
+export declare function autoWriteBatch(firestore: Firestore): typeof firestore extends client.FirebaseFirestore ? AutoWriteBatchClient : AutoWriteBatchAdmin;
 export {};

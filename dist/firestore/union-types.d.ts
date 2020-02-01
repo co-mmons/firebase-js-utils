@@ -25,3 +25,18 @@ export declare namespace Transaction {
     function isClient(transaction: Transaction): transaction is firestoreClient.Transaction;
     function isAdmin(transaction: Transaction): transaction is firestoreAdmin.Transaction;
 }
+export declare type DocumentSnapshot = firestoreClient.DocumentSnapshot | firestoreAdmin.DocumentSnapshot;
+export declare namespace DocumentSnapshot {
+    function isClient(snapshot: DocumentSnapshot): snapshot is firestoreClient.DocumentSnapshot;
+    function isAdmin(snapshot: DocumentSnapshot): snapshot is firestoreAdmin.DocumentSnapshot;
+}
+export declare type FieldValue = firestoreClient.FieldValue | firestoreAdmin.FieldValue;
+export declare namespace FieldValue {
+    function isClient(value: FieldValue): value is firestoreClient.FieldValue;
+    function isAdmin(value: FieldValue): value is firestoreAdmin.FieldValue;
+}
+export declare type FieldPath = firestoreClient.FieldPath | firestoreAdmin.FieldPath;
+export declare namespace FieldPath {
+    function isClient(value: FieldPath): value is firestoreClient.FieldPath;
+    function isAdmin(value: FieldPath): value is firestoreAdmin.FieldPath;
+}

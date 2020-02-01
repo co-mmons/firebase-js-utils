@@ -165,11 +165,7 @@ export class AutoWriteBatchAdmin extends AutoWriteBatch implements AutoWriteBatc
 
 }
 
-export function autoWriteBatch(firestore: client.FirebaseFirestore): AutoWriteBatchClient;
-
-export function autoWriteBatch(firestore: admin.Firestore): AutoWriteBatchAdmin;
-
-export function autoWriteBatch(firestore: Firestore): AutoWriteBatchClient | AutoWriteBatchAdmin {
+export function autoWriteBatch(firestore: Firestore): typeof firestore extends client.FirebaseFirestore ? AutoWriteBatchClient : AutoWriteBatchAdmin {
     if (firestore instanceof client.FirebaseFirestore) {
         return new AutoWriteBatchClient(firestore);
     } else if (firestore instanceof admin.Firestore) {
