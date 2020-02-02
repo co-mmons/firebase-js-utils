@@ -1,6 +1,8 @@
+import {packages} from "./config";
+
 let _mode: "admin" | "client";
 
-export function setFirebaseMode(mode: "admin" | "client") {
+export function setFirebaseMode(mode: "admin" | "client", config?: {packages?: Partial<typeof packages>}) {
     _mode = mode;
 }
 

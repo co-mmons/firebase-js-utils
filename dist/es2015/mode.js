@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 let _mode;
-function setFirebaseMode(mode) {
+function setFirebaseMode(mode, config) {
     _mode = mode;
 }
 exports.setFirebaseMode = setFirebaseMode;

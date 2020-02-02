@@ -1,5 +1,5 @@
 let _mode;
-export function setFirebaseMode(mode) {
+export function setFirebaseMode(mode, config) {
     _mode = mode;
 }
 export function isFirebaseAdmin() {
