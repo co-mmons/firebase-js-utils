@@ -1,6 +1,6 @@
 import { __awaiter } from "tslib";
 import { sleep } from "@co.mmons/js-utils/core";
-import * as admin from "@google-cloud/firestore";
+import { firestoreAdmin } from "./types";
 export function deleteQuery(query, options) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!options) {
@@ -49,7 +49,7 @@ export function deleteQuery(query, options) {
                 }
             }
         }
-        if (deleteCount > 0 && options.subcollections !== false && query instanceof admin.Query) {
+        if (deleteCount > 0 && options.subcollections !== false && query instanceof firestoreAdmin.Query) {
             for (const doc of snapshot.docs) {
                 for (const collection of (yield doc.ref.listCollections())) {
                     yield deleteQuery(collection, options);

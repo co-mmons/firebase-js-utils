@@ -1,5 +1,6 @@
 import * as firestoreClient from "@firebase/firestore-types";
 import * as firestoreAdmin from "@google-cloud/firestore";
+
 export {firestoreClient, firestoreAdmin};
 
 declare module "@firebase/firestore-types" {

@@ -1,6 +1,6 @@
 import {sleep} from "@co.mmons/js-utils/core";
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
+import {firestoreAdmin, firestoreClient} from "./types";
+import {Query} from "./union-types";
 
 export interface DeleteOptions {
     readLimit?: number;
@@ -16,11 +16,11 @@ export interface DeleteOptionsAdmin extends DeleteOptions {
     subcollections?: boolean;
 }
 
-export async function deleteQuery(query: admin.Query, options?: DeleteOptionsAdmin);
+export async function deleteQuery(query: firestoreAdmin.Query, options?: DeleteOptionsAdmin);
 
-export async function deleteQuery(query: client.Query, options?: DeleteOptions);
+export async function deleteQuery(query: firestoreClient.Query, options?: DeleteOptions);
 
-export async function deleteQuery(query: client.Query | admin.Query, options?: DeleteOptions & DeleteOptionsAdmin) {
+export async function deleteQuery(query: Query, options?: DeleteOptions & DeleteOptionsAdmin) {
 
     if (!options) {
         options = {};
@@ -54,12 +54,12 @@ export async function deleteQuery(query: client.Query | admin.Query, options?: D
 
     if (options.batch !== false) {
 
-        const docs = snapshot.docs.slice() as Array<typeof query extends client.Query ? client.QueryDocumentSnapshot : admin.QueryDocumentSnapshot>;
+        const docs = snapshot.docs.slice() as Array<typeof query extends firestoreClient.Query ? firestoreClient.QueryDocumentSnapshot : firestoreAdmin.QueryDocumentSnapshot>;
 
         while (docs.length > 0) {
 
             const part = docs.splice(0, 499);
-            const batch = query.firestore.batch() as (typeof query extends client.Query ? client.WriteBatch : admin.WriteBatch);
+            const batch = query.firestore.batch() as (typeof query extends firestoreClient.Query ? firestoreClient.WriteBatch : firestoreAdmin.WriteBatch);
 
             for (const doc of part) {
                 batch.delete(doc.ref);
@@ -83,8 +83,8 @@ export async function deleteQuery(query: client.Query | admin.Query, options?: D
         }
     }
 
-    if (deleteCount > 0 && options.subcollections !== false && query instanceof admin.Query) {
-        for (const doc of snapshot.docs as Array<admin.QueryDocumentSnapshot>) {
+    if (deleteCount > 0 && options.subcollections !== false && query instanceof firestoreAdmin.Query) {
+        for (const doc of snapshot.docs as Array<firestoreAdmin.QueryDocumentSnapshot>) {
             for (const collection of (await doc.ref.listCollections())) {
                 await deleteQuery(collection, options);
             }

@@ -1,11 +1,10 @@
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
 import { AuthUser } from "./auth";
+import { Firestore } from "./firestore";
 export interface FirebaseContext {
-    firestore?: client.FirebaseFirestore | admin.Firestore;
+    firestore?: Firestore;
     authUser?: AuthUser;
     functionUrl?: (name: string) => string;
 }
-export interface FirebaseContextFirestore<Firestore extends client.FirebaseFirestore | admin.Firestore> {
-    firestore?: Firestore;
+export interface FirebaseContextFirestore<FirestoreImpl extends Firestore> {
+    firestore?: FirestoreImpl;
 }

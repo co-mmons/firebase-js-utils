@@ -1,6 +1,6 @@
 import { __awaiter, __extends, __generator, __spreadArrays } from "tslib";
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
+import { firestoreAdmin, firestoreClient } from "./types";
+import { DocumentReference } from "./union-types";
 var AutoWriteBatch = /** @class */ (function () {
     function AutoWriteBatch(firestore) {
         this.firestore = firestore;
@@ -19,14 +19,14 @@ var AutoWriteBatch = /** @class */ (function () {
     });
     Object.defineProperty(AutoWriteBatch.prototype, "clientBatch", {
         get: function () {
-            return this.batch instanceof client.WriteBatch && this.batch;
+            return this.batch instanceof firestoreClient.WriteBatch && this.batch;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(AutoWriteBatch.prototype, "adminBatch", {
         get: function () {
-            return this.batch instanceof admin.WriteBatch && this.batch;
+            return this.batch instanceof firestoreAdmin.WriteBatch && this.batch;
         },
         enumerable: true,
         configurable: true
@@ -110,10 +110,10 @@ var AutoWriteBatch = /** @class */ (function () {
     };
     AutoWriteBatch.prototype.set = function (documentRef, data, options) {
         this.count$++;
-        if (documentRef instanceof client.DocumentReference) {
+        if (DocumentReference.isClient(documentRef)) {
             this.clientBatch.set(documentRef, data, options);
         }
-        else if (documentRef instanceof admin.DocumentReference) {
+        else if (DocumentReference.isAdmin(documentRef)) {
             this.adminBatch.set(documentRef, data, options);
         }
         return this;
@@ -126,18 +126,18 @@ var AutoWriteBatch = /** @class */ (function () {
         }
         this.count$++;
         if (arguments.length === 2) {
-            if (documentRef instanceof client.DocumentReference) {
+            if (DocumentReference.isClient(documentRef)) {
                 this.clientBatch.update(documentRef, dataOrField);
             }
-            else if (documentRef instanceof admin.DocumentReference) {
+            else if (DocumentReference.isAdmin(documentRef)) {
                 this.adminBatch.update(documentRef, dataOrField);
             }
         }
         else {
-            if (documentRef instanceof client.DocumentReference) {
+            if (DocumentReference.isClient(documentRef)) {
                 (_a = this.clientBatch).update.apply(_a, __spreadArrays([documentRef, dataOrField, value], moreFieldsAndValues));
             }
-            else if (documentRef instanceof admin.DocumentReference) {
+            else if (DocumentReference.isAdmin(documentRef)) {
                 (_b = this.adminBatch).update.apply(_b, __spreadArrays([documentRef, dataOrField, value], moreFieldsAndValues));
             }
         }
@@ -163,10 +163,10 @@ var AutoWriteBatchAdmin = /** @class */ (function (_super) {
 }(AutoWriteBatch));
 export { AutoWriteBatchAdmin };
 export function autoWriteBatch(firestore) {
-    if (firestore instanceof client.FirebaseFirestore) {
+    if (firestore instanceof firestoreClient.FirebaseFirestore) {
         return new AutoWriteBatchClient(firestore);
     }
-    else if (firestore instanceof admin.Firestore) {
+    else if (firestore instanceof firestoreAdmin.Firestore) {
         return new AutoWriteBatchAdmin(firestore);
     }
 }

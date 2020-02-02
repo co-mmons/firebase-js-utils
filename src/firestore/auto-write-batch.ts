@@ -1,7 +1,6 @@
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
 import {UpdateData} from "./shared-types";
-import {DocumentReference, Firestore} from "./union-types";
+import {firestoreAdmin, firestoreClient} from "./types";
+import {DocumentReference, FieldPath, Firestore} from "./union-types";
 
 export abstract class AutoWriteBatch {
 
@@ -10,13 +9,13 @@ export abstract class AutoWriteBatch {
 
     onCommit: (count: number, results?: any) => void;
 
-    private batch$: client.WriteBatch | admin.WriteBatch;
+    private batch$: firestoreClient.WriteBatch | firestoreAdmin.WriteBatch;
 
     private limit$: number = 499;
 
     private count$: number = 0;
 
-    private get batch(): client.WriteBatch | admin.WriteBatch {
+    private get batch(): firestoreClient.WriteBatch | firestoreAdmin.WriteBatch {
         if (!this.batch$) {
             this.batch$ = this.firestore.batch();
         }
@@ -24,12 +23,12 @@ export abstract class AutoWriteBatch {
         return this.batch$;
     }
 
-    private get clientBatch(): client.WriteBatch {
-        return this.batch instanceof client.WriteBatch && this.batch;
+    private get clientBatch(): firestoreClient.WriteBatch {
+        return this.batch instanceof firestoreClient.WriteBatch && this.batch;
     }
 
-    private get adminBatch(): admin.WriteBatch {
-        return this.batch instanceof admin.WriteBatch && this.batch;
+    private get adminBatch(): firestoreAdmin.WriteBatch {
+        return this.batch instanceof firestoreAdmin.WriteBatch && this.batch;
     }
 
     get count(): number {
@@ -100,30 +99,30 @@ export abstract class AutoWriteBatch {
 
         this.count$++;
 
-        if (documentRef instanceof client.DocumentReference) {
+        if (DocumentReference.isClient(documentRef)) {
             this.clientBatch.set(documentRef, data, options);
-        } else if (documentRef instanceof admin.DocumentReference) {
+        } else if (DocumentReference.isAdmin(documentRef)) {
             this.adminBatch.set(documentRef, data, options);
         }
 
         return this;
     }
 
-    update(documentRef: DocumentReference<any>, dataOrField: UpdateData | string | client.FieldPath | admin.FieldPath, value?: any, ...moreFieldsAndValues: any[]): this {
+    update(documentRef: DocumentReference<any>, dataOrField: UpdateData | string | FieldPath, value?: any, ...moreFieldsAndValues: any[]): this {
 
         this.count$++;
 
         if (arguments.length === 2) {
-            if (documentRef instanceof client.DocumentReference) {
+            if (DocumentReference.isClient(documentRef)) {
                 this.clientBatch.update(documentRef, dataOrField as UpdateData);
-            } else if (documentRef instanceof admin.DocumentReference) {
+            } else if (DocumentReference.isAdmin(documentRef)) {
                 this.adminBatch.update(documentRef, dataOrField as UpdateData);
             }
         } else {
-            if (documentRef instanceof client.DocumentReference) {
-                this.clientBatch.update(documentRef, dataOrField as (string | client.FieldPath), value, ...moreFieldsAndValues);
-            } else if (documentRef instanceof admin.DocumentReference) {
-                this.adminBatch.update(documentRef, dataOrField as (string | admin.FieldPath), value, ...moreFieldsAndValues);
+            if (DocumentReference.isClient(documentRef)) {
+                this.clientBatch.update(documentRef, dataOrField as (string | firestoreClient.FieldPath), value, ...moreFieldsAndValues);
+            } else if (DocumentReference.isAdmin(documentRef)) {
+                this.adminBatch.update(documentRef, dataOrField as (string | firestoreAdmin.FieldPath), value, ...moreFieldsAndValues);
             }
         }
 
@@ -134,13 +133,13 @@ export abstract class AutoWriteBatch {
 
 interface AutoWriteBatchClientMethods {
     commit(): Promise<{count: number}>;
-    set<T = any>(documentRef: client.DocumentReference<T>, data: T, options?: client.SetOptions): this;
-    update(documentRef: client.DocumentReference<any>, dataOrField: UpdateData | string | client.FieldPath, value?: any, ...moreFieldsAndValues: any[]): this;
+    set<T = any>(documentRef: firestoreClient.DocumentReference<T>, data: T, options?: firestoreClient.SetOptions): this;
+    update(documentRef: firestoreClient.DocumentReference<any>, dataOrField: UpdateData | string | firestoreClient.FieldPath, value?: any, ...moreFieldsAndValues: any[]): this;
 }
 
 export class AutoWriteBatchClient extends AutoWriteBatch implements AutoWriteBatchClientMethods {
 
-    constructor(firestore: client.FirebaseFirestore) {
+    constructor(firestore: firestoreClient.FirebaseFirestore) {
         super(firestore);
     }
 
@@ -162,7 +161,7 @@ interface AutoWriteBatchAdminMethods {
      * @param precondition A Precondition to enforce on this update.
      * @return This `WriteBatch` instance. Used for chaining method calls.
      */
-    update(documentRef: admin.DocumentReference<any>, data: UpdateData, precondition?: admin.Precondition): this;
+    update(documentRef: firestoreAdmin.DocumentReference<any>, data: UpdateData, precondition?: firestoreAdmin.Precondition): this;
 
     /**
      * Deletes the document referred to by the provided `DocumentReference`.
@@ -171,24 +170,24 @@ interface AutoWriteBatchAdminMethods {
      * @param precondition A Precondition to enforce for this delete.
      * @return This `WriteBatch` instance. Used for chaining method calls.
      */
-    delete(documentRef: admin.DocumentReference<any>, precondition?: admin.Precondition): this;
+    delete(documentRef: firestoreAdmin.DocumentReference<any>, precondition?: firestoreAdmin.Precondition): this;
 
-    commit(): Promise<{count: number, results?: admin.WriteResult[]}>;
+    commit(): Promise<{count: number, results?: firestoreAdmin.WriteResult[]}>;
 
 }
 
 export class AutoWriteBatchAdmin extends AutoWriteBatch implements AutoWriteBatchAdminMethods {
 
-    constructor(firestore: admin.Firestore) {
+    constructor(firestore: firestoreAdmin.Firestore) {
         super(firestore);
     }
 
 }
 
-export function autoWriteBatch(firestore: Firestore): typeof firestore extends client.FirebaseFirestore ? AutoWriteBatchClient : AutoWriteBatchAdmin {
-    if (firestore instanceof client.FirebaseFirestore) {
+export function autoWriteBatch(firestore: Firestore): typeof firestore extends firestoreClient.FirebaseFirestore ? AutoWriteBatchClient : AutoWriteBatchAdmin {
+    if (firestore instanceof firestoreClient.FirebaseFirestore) {
         return new AutoWriteBatchClient(firestore);
-    } else if (firestore instanceof admin.Firestore) {
+    } else if (firestore instanceof firestoreAdmin.Firestore) {
         return new AutoWriteBatchAdmin(firestore);
     }
 }

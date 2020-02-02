@@ -1,5 +1,4 @@
-import * as client from "@firebase/firestore-types";
-import * as admin from "@google-cloud/firestore";
+import { firestoreAdmin, firestoreClient } from "./types";
 export interface DeleteOptions {
     readLimit?: number;
     batch?: boolean;
@@ -12,5 +11,5 @@ export interface DeleteOptions {
 export interface DeleteOptionsAdmin extends DeleteOptions {
     subcollections?: boolean;
 }
-export declare function deleteQuery(query: admin.Query, options?: DeleteOptionsAdmin): any;
-export declare function deleteQuery(query: client.Query, options?: DeleteOptions): any;
+export declare function deleteQuery(query: firestoreAdmin.Query, options?: DeleteOptionsAdmin): any;
+export declare function deleteQuery(query: firestoreClient.Query, options?: DeleteOptions): any;
