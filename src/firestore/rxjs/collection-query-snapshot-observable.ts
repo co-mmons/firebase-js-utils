@@ -13,7 +13,7 @@ export function querySnapshotObservable<T = DocumentData>(query: Query<T>, optio
 
     if (Query.isClient(query)) {
         return new Observable(subscriber => {
-            const unsubscribe = query.onSnapshot(options, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            const unsubscribe = query.onSnapshot(options || {}, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
             return () => unsubscribe();
         });
     } else if (Query.isAdmin(query)) {

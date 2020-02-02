@@ -15,7 +15,7 @@ export function docsSnapshotsObservable<T>(query: Query<T>, options?: firestoreC
     if (Query.isClient(query)) {
 
         return new Observable<firestoreClientTypes.QuerySnapshot<T>>(subscriber => {
-            const unsubscribe = query.onSnapshot(options,snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            const unsubscribe = query.onSnapshot(options || {}, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
             return () => unsubscribe();
         }).pipe(map(snapshot => snapshot.docs)) as any;
 
