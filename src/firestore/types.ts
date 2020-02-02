@@ -3,15 +3,15 @@ import * as firestoreAdmin from "@google-cloud/firestore";
 export {firestoreClient, firestoreAdmin};
 
 declare module "@firebase/firestore-types" {
-    export interface FirebaseFirestore {
+    interface FirebaseFirestore {
         collection<T = DocumentData>(collectionPath: string): CollectionReference<T>;
         doc<T = DocumentData>(documentPath: string): DocumentReference<T>;
     }
 }
 
 declare module "@google-cloud/firestore" {
-    export namespace FirebaseFirestore {
-        export interface Firestore {
+    namespace FirebaseFirestore {
+        interface Firestore {
             collection<T = DocumentData>(collectionPath: string): CollectionReference<T>;
             doc<T = DocumentData>(documentPath: string): DocumentReference<T>;
         }
