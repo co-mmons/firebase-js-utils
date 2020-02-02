@@ -1,15 +1,15 @@
 import {Observable} from "rxjs";
 import {DocumentData} from "../shared-types";
-import {firestoreAdmin, firestoreClient} from "../types";
+import {firestoreAdminTypes, firestoreClientTypes} from "../types";
 import {CollectionReference, Query} from "../union-types";
 
-export function querySnapshotObservable<T = DocumentData>(query: firestoreClient.Query<T>, options?: firestoreClient.SnapshotListenOptions): Observable<firestoreClient.QuerySnapshot<T>>;
+export function querySnapshotObservable<T = DocumentData>(query: firestoreClientTypes.Query<T>, options?: firestoreClientTypes.SnapshotListenOptions): Observable<firestoreClientTypes.QuerySnapshot<T>>;
 
-export function querySnapshotObservable<T = DocumentData>(query: firestoreAdmin.Query<T>): Observable<firestoreAdmin.QuerySnapshot<T>>;
+export function querySnapshotObservable<T = DocumentData>(query: firestoreAdminTypes.Query<T>): Observable<firestoreAdminTypes.QuerySnapshot<T>>;
 
-export function querySnapshotObservable<T = DocumentData>(query: Query<T>): Observable<firestoreClient.QuerySnapshot<T> | firestoreAdmin.QuerySnapshot<T>>;
+export function querySnapshotObservable<T = DocumentData>(query: Query<T>): Observable<firestoreClientTypes.QuerySnapshot<T> | firestoreAdminTypes.QuerySnapshot<T>>;
 
-export function querySnapshotObservable<T = DocumentData>(query: Query<T>, options?: firestoreClient.SnapshotListenOptions): Observable<firestoreClient.QuerySnapshot<T> | firestoreAdmin.QuerySnapshot<T>> {
+export function querySnapshotObservable<T = DocumentData>(query: Query<T>, options?: firestoreClientTypes.SnapshotListenOptions): Observable<firestoreClientTypes.QuerySnapshot<T> | firestoreAdminTypes.QuerySnapshot<T>> {
 
     if (Query.isClient(query)) {
         return new Observable(subscriber => {
@@ -25,13 +25,13 @@ export function querySnapshotObservable<T = DocumentData>(query: Query<T>, optio
 }
 
 
-export function collectionSnapshotObservable<T = DocumentData>(collection: firestoreClient.CollectionReference<T>, options?: firestoreClient.SnapshotListenOptions): Observable<firestoreClient.QuerySnapshot>;
+export function collectionSnapshotObservable<T = DocumentData>(collection: firestoreClientTypes.CollectionReference<T>, options?: firestoreClientTypes.SnapshotListenOptions): Observable<firestoreClientTypes.QuerySnapshot>;
 
-export function collectionSnapshotObservable<T = DocumentData>(collection: firestoreAdmin.CollectionReference<T> ): Observable<firestoreAdmin.QuerySnapshot>;
+export function collectionSnapshotObservable<T = DocumentData>(collection: firestoreAdminTypes.CollectionReference<T> ): Observable<firestoreAdminTypes.QuerySnapshot>;
 
-export function collectionSnapshotObservable<T = DocumentData>(collection: CollectionReference<T>): Observable<firestoreClient.QuerySnapshot<T> | firestoreAdmin.QuerySnapshot<T>>;
+export function collectionSnapshotObservable<T = DocumentData>(collection: CollectionReference<T>): Observable<firestoreClientTypes.QuerySnapshot<T> | firestoreAdminTypes.QuerySnapshot<T>>;
 
-export function collectionSnapshotObservable<T = DocumentData>(collection: CollectionReference<T>, options?: firestoreClient.SnapshotListenOptions): Observable<firestoreClient.QuerySnapshot<T> | firestoreAdmin.QuerySnapshot<T>> {
+export function collectionSnapshotObservable<T = DocumentData>(collection: CollectionReference<T>, options?: firestoreClientTypes.SnapshotListenOptions): Observable<firestoreClientTypes.QuerySnapshot<T> | firestoreAdminTypes.QuerySnapshot<T>> {
 
     if (CollectionReference.isClient(collection)) {
         return querySnapshotObservable(collection, options);

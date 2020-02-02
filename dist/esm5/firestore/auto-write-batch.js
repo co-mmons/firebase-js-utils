@@ -1,6 +1,5 @@
 import { __awaiter, __extends, __generator, __spreadArrays } from "tslib";
-import { firestoreAdmin, firestoreClient } from "./types";
-import { DocumentReference } from "./union-types";
+import { DocumentReference, Firestore, WriteBatch } from "./union-types";
 var AutoWriteBatch = /** @class */ (function () {
     function AutoWriteBatch(firestore) {
         this.firestore = firestore;
@@ -13,20 +12,6 @@ var AutoWriteBatch = /** @class */ (function () {
                 this.batch$ = this.firestore.batch();
             }
             return this.batch$;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(AutoWriteBatch.prototype, "clientBatch", {
-        get: function () {
-            return this.batch instanceof firestoreClient.WriteBatch && this.batch;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(AutoWriteBatch.prototype, "adminBatch", {
-        get: function () {
-            return this.batch instanceof firestoreAdmin.WriteBatch && this.batch;
         },
         enumerable: true,
         configurable: true
@@ -110,11 +95,11 @@ var AutoWriteBatch = /** @class */ (function () {
     };
     AutoWriteBatch.prototype.set = function (documentRef, data, options) {
         this.count$++;
-        if (DocumentReference.isClient(documentRef)) {
-            this.clientBatch.set(documentRef, data, options);
+        if (DocumentReference.isClient(documentRef) && WriteBatch.isClient(this.batch)) {
+            this.batch.set(documentRef, data, options);
         }
-        else if (DocumentReference.isAdmin(documentRef)) {
-            this.adminBatch.set(documentRef, data, options);
+        else if (DocumentReference.isAdmin(documentRef) && WriteBatch.isAdmin(this.batch)) {
+            this.batch.set(documentRef, data, options);
         }
         return this;
     };
@@ -126,19 +111,19 @@ var AutoWriteBatch = /** @class */ (function () {
         }
         this.count$++;
         if (arguments.length === 2) {
-            if (DocumentReference.isClient(documentRef)) {
-                this.clientBatch.update(documentRef, dataOrField);
+            if (DocumentReference.isClient(documentRef) && WriteBatch.isClient(this.batch)) {
+                this.batch.update(documentRef, dataOrField);
             }
-            else if (DocumentReference.isAdmin(documentRef)) {
-                this.adminBatch.update(documentRef, dataOrField);
+            else if (DocumentReference.isAdmin(documentRef) && WriteBatch.isAdmin(this.batch)) {
+                this.batch.update(documentRef, dataOrField);
             }
         }
         else {
-            if (DocumentReference.isClient(documentRef)) {
-                (_a = this.clientBatch).update.apply(_a, __spreadArrays([documentRef, dataOrField, value], moreFieldsAndValues));
+            if (DocumentReference.isClient(documentRef) && WriteBatch.isClient(this.batch)) {
+                (_a = this.batch).update.apply(_a, __spreadArrays([documentRef, dataOrField, value], moreFieldsAndValues));
             }
-            else if (DocumentReference.isAdmin(documentRef)) {
-                (_b = this.adminBatch).update.apply(_b, __spreadArrays([documentRef, dataOrField, value], moreFieldsAndValues));
+            else if (DocumentReference.isAdmin(documentRef) && WriteBatch.isAdmin(this.batch)) {
+                (_b = this.batch).update.apply(_b, __spreadArrays([documentRef, dataOrField, value], moreFieldsAndValues));
             }
         }
         return this;
@@ -163,10 +148,10 @@ var AutoWriteBatchAdmin = /** @class */ (function (_super) {
 }(AutoWriteBatch));
 export { AutoWriteBatchAdmin };
 export function autoWriteBatch(firestore) {
-    if (firestore instanceof firestoreClient.FirebaseFirestore) {
+    if (Firestore.isClient(firestore)) {
         return new AutoWriteBatchClient(firestore);
     }
-    else if (firestore instanceof firestoreAdmin.Firestore) {
+    else if (Firestore.isAdmin(firestore)) {
         return new AutoWriteBatchAdmin(firestore);
     }
 }

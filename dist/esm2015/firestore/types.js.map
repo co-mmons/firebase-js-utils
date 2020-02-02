@@ -1,1 +1,1 @@
-{"version":3,"file":"types.js","sourceRoot":"","sources":["../../../src/firestore/types.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,eAAe,MAAM,2BAA2B,CAAC;AAC7D,OAAO,KAAK,cAAc,MAAM,yBAAyB,CAAC;AAE1D,OAAO,EAAC,eAAe,EAAE,cAAc,EAAC,CAAC"}
+{"version":3,"file":"types.js","sourceRoot":"","sources":["../../../src/firestore/types.ts"],"names":[],"mappings":""}

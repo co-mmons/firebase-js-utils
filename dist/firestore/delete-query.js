@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const core_1 = require("@co.mmons/js-utils/core");
-const types_1 = require("./types");
+const union_types_1 = require("./union-types");
 function deleteQuery(query, options) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         if (!options) {
@@ -51,7 +51,7 @@ function deleteQuery(query, options) {
                 }
             }
         }
-        if (deleteCount > 0 && options.subcollections !== false && query instanceof types_1.firestoreAdmin.Query) {
+        if (deleteCount > 0 && options.subcollections !== false && union_types_1.Query.isAdmin(query)) {
             for (const doc of snapshot.docs) {
                 for (const collection of (yield doc.ref.listCollections())) {
                     yield deleteQuery(collection, options);

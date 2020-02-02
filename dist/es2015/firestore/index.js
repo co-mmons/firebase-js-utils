@@ -9,4 +9,5 @@ tslib_1.__exportStar(require("./docs-data"), exports);
 tslib_1.__exportStar(require("./docs-snapshots"), exports);
 tslib_1.__exportStar(require("./types"), exports);
 tslib_1.__exportStar(require("./union-types"), exports);
+tslib_1.__exportStar(require("./mode"), exports);
 //# sourceMappingURL=index.js.map

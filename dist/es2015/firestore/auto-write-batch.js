@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const types_1 = require("./types");
 const union_types_1 = require("./union-types");
 class AutoWriteBatch {
     constructor(firestore) {
@@ -14,12 +13,6 @@ class AutoWriteBatch {
             this.batch$ = this.firestore.batch();
         }
         return this.batch$;
-    }
-    get clientBatch() {
-        return this.batch instanceof types_1.firestoreClient.WriteBatch && this.batch;
-    }
-    get adminBatch() {
-        return this.batch instanceof types_1.firestoreAdmin.WriteBatch && this.batch;
     }
     get count() {
         return this.count$;
@@ -78,30 +71,30 @@ class AutoWriteBatch {
     }
     set(documentRef, data, options) {
         this.count$++;
-        if (union_types_1.DocumentReference.isClient(documentRef)) {
-            this.clientBatch.set(documentRef, data, options);
+        if (union_types_1.DocumentReference.isClient(documentRef) && union_types_1.WriteBatch.isClient(this.batch)) {
+            this.batch.set(documentRef, data, options);
         }
-        else if (union_types_1.DocumentReference.isAdmin(documentRef)) {
-            this.adminBatch.set(documentRef, data, options);
+        else if (union_types_1.DocumentReference.isAdmin(documentRef) && union_types_1.WriteBatch.isAdmin(this.batch)) {
+            this.batch.set(documentRef, data, options);
         }
         return this;
     }
     update(documentRef, dataOrField, value, ...moreFieldsAndValues) {
         this.count$++;
         if (arguments.length === 2) {
-            if (union_types_1.DocumentReference.isClient(documentRef)) {
-                this.clientBatch.update(documentRef, dataOrField);
+            if (union_types_1.DocumentReference.isClient(documentRef) && union_types_1.WriteBatch.isClient(this.batch)) {
+                this.batch.update(documentRef, dataOrField);
             }
-            else if (union_types_1.DocumentReference.isAdmin(documentRef)) {
-                this.adminBatch.update(documentRef, dataOrField);
+            else if (union_types_1.DocumentReference.isAdmin(documentRef) && union_types_1.WriteBatch.isAdmin(this.batch)) {
+                this.batch.update(documentRef, dataOrField);
             }
         }
         else {
-            if (union_types_1.DocumentReference.isClient(documentRef)) {
-                this.clientBatch.update(documentRef, dataOrField, value, ...moreFieldsAndValues);
+            if (union_types_1.DocumentReference.isClient(documentRef) && union_types_1.WriteBatch.isClient(this.batch)) {
+                this.batch.update(documentRef, dataOrField, value, ...moreFieldsAndValues);
             }
-            else if (union_types_1.DocumentReference.isAdmin(documentRef)) {
-                this.adminBatch.update(documentRef, dataOrField, value, ...moreFieldsAndValues);
+            else if (union_types_1.DocumentReference.isAdmin(documentRef) && union_types_1.WriteBatch.isAdmin(this.batch)) {
+                this.batch.update(documentRef, dataOrField, value, ...moreFieldsAndValues);
             }
         }
         return this;
@@ -121,10 +114,10 @@ class AutoWriteBatchAdmin extends AutoWriteBatch {
 }
 exports.AutoWriteBatchAdmin = AutoWriteBatchAdmin;
 function autoWriteBatch(firestore) {
-    if (firestore instanceof types_1.firestoreClient.FirebaseFirestore) {
+    if (union_types_1.Firestore.isClient(firestore)) {
         return new AutoWriteBatchClient(firestore);
     }
-    else if (firestore instanceof types_1.firestoreAdmin.Firestore) {
+    else if (union_types_1.Firestore.isAdmin(firestore)) {
         return new AutoWriteBatchAdmin(firestore);
     }
 }

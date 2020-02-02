@@ -1,5 +1,5 @@
 import {sleep} from "@co.mmons/js-utils/core";
-import {firestoreAdmin, firestoreClient} from "./types";
+import {firestoreAdminTypes, firestoreClientTypes} from "./types";
 import {Query} from "./union-types";
 
 export interface DeleteOptions {
@@ -16,9 +16,9 @@ export interface DeleteOptionsAdmin extends DeleteOptions {
     subcollections?: boolean;
 }
 
-export async function deleteQuery(query: firestoreAdmin.Query, options?: DeleteOptionsAdmin);
+export async function deleteQuery(query: firestoreAdminTypes.Query, options?: DeleteOptionsAdmin);
 
-export async function deleteQuery(query: firestoreClient.Query, options?: DeleteOptions);
+export async function deleteQuery(query: firestoreClientTypes.Query, options?: DeleteOptions);
 
 export async function deleteQuery(query: Query, options?: DeleteOptions & DeleteOptionsAdmin) {
 
@@ -54,12 +54,12 @@ export async function deleteQuery(query: Query, options?: DeleteOptions & Delete
 
     if (options.batch !== false) {
 
-        const docs = snapshot.docs.slice() as Array<typeof query extends firestoreClient.Query ? firestoreClient.QueryDocumentSnapshot : firestoreAdmin.QueryDocumentSnapshot>;
+        const docs = snapshot.docs.slice() as Array<typeof query extends firestoreClientTypes.Query ? firestoreClientTypes.QueryDocumentSnapshot : firestoreAdminTypes.QueryDocumentSnapshot>;
 
         while (docs.length > 0) {
 
             const part = docs.splice(0, 499);
-            const batch = query.firestore.batch() as (typeof query extends firestoreClient.Query ? firestoreClient.WriteBatch : firestoreAdmin.WriteBatch);
+            const batch = query.firestore.batch() as (typeof query extends firestoreClientTypes.Query ? firestoreClientTypes.WriteBatch : firestoreAdminTypes.WriteBatch);
 
             for (const doc of part) {
                 batch.delete(doc.ref);
@@ -83,8 +83,8 @@ export async function deleteQuery(query: Query, options?: DeleteOptions & Delete
         }
     }
 
-    if (deleteCount > 0 && options.subcollections !== false && query instanceof firestoreAdmin.Query) {
-        for (const doc of snapshot.docs as Array<firestoreAdmin.QueryDocumentSnapshot>) {
+    if (deleteCount > 0 && options.subcollections !== false && Query.isAdmin(query)) {
+        for (const doc of snapshot.docs as Array<firestoreAdminTypes.QueryDocumentSnapshot>) {
             for (const collection of (await doc.ref.listCollections())) {
                 await deleteQuery(collection, options);
             }

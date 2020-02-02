@@ -1,6 +1,6 @@
 import { __awaiter, __generator } from "tslib";
 import { sleep } from "@co.mmons/js-utils/core";
-import { firestoreAdmin } from "./types";
+import { Query } from "./union-types";
 export function deleteQuery(query, options) {
     return __awaiter(this, void 0, void 0, function () {
         var snapshot, deleteCount, _i, _a, d, error_1, docs, part, batch, _b, part_1, doc, i, error_2, _c, _d, doc, _e, _f, collection, _g, _h;
@@ -80,7 +80,7 @@ export function deleteQuery(query, options) {
                     return [3 /*break*/, 9];
                 case 16: return [3 /*break*/, 8];
                 case 17:
-                    if (!(deleteCount > 0 && options.subcollections !== false && query instanceof firestoreAdmin.Query)) return [3 /*break*/, 24];
+                    if (!(deleteCount > 0 && options.subcollections !== false && Query.isAdmin(query))) return [3 /*break*/, 24];
                     _c = 0, _d = snapshot.docs;
                     _j.label = 18;
                 case 18:

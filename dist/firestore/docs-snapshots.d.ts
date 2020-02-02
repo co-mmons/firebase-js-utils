@@ -1,5 +1,5 @@
 import * as admin from "@google-cloud/firestore";
 import { DocumentData } from "./shared-types";
-import { firestoreAdmin, firestoreClient } from "./types";
-export declare function docsSnapshots<T = DocumentData>(query: firestoreAdmin.Query<T>): Promise<Array<admin.QueryDocumentSnapshot<T>>>;
-export declare function docsSnapshots<T = DocumentData>(query: firestoreClient.Query<T>, options?: firestoreClient.GetOptions): Promise<Array<firestoreClient.QueryDocumentSnapshot<T>>>;
+import { firestoreAdminTypes, firestoreClientTypes } from "./types";
+export declare function docsSnapshots<T = DocumentData>(query: firestoreAdminTypes.Query<T>): Promise<Array<admin.QueryDocumentSnapshot<T>>>;
+export declare function docsSnapshots<T = DocumentData>(query: firestoreClientTypes.Query<T>, options?: firestoreClientTypes.GetOptions): Promise<Array<firestoreClientTypes.QueryDocumentSnapshot<T>>>;
