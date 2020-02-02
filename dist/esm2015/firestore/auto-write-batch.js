@@ -37,6 +37,14 @@ export class AutoWriteBatch {
                 const count = this.count$;
                 const results = yield this.batch.commit();
                 this.count$ = 0;
+                if (this.onCommit) {
+                    try {
+                        this.onCommit(count, results);
+                    }
+                    catch (e) {
+                        console.error(e);
+                    }
+                }
                 return { count, results };
             }
             return { count: 0 };
@@ -48,6 +56,14 @@ export class AutoWriteBatch {
                 const count = this.count$;
                 const results = yield this.batch.commit();
                 this.count$ = 0;
+                if (this.onCommit) {
+                    try {
+                        this.onCommit(count, results);
+                    }
+                    catch (e) {
+                        console.error(e);
+                    }
+                }
                 return { count, results };
             }
             return { count: 0 };

@@ -8,6 +8,8 @@ export abstract class AutoWriteBatch {
     protected constructor(private readonly firestore: Firestore) {
     }
 
+    onCommit: (count: number, results?: any) => void;
+
     private batch$: client.WriteBatch | admin.WriteBatch;
 
     private limit$: number = 499;
@@ -52,6 +54,15 @@ export abstract class AutoWriteBatch {
             const count = this.count$;
             const results = await this.batch.commit();
             this.count$ = 0;
+
+            if (this.onCommit) {
+                try {
+                    this.onCommit(count, results);
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+
             return {count, results};
         }
 
@@ -64,6 +75,15 @@ export abstract class AutoWriteBatch {
             const count = this.count$;
             const results = await this.batch.commit();
             this.count$ = 0;
+
+            if (this.onCommit) {
+                try {
+                    this.onCommit(count, results);
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+
             return {count, results};
         }
 

@@ -5,6 +5,7 @@ import { DocumentReference, Firestore } from "./union-types";
 export declare abstract class AutoWriteBatch {
     private readonly firestore;
     protected constructor(firestore: Firestore);
+    onCommit: (count: number, results?: any) => void;
     private batch$;
     private limit$;
     private count$;

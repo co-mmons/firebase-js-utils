@@ -63,6 +63,14 @@ var AutoWriteBatch = /** @class */ (function () {
                     case 1:
                         results = _a.sent();
                         this.count$ = 0;
+                        if (this.onCommit) {
+                            try {
+                                this.onCommit(count, results);
+                            }
+                            catch (e) {
+                                console.error(e);
+                            }
+                        }
                         return [2 /*return*/, { count: count, results: results }];
                     case 2: return [2 /*return*/, { count: 0 }];
                 }
@@ -81,6 +89,14 @@ var AutoWriteBatch = /** @class */ (function () {
                     case 1:
                         results = _a.sent();
                         this.count$ = 0;
+                        if (this.onCommit) {
+                            try {
+                                this.onCommit(count, results);
+                            }
+                            catch (e) {
+                                console.error(e);
+                            }
+                        }
                         return [2 /*return*/, { count: count, results: results }];
                     case 2: return [2 /*return*/, { count: 0 }];
                 }
