@@ -6,15 +6,19 @@ export function applyConverter<T>(documentRef: firestoreClientTypes.DocumentRefe
 
 export function applyConverter<T>(documentRef: firestoreAdminTypes.DocumentReference<any>, converter: FirestoreDataConverter<T>): firestoreAdminTypes.DocumentReference<T>;
 
+export function applyConverter<T>(documentRef: DocumentReference<any>, converter: FirestoreDataConverter<T>): typeof documentRef extends firestoreClientTypes.DocumentReference ? firestoreClientTypes.DocumentReference : firestoreAdminTypes.DocumentReference<T>;
+
 export function applyConverter<T>(collectionRef: firestoreClientTypes.CollectionReference<any>, converter: FirestoreDataConverter<T>): firestoreClientTypes.CollectionReference<T>;
 
 export function applyConverter<T>(collectionRef: firestoreAdminTypes.CollectionReference<any>, converter: FirestoreDataConverter<T>): firestoreAdminTypes.CollectionReference<T>;
+
+export function applyConverter<T>(collectionRef: CollectionReference<any>, converter: FirestoreDataConverter<T>): typeof collectionRef extends firestoreClientTypes.CollectionReference ? firestoreClientTypes.CollectionReference<T> : firestoreAdminTypes.CollectionReference<T>;
 
 export function applyConverter<T>(query: firestoreClientTypes.Query<any>, converter: FirestoreDataConverter<T>): firestoreClientTypes.Query<T>;
 
 export function applyConverter<T>(query: firestoreAdminTypes.Query<any>, converter: FirestoreDataConverter<T>): firestoreAdminTypes.Query<T>;
 
-export function applyConverter<T>(applicable: DocumentReference<any> | Query<any> | CollectionReference<any>, converter: FirestoreDataConverter<T>): DocumentReference<T> | Query<T> | CollectionReference<T>;
+export function applyConverter<T>(query: Query, converter: FirestoreDataConverter<T>): typeof query extends firestoreClientTypes.Query<T> ? firestoreClientTypes.Query<T> : firestoreAdminTypes.Query<T>;
 
 export function applyConverter<T, A extends DocumentReference<any> | Query<any> | CollectionReference<any>>(applicable: A, converter: FirestoreDataConverter<T>): DocumentReference<T> | Query<T> | CollectionReference<T> {
 
