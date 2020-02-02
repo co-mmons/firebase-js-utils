@@ -1,5 +1,5 @@
 import { UpdateData } from "./shared-types";
-import { firestoreAdminTypes, firestoreClientTypes } from "./types";
+import { firestoreAdminModuleTypes, firestoreClientModuleTypes } from "./types";
 import { DocumentReference, FieldPath, Firestore } from "./union-types";
 export declare abstract class AutoWriteBatch {
     private readonly firestore;
@@ -29,11 +29,11 @@ interface AutoWriteBatchClientMethods {
     commit(): Promise<{
         count: number;
     }>;
-    set<T = any>(documentRef: firestoreClientTypes.DocumentReference<T>, data: T, options?: firestoreClientTypes.SetOptions): this;
-    update(documentRef: firestoreClientTypes.DocumentReference<any>, dataOrField: UpdateData | string | firestoreClientTypes.FieldPath, value?: any, ...moreFieldsAndValues: any[]): this;
+    set<T = any>(documentRef: firestoreClientModuleTypes.DocumentReference<T>, data: T, options?: firestoreClientModuleTypes.SetOptions): this;
+    update(documentRef: firestoreClientModuleTypes.DocumentReference<any>, dataOrField: UpdateData | string | firestoreClientModuleTypes.FieldPath, value?: any, ...moreFieldsAndValues: any[]): this;
 }
 export declare class AutoWriteBatchClient extends AutoWriteBatch implements AutoWriteBatchClientMethods {
-    constructor(firestore: firestoreClientTypes.Firestore);
+    constructor(firestore: firestoreClientModuleTypes.Firestore);
 }
 interface AutoWriteBatchAdminMethods {
     /**
@@ -50,7 +50,7 @@ interface AutoWriteBatchAdminMethods {
      * @param precondition A Precondition to enforce on this update.
      * @return This `WriteBatch` instance. Used for chaining method calls.
      */
-    update(documentRef: firestoreAdminTypes.DocumentReference<any>, data: UpdateData, precondition?: firestoreAdminTypes.Precondition): this;
+    update(documentRef: firestoreAdminModuleTypes.DocumentReference<any>, data: UpdateData, precondition?: firestoreAdminModuleTypes.Precondition): this;
     /**
      * Deletes the document referred to by the provided `DocumentReference`.
      *
@@ -58,14 +58,14 @@ interface AutoWriteBatchAdminMethods {
      * @param precondition A Precondition to enforce for this delete.
      * @return This `WriteBatch` instance. Used for chaining method calls.
      */
-    delete(documentRef: firestoreAdminTypes.DocumentReference<any>, precondition?: firestoreAdminTypes.Precondition): this;
+    delete(documentRef: firestoreAdminModuleTypes.DocumentReference<any>, precondition?: firestoreAdminModuleTypes.Precondition): this;
     commit(): Promise<{
         count: number;
-        results?: firestoreAdminTypes.WriteResult[];
+        results?: firestoreAdminModuleTypes.WriteResult[];
     }>;
 }
 export declare class AutoWriteBatchAdmin extends AutoWriteBatch implements AutoWriteBatchAdminMethods {
-    constructor(firestore: firestoreAdminTypes.Firestore);
+    constructor(firestore: firestoreAdminModuleTypes.Firestore);
 }
-export declare function autoWriteBatch(firestore: Firestore): typeof firestore extends firestoreClientTypes.Firestore ? AutoWriteBatchClient : AutoWriteBatchAdmin;
+export declare function autoWriteBatch(firestore: Firestore): typeof firestore extends firestoreClientModuleTypes.Firestore ? AutoWriteBatchClient : AutoWriteBatchAdmin;
 export {};

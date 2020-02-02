@@ -1,27 +1,27 @@
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {DocumentData} from "../shared-types";
-import {firestoreAdminTypes, firestoreClientTypes} from "../types";
+import {firestoreAdminModuleTypes, firestoreClientModuleTypes} from "../types";
 import {Query} from "../union-types";
 
-export function docsSnapshotsObservable<T = DocumentData>(query: firestoreClientTypes.Query<T>, options?: firestoreClientTypes.SnapshotListenOptions): Observable<Array<firestoreClientTypes.QueryDocumentSnapshot<T>>>;
+export function docsSnapshotsObservable<T = DocumentData>(query: firestoreClientModuleTypes.Query<T>, options?: firestoreClientModuleTypes.SnapshotListenOptions): Observable<Array<firestoreClientModuleTypes.QueryDocumentSnapshot<T>>>;
 
-export function docsSnapshotsObservable<T = DocumentData>(query: firestoreAdminTypes.Query<T>): Observable<Array<firestoreAdminTypes.QueryDocumentSnapshot<T>>>;
+export function docsSnapshotsObservable<T = DocumentData>(query: firestoreAdminModuleTypes.Query<T>): Observable<Array<firestoreAdminModuleTypes.QueryDocumentSnapshot<T>>>;
 
-export function docsSnapshotsObservable<T = DocumentData>(query: Query<T>): Observable<Array<firestoreClientTypes.QueryDocumentSnapshot<T> | firestoreAdminTypes.QueryDocumentSnapshot<T>>>;
+export function docsSnapshotsObservable<T = DocumentData>(query: Query<T>): Observable<Array<firestoreClientModuleTypes.QueryDocumentSnapshot<T> | firestoreAdminModuleTypes.QueryDocumentSnapshot<T>>>;
 
-export function docsSnapshotsObservable<T>(query: Query<T>, options?: firestoreClientTypes.SnapshotListenOptions): Observable<Array<firestoreClientTypes.QueryDocumentSnapshot<T> | firestoreAdminTypes.QueryDocumentSnapshot<T>>> {
+export function docsSnapshotsObservable<T>(query: Query<T>, options?: firestoreClientModuleTypes.SnapshotListenOptions): Observable<Array<firestoreClientModuleTypes.QueryDocumentSnapshot<T> | firestoreAdminModuleTypes.QueryDocumentSnapshot<T>>> {
 
     if (Query.isClient(query)) {
 
-        return new Observable<firestoreClientTypes.QuerySnapshot<T>>(subscriber => {
+        return new Observable<firestoreClientModuleTypes.QuerySnapshot<T>>(subscriber => {
             const unsubscribe = query.onSnapshot(options || {}, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
             return () => unsubscribe();
         }).pipe(map(snapshot => snapshot.docs)) as any;
 
     } else if (Query.isAdmin(query)) {
 
-        return new Observable<firestoreAdminTypes.QuerySnapshot<T>>(subscriber => {
+        return new Observable<firestoreAdminModuleTypes.QuerySnapshot<T>>(subscriber => {
             const unsubscribe = query.onSnapshot(snapshot => subscriber.next(snapshot as any), error => subscriber.error(error));
             return () => unsubscribe();
         }).pipe(map(snapshot => snapshot.docs)) as any;

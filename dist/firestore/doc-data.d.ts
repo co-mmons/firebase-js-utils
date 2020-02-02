@@ -1,4 +1,4 @@
 import { DocumentData } from "./shared-types";
-import { firestoreAdminTypes, firestoreClientTypes } from "./types";
-export declare function docData<T = DocumentData>(doc: firestoreAdminTypes.DocumentReference<T>): Promise<T>;
-export declare function docData<T = DocumentData>(doc: firestoreClientTypes.DocumentReference<T>, options?: firestoreClientTypes.GetOptions & firestoreClientTypes.SnapshotOptions): Promise<T>;
+import { firestoreAdminModuleTypes, firestoreClientModuleTypes } from "./types";
+export declare function docData<T = DocumentData>(doc: firestoreAdminModuleTypes.DocumentReference<T>): Promise<T>;
+export declare function docData<T = DocumentData>(doc: firestoreClientModuleTypes.DocumentReference<T>, options?: firestoreClientModuleTypes.GetOptions & firestoreClientModuleTypes.SnapshotOptions): Promise<T>;

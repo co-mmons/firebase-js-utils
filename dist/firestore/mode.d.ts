@@ -1,5 +1,6 @@
-import { firestoreClientTypes, firestoreAdminTypes } from "./types";
+import { firestoreClientModuleTypes, firestoreAdminModuleTypes } from "./types";
 export declare function isFirestoreClient(): boolean;
-export declare function firestoreClient(): typeof firestoreClientTypes;
+export declare function firestoreClientModule(): typeof firestoreClientModuleTypes;
 export declare function isFirestoreAdmin(): boolean;
-export declare function firestoreAdmin(): typeof firestoreAdminTypes;
+export declare function firestoreAdminModule(): typeof firestoreAdminModuleTypes;
+export declare function firestoreModule(): typeof firestoreAdminModuleTypes | typeof firestoreClientModuleTypes;

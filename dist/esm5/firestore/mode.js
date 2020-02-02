@@ -1,30 +1,40 @@
-import { packages } from "../config";
+import { modules } from "../config";
 import { isFirebaseClient, isFirebaseAdmin } from "../mode";
-var admin;
 export function isFirestoreClient() {
     return isFirebaseClient();
 }
-export function firestoreClient() {
+export function firestoreClientModule() {
     if (isFirebaseClient()) {
-        var pckg = packages.firestore;
-        if (!pckg) {
-            throw new Error("Firestore package not configured");
+        var mod = modules.firestore;
+        if (!mod) {
+            throw new Error("Firestore module not configured");
         }
-        return pckg;
+        return mod;
     }
     throw new Error("Firebase not running in client mode");
 }
 export function isFirestoreAdmin() {
     return isFirebaseAdmin();
 }
-export function firestoreAdmin() {
+export function firestoreAdminModule() {
     if (isFirebaseAdmin()) {
-        var pckg = packages.firestore;
-        if (!pckg) {
-            throw new Error("Firestore package not configured");
+        var mod = modules.firestore;
+        if (!mod) {
+            throw new Error("Firestore module not configured");
         }
-        return pckg;
+        return mod;
     }
     throw new Error("Firebase not running in admin mode");
+}
+export function firestoreModule() {
+    if (isFirestoreClient()) {
+        return firestoreClientModule();
+    }
+    else if (isFirestoreAdmin()) {
+        return firestoreAdminModule();
+    }
+    else {
+        throw new Error("Firestore not configured");
+    }
 }
 //# sourceMappingURL=mode.js.map

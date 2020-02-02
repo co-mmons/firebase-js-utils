@@ -1,6 +1,6 @@
-import { packages } from "./config";
+import { modules } from "./config";
 export declare function setFirebaseMode(mode: "admin" | "client", config?: {
-    packages?: Partial<typeof packages>;
+    modules?: Partial<typeof modules>;
 }): void;
 export declare function isFirebaseAdmin(): boolean;
 export declare function isFirebaseClient(): boolean;

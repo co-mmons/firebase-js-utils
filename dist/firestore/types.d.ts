@@ -1,11 +1,11 @@
-import type { firestore as firestoreClientTypes } from "firebase/app";
-import type * as firestoreAdminTypes from "@google-cloud/firestore";
-export type { firestoreClientTypes, firestoreAdminTypes };
+import type { firestore as firestoreClientModuleTypes } from "firebase/app";
+import type * as firestoreAdminModuleTypes from "@google-cloud/firestore";
+export type { firestoreClientModuleTypes, firestoreAdminModuleTypes };
 declare module "firebase/app" {
     namespace firestore {
         interface Firestore {
-            collection<T = firestoreClientTypes.DocumentData>(collectionPath: string): firestoreClientTypes.CollectionReference<T>;
-            doc<T = firestoreClientTypes.DocumentData>(documentPath: string): firestoreClientTypes.DocumentReference<T>;
+            collection<T = firestoreClientModuleTypes.DocumentData>(collectionPath: string): firestoreClientModuleTypes.CollectionReference<T>;
+            doc<T = firestoreClientModuleTypes.DocumentData>(documentPath: string): firestoreClientModuleTypes.DocumentReference<T>;
         }
     }
 }

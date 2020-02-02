@@ -2,35 +2,46 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const config_1 = require("../config");
 const mode_1 = require("../mode");
-let admin;
 function isFirestoreClient() {
     return mode_1.isFirebaseClient();
 }
 exports.isFirestoreClient = isFirestoreClient;
-function firestoreClient() {
+function firestoreClientModule() {
     if (mode_1.isFirebaseClient()) {
-        const pckg = config_1.packages.firestore;
-        if (!pckg) {
-            throw new Error("Firestore package not configured");
+        const mod = config_1.modules.firestore;
+        if (!mod) {
+            throw new Error("Firestore module not configured");
         }
-        return pckg;
+        return mod;
     }
     throw new Error("Firebase not running in client mode");
 }
-exports.firestoreClient = firestoreClient;
+exports.firestoreClientModule = firestoreClientModule;
 function isFirestoreAdmin() {
     return mode_1.isFirebaseAdmin();
 }
 exports.isFirestoreAdmin = isFirestoreAdmin;
-function firestoreAdmin() {
+function firestoreAdminModule() {
     if (mode_1.isFirebaseAdmin()) {
-        const pckg = config_1.packages.firestore;
-        if (!pckg) {
-            throw new Error("Firestore package not configured");
+        const mod = config_1.modules.firestore;
+        if (!mod) {
+            throw new Error("Firestore module not configured");
         }
-        return pckg;
+        return mod;
     }
     throw new Error("Firebase not running in admin mode");
 }
-exports.firestoreAdmin = firestoreAdmin;
+exports.firestoreAdminModule = firestoreAdminModule;
+function firestoreModule() {
+    if (isFirestoreClient()) {
+        return firestoreClientModule();
+    }
+    else if (isFirestoreAdmin()) {
+        return firestoreAdminModule();
+    }
+    else {
+        throw new Error("Firestore not configured");
+    }
+}
+exports.firestoreModule = firestoreModule;
 //# sourceMappingURL=mode.js.map

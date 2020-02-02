@@ -1,3 +1,3 @@
-export declare const packages: {
+export declare const modules: {
     firestore: any;
 };

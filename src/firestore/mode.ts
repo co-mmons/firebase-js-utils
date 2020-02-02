@@ -1,22 +1,20 @@
-import {packages} from "../config";
-import {firestoreClientTypes, firestoreAdminTypes} from "./types";
+import {modules} from "../config";
+import {firestoreClientModuleTypes, firestoreAdminModuleTypes} from "./types";
 import {isFirebaseClient, isFirebaseAdmin} from "../mode";
-
-let admin: typeof firestoreAdminTypes;
 
 export function isFirestoreClient() {
     return isFirebaseClient();
 }
 
-export function firestoreClient(): typeof firestoreClientTypes {
+export function firestoreClientModule(): typeof firestoreClientModuleTypes {
 
     if (isFirebaseClient()) {
-        const pckg = packages.firestore;
-        if (!pckg) {
-            throw new Error("Firestore package not configured");
+        const mod = modules.firestore;
+        if (!mod) {
+            throw new Error("Firestore module not configured");
         }
 
-        return pckg;
+        return mod;
     }
 
     throw new Error("Firebase not running in client mode");
@@ -26,16 +24,26 @@ export function isFirestoreAdmin() {
     return isFirebaseAdmin();
 }
 
-export function firestoreAdmin(): typeof firestoreAdminTypes {
+export function firestoreAdminModule(): typeof firestoreAdminModuleTypes {
 
     if (isFirebaseAdmin()) {
-        const pckg = packages.firestore;
-        if (!pckg) {
-            throw new Error("Firestore package not configured");
+        const mod = modules.firestore;
+        if (!mod) {
+            throw new Error("Firestore module not configured");
         }
 
-        return pckg;
+        return mod;
     }
 
     throw new Error("Firebase not running in admin mode");
+}
+
+export function firestoreModule() {
+    if (isFirestoreClient()) {
+        return firestoreClientModule();
+    } else if (isFirestoreAdmin()) {
+        return firestoreAdminModule();
+    } else {
+        throw new Error("Firestore not configured");
+    }
 }

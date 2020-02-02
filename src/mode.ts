@@ -1,13 +1,13 @@
-import {packages} from "./config";
+import {modules} from "./config";
 
 let _mode: "admin" | "client";
 
-export function setFirebaseMode(mode: "admin" | "client", config?: {packages?: Partial<typeof packages>}) {
+export function setFirebaseMode(mode: "admin" | "client", config?: {modules?: Partial<typeof modules>}) {
     _mode = mode;
 
-    if (config?.packages) {
-        for (const pckg of Object.keys(config.packages)) {
-            packages[pckg] = config.packages[pckg];
+    if (config?.modules) {
+        for (const mod of Object.keys(config.modules)) {
+            modules[mod] = config.modules[mod];
         }
     }
 }
