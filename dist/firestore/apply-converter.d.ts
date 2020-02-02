@@ -1,0 +1,10 @@
+import { FirestoreDataConverter } from "./shared-types";
+import { CollectionReference, DocumentReference, Query } from "./union-types";
+import { firestoreClientTypes, firestoreAdminTypes } from "./types";
+export declare function applyConverter<T>(documentRef: firestoreClientTypes.DocumentReference<any>, converter: FirestoreDataConverter<T>): firestoreClientTypes.DocumentReference<T>;
+export declare function applyConverter<T>(documentRef: firestoreAdminTypes.DocumentReference<any>, converter: FirestoreDataConverter<T>): firestoreAdminTypes.DocumentReference<T>;
+export declare function applyConverter<T>(collectionRef: firestoreClientTypes.CollectionReference<any>, converter: FirestoreDataConverter<T>): firestoreClientTypes.CollectionReference<T>;
+export declare function applyConverter<T>(collectionRef: firestoreAdminTypes.CollectionReference<any>, converter: FirestoreDataConverter<T>): firestoreAdminTypes.CollectionReference<T>;
+export declare function applyConverter<T>(query: firestoreClientTypes.Query<any>, converter: FirestoreDataConverter<T>): firestoreClientTypes.Query<T>;
+export declare function applyConverter<T>(query: firestoreAdminTypes.Query<any>, converter: FirestoreDataConverter<T>): firestoreAdminTypes.Query<T>;
+export declare function applyConverter<T>(applicable: DocumentReference<any> | Query<any> | CollectionReference<any>, converter: FirestoreDataConverter<T>): DocumentReference<T> | Query<T> | CollectionReference<T>;
