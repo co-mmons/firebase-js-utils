@@ -122,4 +122,25 @@ var WriteBatch;
     }
     WriteBatch.isAdmin = isAdmin;
 })(WriteBatch = exports.WriteBatch || (exports.WriteBatch = {}));
+var QueryDocumentSnapshot;
+(function (QueryDocumentSnapshot) {
+    function is(value) {
+        if (mode_1.isFirestoreClient()) {
+            return value instanceof mode_1.firestoreClientModule().QueryDocumentSnapshot;
+        }
+        else if (mode_1.isFirestoreAdmin()) {
+            return value instanceof mode_1.firestoreAdminModule().QueryDocumentSnapshot;
+        }
+        return false;
+    }
+    QueryDocumentSnapshot.is = is;
+    function isClient(value) {
+        return mode_1.isFirestoreClient() && value instanceof mode_1.firestoreClientModule().QueryDocumentSnapshot;
+    }
+    QueryDocumentSnapshot.isClient = isClient;
+    function isAdmin(value) {
+        return mode_1.isFirestoreAdmin() && value instanceof mode_1.firestoreAdminModule().QueryDocumentSnapshot;
+    }
+    QueryDocumentSnapshot.isAdmin = isAdmin;
+})(QueryDocumentSnapshot = exports.QueryDocumentSnapshot || (exports.QueryDocumentSnapshot = {}));
 //# sourceMappingURL=union-types.js.map

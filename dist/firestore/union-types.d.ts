@@ -55,3 +55,9 @@ export declare namespace WriteBatch {
     function isClient(value: WriteBatch): value is firestoreClientModuleTypes.WriteBatch;
     function isAdmin(value: WriteBatch): value is firestoreAdminModuleTypes.WriteBatch;
 }
+export declare type QueryDocumentSnapshot<T = DocumentData> = firestoreClientModuleTypes.QueryDocumentSnapshot<T> | firestoreAdminModuleTypes.QueryDocumentSnapshot<T>;
+export declare namespace QueryDocumentSnapshot {
+    function is(value: any): value is QueryDocumentSnapshot;
+    function isClient<T>(value: QueryDocumentSnapshot<T>): value is firestoreClientModuleTypes.QueryDocumentSnapshot<T>;
+    function isAdmin<T>(value: QueryDocumentSnapshot): value is firestoreAdminModuleTypes.QueryDocumentSnapshot<T>;
+}

@@ -158,3 +158,27 @@ export namespace WriteBatch {
         return isFirestoreAdmin() && value instanceof firestoreAdminModule().WriteBatch;
     }
 }
+
+
+export type QueryDocumentSnapshot<T = DocumentData> = firestoreClientModuleTypes.QueryDocumentSnapshot<T> | firestoreAdminModuleTypes.QueryDocumentSnapshot<T>;
+
+export namespace QueryDocumentSnapshot {
+
+    export function is(value: any): value is QueryDocumentSnapshot {
+        if (isFirestoreClient()) {
+            return value instanceof firestoreClientModule().QueryDocumentSnapshot;
+        } else if (isFirestoreAdmin()) {
+            return value instanceof firestoreAdminModule().QueryDocumentSnapshot;
+        }
+
+        return false;
+    }
+
+    export function isClient<T>(value: QueryDocumentSnapshot<T>): value is firestoreClientModuleTypes.QueryDocumentSnapshot<T> {
+        return isFirestoreClient() && value instanceof firestoreClientModule().QueryDocumentSnapshot;
+    }
+
+    export function isAdmin<T>(value: QueryDocumentSnapshot): value is firestoreAdminModuleTypes.QueryDocumentSnapshot<T> {
+        return isFirestoreAdmin() && value instanceof firestoreAdminModule().QueryDocumentSnapshot;
+    }
+}

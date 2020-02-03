@@ -120,4 +120,25 @@ export var WriteBatch;
     }
     WriteBatch.isAdmin = isAdmin;
 })(WriteBatch || (WriteBatch = {}));
+export var QueryDocumentSnapshot;
+(function (QueryDocumentSnapshot) {
+    function is(value) {
+        if (isFirestoreClient()) {
+            return value instanceof firestoreClientModule().QueryDocumentSnapshot;
+        }
+        else if (isFirestoreAdmin()) {
+            return value instanceof firestoreAdminModule().QueryDocumentSnapshot;
+        }
+        return false;
+    }
+    QueryDocumentSnapshot.is = is;
+    function isClient(value) {
+        return isFirestoreClient() && value instanceof firestoreClientModule().QueryDocumentSnapshot;
+    }
+    QueryDocumentSnapshot.isClient = isClient;
+    function isAdmin(value) {
+        return isFirestoreAdmin() && value instanceof firestoreAdminModule().QueryDocumentSnapshot;
+    }
+    QueryDocumentSnapshot.isAdmin = isAdmin;
+})(QueryDocumentSnapshot || (QueryDocumentSnapshot = {}));
 //# sourceMappingURL=union-types.js.map

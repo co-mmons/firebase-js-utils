@@ -1,13 +1,27 @@
-import { serialize, unserialize } from "@co.mmons/js-utils/json";
+import { QueryDocumentSnapshot } from "./union-types";
 var DataConverter = /** @class */ (function () {
-    function DataConverter(type) {
-        this.type = type;
+    function DataConverter() {
     }
-    DataConverter.prototype.fromFirestore = function (data) {
-        return unserialize(data, this.type);
-    };
+    /**
+     * Called by the Firestore SDK to convert a custom model object of type T
+     * into a plain Javascript object (suitable for writing directly to the
+     * Firestore database).
+     *
+     * @final
+     */
     DataConverter.prototype.toFirestore = function (modelObject) {
-        return serialize(modelObject);
+        return this.to(modelObject);
+    };
+    /**
+     * @final
+     */
+    DataConverter.prototype.fromFirestore = function (dataOrSnapshot, options) {
+        if (QueryDocumentSnapshot.is(dataOrSnapshot) && QueryDocumentSnapshot.isClient(dataOrSnapshot)) {
+            return this.from(dataOrSnapshot.data(options));
+        }
+        else {
+            return this.from(dataOrSnapshot);
+        }
     };
     return DataConverter;
 }());
