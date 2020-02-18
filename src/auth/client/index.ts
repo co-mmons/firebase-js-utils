@@ -1,5 +1,5 @@
 import {auth, User as FirebaseUser} from "firebase/app";
-import {Observable, ReplaySubject} from "rxjs";
+import {Observable, of, ReplaySubject, throwError} from "rxjs";
 import {first, map, switchMap} from "rxjs/operators";
 import {AuthUser} from "../auth-user";
 import {User} from "../user";
@@ -72,6 +72,14 @@ export class AuthUserClient implements AuthUser {
         } else {
             return this.userIdObservable.pipe(first(), map(id => true)).toPromise();
         }
+    }
+
+    protected userNotSignedError() {
+        return new Error("User not signed");
+    }
+
+    observeUser(assertSigned?: boolean): Observable<User> {
+        return this.userObservable.pipe(switchMap(user => user || !assertSigned ? of(user) : throwError(this.userNotSignedError())));
     }
 
 }

@@ -1,4 +1,4 @@
-import { Observable, ReplaySubject } from "rxjs";
+import { Observable, of, ReplaySubject, throwError } from "rxjs";
 import { first, map, switchMap } from "rxjs/operators";
 var AuthUserClient = /** @class */ (function () {
     function AuthUserClient(auth) {
@@ -69,6 +69,13 @@ var AuthUserClient = /** @class */ (function () {
         else {
             return this.userIdObservable.pipe(first(), map(function (id) { return true; })).toPromise();
         }
+    };
+    AuthUserClient.prototype.userNotSignedError = function () {
+        return new Error("User not signed");
+    };
+    AuthUserClient.prototype.observeUser = function (assertSigned) {
+        var _this = this;
+        return this.userObservable.pipe(switchMap(function (user) { return user || !assertSigned ? of(user) : throwError(_this.userNotSignedError()); }));
     };
     return AuthUserClient;
 }());

@@ -54,6 +54,12 @@ class AuthUserClient {
             return this.userIdObservable.pipe(operators_1.first(), operators_1.map(id => true)).toPromise();
         }
     }
+    userNotSignedError() {
+        return new Error("User not signed");
+    }
+    observeUser(assertSigned) {
+        return this.userObservable.pipe(operators_1.switchMap(user => user || !assertSigned ? rxjs_1.of(user) : rxjs_1.throwError(this.userNotSignedError())));
+    }
 }
 exports.AuthUserClient = AuthUserClient;
 //# sourceMappingURL=index.js.map

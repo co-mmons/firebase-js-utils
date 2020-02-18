@@ -1,4 +1,4 @@
-import { Observable, ReplaySubject } from "rxjs";
+import { Observable, of, ReplaySubject, throwError } from "rxjs";
 import { first, map, switchMap } from "rxjs/operators";
 export class AuthUserClient {
     constructor(auth) {
@@ -51,6 +51,12 @@ export class AuthUserClient {
         else {
             return this.userIdObservable.pipe(first(), map(id => true)).toPromise();
         }
+    }
+    userNotSignedError() {
+        return new Error("User not signed");
+    }
+    observeUser(assertSigned) {
+        return this.userObservable.pipe(switchMap(user => user || !assertSigned ? of(user) : throwError(this.userNotSignedError())));
     }
 }
 //# sourceMappingURL=index.js.map

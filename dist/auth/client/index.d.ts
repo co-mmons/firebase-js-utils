@@ -16,4 +16,6 @@ export declare class AuthUserClient implements AuthUser {
     private userChanged;
     protected onAuthError(error: any): void;
     initialized(): Promise<boolean>;
+    protected userNotSignedError(): Error;
+    observeUser(assertSigned?: boolean): Observable<User>;
 }

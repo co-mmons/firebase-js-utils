@@ -15,4 +15,6 @@ export interface AuthUser {
 
     readonly userIdTokenObservable: Observable<string>;
 
+    observeUser(assertSigned?: boolean): Observable<User>;
+
 }
