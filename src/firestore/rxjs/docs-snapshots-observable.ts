@@ -1,5 +1,6 @@
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {extractSnapshotListenOptions} from "../client/extract-snapshot-listen-options";
 import {DocumentData} from "../shared-types";
 import {firestoreAdminModuleTypes, firestoreClientModuleTypes} from "../types";
 import {Query} from "../union-types";
@@ -15,7 +16,7 @@ export function docsSnapshotsObservable<T>(query: Query<T>, options?: firestoreC
     if (Query.isClient(query)) {
 
         return new Observable<firestoreClientModuleTypes.QuerySnapshot<T>>(subscriber => {
-            const unsubscribe = query.onSnapshot(options || {}, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            const unsubscribe = query.onSnapshot(extractSnapshotListenOptions(options) || {}, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
             return () => unsubscribe();
         }).pipe(map(snapshot => snapshot.docs)) as any;
 

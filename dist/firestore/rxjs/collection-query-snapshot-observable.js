@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const rxjs_1 = require("rxjs");
+const extract_snapshot_listen_options_1 = require("../client/extract-snapshot-listen-options");
 const union_types_1 = require("../union-types");
 function querySnapshotObservable(query, options) {
     if (union_types_1.Query.isClient(query)) {
         return new rxjs_1.Observable(subscriber => {
-            const unsubscribe = query.onSnapshot(options || {}, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            const unsubscribe = query.onSnapshot(extract_snapshot_listen_options_1.extractSnapshotListenOptions(options) || {}, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
             return () => unsubscribe();
         });
     }

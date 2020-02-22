@@ -1,4 +1,5 @@
 import {Observable} from "rxjs";
+import {extractSnapshotListenOptions} from "../client/extract-snapshot-listen-options";
 import {DocumentData} from "../shared-types";
 import {firestoreAdminModuleTypes, firestoreClientModuleTypes} from "../types";
 import {CollectionReference, Query} from "../union-types";
@@ -13,7 +14,7 @@ export function querySnapshotObservable<T = DocumentData>(query: Query<T>, optio
 
     if (Query.isClient(query)) {
         return new Observable(subscriber => {
-            const unsubscribe = query.onSnapshot(options || {}, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            const unsubscribe = query.onSnapshot(extractSnapshotListenOptions(options) || {}, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
             return () => unsubscribe();
         });
     } else if (Query.isAdmin(query)) {

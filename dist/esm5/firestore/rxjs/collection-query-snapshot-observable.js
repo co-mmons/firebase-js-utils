@@ -1,9 +1,10 @@
 import { Observable } from "rxjs";
+import { extractSnapshotListenOptions } from "../client/extract-snapshot-listen-options";
 import { CollectionReference, Query } from "../union-types";
 export function querySnapshotObservable(query, options) {
     if (Query.isClient(query)) {
         return new Observable(function (subscriber) {
-            var unsubscribe = query.onSnapshot(options || {}, function (snapshot) { return subscriber.next(snapshot); }, function (error) { return subscriber.error(error); });
+            var unsubscribe = query.onSnapshot(extractSnapshotListenOptions(options) || {}, function (snapshot) { return subscriber.next(snapshot); }, function (error) { return subscriber.error(error); });
             return function () { return unsubscribe(); };
         });
     }
