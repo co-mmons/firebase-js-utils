@@ -47,6 +47,7 @@ var AutoWriteBatch = /** @class */ (function () {
                         return [4 /*yield*/, this.batch.commit()];
                     case 1:
                         results = _a.sent();
+                        this.batch$ = undefined;
                         this.count$ = 0;
                         if (this.onCommit) {
                             try {
@@ -73,6 +74,7 @@ var AutoWriteBatch = /** @class */ (function () {
                         return [4 /*yield*/, this.batch.commit()];
                     case 1:
                         results = _a.sent();
+                        this.batch$ = undefined;
                         this.count$ = 0;
                         if (this.onCommit) {
                             try {

@@ -29,6 +29,7 @@ export class AutoWriteBatch {
             if (this.count$ > this.limit$) {
                 const count = this.count$;
                 const results = yield this.batch.commit();
+                this.batch$ = undefined;
                 this.count$ = 0;
                 if (this.onCommit) {
                     try {
@@ -48,6 +49,7 @@ export class AutoWriteBatch {
             if (this.count$ > 0) {
                 const count = this.count$;
                 const results = yield this.batch.commit();
+                this.batch$ = undefined;
                 this.count$ = 0;
                 if (this.onCommit) {
                     try {
