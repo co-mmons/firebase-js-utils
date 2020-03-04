@@ -1,9 +1,10 @@
 import { Observable } from "rxjs";
-import { CollectionReference, Query, QuerySnapshot, SnapshotListenOptions } from "../types";
-declare module "../firestore" {
-    interface UniversalFirestore {
-        collectionSnapshotObservable(collectionPathOrQuery: string | CollectionReference, options?: SnapshotListenOptions): Observable<QuerySnapshot>;
-        querySnapshotObservable(query: Query, options?: SnapshotListenOptions): Observable<QuerySnapshot>;
-    }
-}
-export declare function collectionQuerySnapshotObservableInject(): void;
+import { DocumentData } from "../shared-types";
+import { firestoreAdminModuleTypes, firestoreClientModuleTypes } from "../types";
+import { CollectionReference, Query } from "../union-types";
+export declare function querySnapshotObservable<T = DocumentData>(query: firestoreClientModuleTypes.Query<T>, options?: firestoreClientModuleTypes.SnapshotListenOptions): Observable<firestoreClientModuleTypes.QuerySnapshot<T>>;
+export declare function querySnapshotObservable<T = DocumentData>(query: firestoreAdminModuleTypes.Query<T>): Observable<firestoreAdminModuleTypes.QuerySnapshot<T>>;
+export declare function querySnapshotObservable<T = DocumentData>(query: Query<T>): Observable<firestoreClientModuleTypes.QuerySnapshot<T> | firestoreAdminModuleTypes.QuerySnapshot<T>>;
+export declare function collectionSnapshotObservable<T = DocumentData>(collection: firestoreClientModuleTypes.CollectionReference<T>, options?: firestoreClientModuleTypes.SnapshotListenOptions): Observable<firestoreClientModuleTypes.QuerySnapshot>;
+export declare function collectionSnapshotObservable<T = DocumentData>(collection: firestoreAdminModuleTypes.CollectionReference<T>): Observable<firestoreAdminModuleTypes.QuerySnapshot>;
+export declare function collectionSnapshotObservable<T = DocumentData>(collection: CollectionReference<T>): Observable<firestoreClientModuleTypes.QuerySnapshot<T> | firestoreAdminModuleTypes.QuerySnapshot<T>>;

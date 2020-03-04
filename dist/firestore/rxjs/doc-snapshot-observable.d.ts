@@ -1,8 +1,7 @@
 import { Observable } from "rxjs";
-import { DocumentReference, DocumentSnapshot, SnapshotListenOptions } from "../types";
-declare module "../firestore" {
-    interface UniversalFirestore {
-        docSnapshotObservable(doc: string | DocumentReference, options?: SnapshotListenOptions): Observable<DocumentSnapshot>;
-    }
-}
-export declare function docSnapshotObservableInject(): void;
+import { DocumentData } from "../shared-types";
+import { firestoreAdminModuleTypes, firestoreClientModuleTypes } from "../types";
+import { DocumentReference } from "../union-types";
+export declare function docSnapshotObservable<T = DocumentData>(doc: firestoreClientModuleTypes.DocumentReference<T>, options?: firestoreClientModuleTypes.SnapshotListenOptions): Observable<firestoreClientModuleTypes.DocumentSnapshot<T>>;
+export declare function docSnapshotObservable<T = DocumentData>(doc: firestoreAdminModuleTypes.DocumentReference<T>): Observable<firestoreAdminModuleTypes.DocumentSnapshot<T>>;
+export declare function docSnapshotObservable<T = DocumentData>(doc: DocumentReference<T>): Observable<firestoreClientModuleTypes.DocumentSnapshot<T> | firestoreAdminModuleTypes.DocumentSnapshot<T>>;

@@ -1,7 +1,5 @@
-import "./collection-query-snapshot-observable";
-import "./doc-data-observable";
-import "./doc-snapshot-observable";
-import "./docs-data-observable";
-import "./docs-snapshots-observable";
-export * from "../";
-export declare function injectUniversalFirestoreRxjs(): void;
+export * from "./collection-query-snapshot-observable";
+export * from "./doc-data-observable";
+export * from "./doc-snapshot-observable";
+export * from "./docs-data-observable";
+export * from "./docs-snapshots-observable";

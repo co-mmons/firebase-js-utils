@@ -1,23 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const operators_1 = require("rxjs/operators");
-const extract_snapshot_options_1 = require("../extract-snapshot-options");
-const firestore_1 = require("../firestore");
+const union_types_1 = require("../union-types");
+const doc_snapshot_observable_1 = require("./doc-snapshot-observable");
 function docDataObservable(doc, options) {
-    if (typeof doc == "string") {
-        return this.docDataObservable(this.doc(doc), options);
+    if (union_types_1.DocumentReference.isClient(doc)) {
+        return doc_snapshot_observable_1.docSnapshotObservable(doc, options).pipe(operators_1.map(snapshot => snapshot.data()));
     }
-    let observable = this.docSnapshotObservable(doc, options).pipe(operators_1.map(snapshot => {
-        let data = snapshot.data(extract_snapshot_options_1.extractSnapshotOptions(options));
-        if (options && options.serializer) {
-            return this.unserialize(data, options.serializer, options.serializationOptions);
-        }
-        return data;
-    }));
-    return observable;
+    else if (union_types_1.DocumentReference.isAdmin(doc)) {
+        return doc_snapshot_observable_1.docSnapshotObservable(doc).pipe(operators_1.map(snapshot => snapshot.data()));
+    }
+    else {
+        throw new Error("Invalid document reference");
+    }
 }
-function docDataObservableInject() {
-    firestore_1.UniversalFirestore.prototype.docDataObservable = docDataObservable;
-}
-exports.docDataObservableInject = docDataObservableInject;
+exports.docDataObservable = docDataObservable;
 //# sourceMappingURL=doc-data-observable.js.map

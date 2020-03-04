@@ -1,11 +1,12 @@
-import {UniversalAuth} from "./auth";
-import {UniversalFirestore} from "./firestore";
+import {AuthUser} from "./auth";
+import {Firestore} from "./firestore";
 
-export abstract class UniversalFirebaseContext {
+export interface FirebaseContext {
+    firestore?: Firestore;
+    authUser?: AuthUser;
+    functionUrl?: (name: string) => string;
+}
 
-    readonly auth: UniversalAuth;
-
-    readonly firestore: UniversalFirestore;
-
-    abstract functionUrl(name: string): string;
+export interface FirebaseContextFirestore<FirestoreImpl extends Firestore> {
+    firestore?: FirestoreImpl;
 }

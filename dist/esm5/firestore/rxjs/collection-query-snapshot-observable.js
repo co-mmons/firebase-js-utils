@@ -1,17 +1,29 @@
 import { Observable } from "rxjs";
-import { extractSnapshotListenOptions } from "../extract-snapshot-listen-options";
-import { UniversalFirestore } from "../firestore";
-function collectionOrQuerySnapshotObservable(collectionPathOrQuery, options) {
-    if (typeof collectionPathOrQuery == "string") {
-        return this.querySnapshotObservable(this.collection(collectionPathOrQuery), options);
+import { extractSnapshotListenOptions } from "../client/extract-snapshot-listen-options";
+import { CollectionReference, Query } from "../union-types";
+export function querySnapshotObservable(query, options) {
+    if (Query.isClient(query)) {
+        return new Observable(function (subscriber) {
+            var unsubscribe = query.onSnapshot(extractSnapshotListenOptions(options) || {}, function (snapshot) { return subscriber.next(snapshot); }, function (error) { return subscriber.error(error); });
+            return function () { return unsubscribe(); };
+        });
     }
-    return new Observable(function (subscriber) {
-        var unsubscribe = collectionPathOrQuery.onSnapshot(extractSnapshotListenOptions(options) || {}, subscriber);
-        return function () { return unsubscribe(); };
-    });
+    else if (Query.isAdmin(query)) {
+        return new Observable(function (subscriber) {
+            var unsubscribe = query.onSnapshot(function (snapshot) { return subscriber.next(snapshot); }, function (error) { return subscriber.error(error); });
+            return function () { return unsubscribe(); };
+        });
+    }
 }
-export function collectionQuerySnapshotObservableInject() {
-    UniversalFirestore.prototype.collectionSnapshotObservable = collectionOrQuerySnapshotObservable;
-    UniversalFirestore.prototype.querySnapshotObservable = collectionOrQuerySnapshotObservable;
+export function collectionSnapshotObservable(collection, options) {
+    if (CollectionReference.isClient(collection)) {
+        return querySnapshotObservable(collection, options);
+    }
+    else if (CollectionReference.isAdmin(collection)) {
+        return querySnapshotObservable(collection);
+    }
+    else {
+        throw new Error("Invalid collection");
+    }
 }
 //# sourceMappingURL=collection-query-snapshot-observable.js.map

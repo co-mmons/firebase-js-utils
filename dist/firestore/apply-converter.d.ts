@@ -1,0 +1,12 @@
+import { DataConverter } from "./data-converter";
+import { CollectionReference, DocumentReference, Query } from "./union-types";
+import { firestoreClientModuleTypes, firestoreAdminModuleTypes } from "./types";
+export declare function applyConverter<T>(documentRef: firestoreClientModuleTypes.DocumentReference<any>, converter: DataConverter<T>): firestoreClientModuleTypes.DocumentReference<T>;
+export declare function applyConverter<T>(documentRef: firestoreAdminModuleTypes.DocumentReference<any>, converter: DataConverter<T>): firestoreAdminModuleTypes.DocumentReference<T>;
+export declare function applyConverter<T>(documentRef: DocumentReference<any>, converter: DataConverter<T>): typeof documentRef extends firestoreClientModuleTypes.DocumentReference ? firestoreClientModuleTypes.DocumentReference : firestoreAdminModuleTypes.DocumentReference<T>;
+export declare function applyConverter<T>(collectionRef: firestoreClientModuleTypes.CollectionReference<any>, converter: DataConverter<T>): firestoreClientModuleTypes.CollectionReference<T>;
+export declare function applyConverter<T>(collectionRef: firestoreAdminModuleTypes.CollectionReference<any>, converter: DataConverter<T>): firestoreAdminModuleTypes.CollectionReference<T>;
+export declare function applyConverter<T>(collectionRef: CollectionReference<any>, converter: DataConverter<T>): typeof collectionRef extends firestoreClientModuleTypes.CollectionReference ? firestoreClientModuleTypes.CollectionReference<T> : firestoreAdminModuleTypes.CollectionReference<T>;
+export declare function applyConverter<T>(query: firestoreClientModuleTypes.Query<any>, converter: DataConverter<T>): firestoreClientModuleTypes.Query<T>;
+export declare function applyConverter<T>(query: firestoreAdminModuleTypes.Query<any>, converter: DataConverter<T>): firestoreAdminModuleTypes.Query<T>;
+export declare function applyConverter<T>(query: Query, converter: DataConverter<T>): typeof query extends firestoreClientModuleTypes.Query<T> ? firestoreClientModuleTypes.Query<T> : firestoreAdminModuleTypes.Query<T>;

@@ -1,16 +1,16 @@
 import { Observable } from "rxjs";
-import { extractSnapshotListenOptions } from "../extract-snapshot-listen-options";
-import { UniversalFirestore } from "../firestore";
-function docSnapshotObservable(doc, options) {
-    if (typeof doc == "string") {
-        return this.docSnapshotObservable(this.doc(doc), options);
-    }
+import { extractSnapshotListenOptions } from "../client/extract-snapshot-listen-options";
+import { DocumentReference } from "../union-types";
+export function docSnapshotObservable(doc, options) {
     return new Observable(function (subscriber) {
-        var unsubscribe = doc.onSnapshot(extractSnapshotListenOptions(options), subscriber);
-        return function () { return unsubscribe(); };
+        if (DocumentReference.isClient(doc)) {
+            var unsubscribe_1 = doc.onSnapshot(extractSnapshotListenOptions(options) || {}, function (snapshot) { return subscriber.next(snapshot); }, function (error) { return subscriber.error(error); });
+            return function () { return unsubscribe_1(); };
+        }
+        else if (DocumentReference.isAdmin(doc)) {
+            var unsubscribe_2 = doc.onSnapshot(function (snapshot) { return subscriber.next(snapshot); }, function (error) { return subscriber.error(error); });
+            return function () { return unsubscribe_2(); };
+        }
     });
-}
-export function docSnapshotObservableInject() {
-    UniversalFirestore.prototype.docSnapshotObservable = docSnapshotObservable;
 }
 //# sourceMappingURL=doc-snapshot-observable.js.map

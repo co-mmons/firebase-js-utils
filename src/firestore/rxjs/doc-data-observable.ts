@@ -1,37 +1,23 @@
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {extractSnapshotOptions} from "../extract-snapshot-options";
-import {UniversalFirestore} from "../firestore";
-import {SerializationOptions} from "../serialization-options";
-import {DocumentReference, SnapshotListenOptions, SnapshotOptions} from "../types";
+import {DocumentData} from "../shared-types";
+import {firestoreAdminModuleTypes, firestoreClientModuleTypes} from "../types";
+import {DocumentReference} from "../union-types";
+import {docSnapshotObservable} from "./doc-snapshot-observable";
 
-function docDataObservable<V = any>(this: UniversalFirestore, doc: string | DocumentReference, options?: SnapshotOptions & SnapshotListenOptions & SerializationOptions): Observable<V> {
+export function docDataObservable<T = DocumentData>(doc: firestoreClientModuleTypes.DocumentReference<T>, options?: firestoreClientModuleTypes.SnapshotOptions & firestoreClientModuleTypes.SnapshotListenOptions): Observable<T>;
 
-    if (typeof doc == "string") {
-        return this.docDataObservable(this.doc(doc), options);
+export function docDataObservable<T = DocumentData>(doc: firestoreAdminModuleTypes.DocumentReference<T>): Observable<T>;
+
+export function docDataObservable<T = DocumentData>(doc: DocumentReference<T>): Observable<T>;
+
+export function docDataObservable<T = DocumentData>(doc: DocumentReference<T>, options?: firestoreClientModuleTypes.SnapshotOptions & firestoreClientModuleTypes.SnapshotListenOptions): Observable<T> {
+
+    if (DocumentReference.isClient(doc)) {
+        return docSnapshotObservable(doc, options).pipe(map(snapshot => snapshot.data()));
+    } else if (DocumentReference.isAdmin(doc)) {
+        return docSnapshotObservable(doc).pipe(map(snapshot => snapshot.data()));
+    } else {
+        throw new Error("Invalid document reference");
     }
-
-    let observable = this.docSnapshotObservable(doc, options).pipe(map(snapshot => {
-        let data = snapshot.data(extractSnapshotOptions(options)) as V;
-
-        if (options && options.serializer) {
-            return this.unserialize(data, options.serializer, options.serializationOptions);
-        }
-
-        return data;
-    }));
-
-    return observable;
-}
-
-declare module "../firestore" {
-
-    interface UniversalFirestore {
-        docDataObservable<V = any>(doc: string | DocumentReference, options?: SnapshotOptions & SnapshotListenOptions & SerializationOptions): Observable<V>;
-    }
-
-}
-
-export function docDataObservableInject() {
-    UniversalFirestore.prototype.docDataObservable = docDataObservable;
 }

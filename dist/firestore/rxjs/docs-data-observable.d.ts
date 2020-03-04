@@ -1,9 +1,7 @@
 import { Observable } from "rxjs";
-import { SerializationOptions } from "../serialization-options";
-import { Query, SnapshotListenOptions, SnapshotOptions } from "../types";
-declare module "../firestore" {
-    interface UniversalFirestore {
-        docsDataObservable<V = any>(collectionPathOrQuery: string | Query, options?: SnapshotOptions & SnapshotListenOptions & SerializationOptions): Observable<V[]>;
-    }
-}
-export declare function docsDataObservableInject(): void;
+import { DocumentData } from "../shared-types";
+import { firestoreAdminModuleTypes, firestoreClientModuleTypes } from "../types";
+import { Query } from "../union-types";
+export declare function docsDataObservable<T = DocumentData>(query: firestoreClientModuleTypes.Query<T>, options?: firestoreClientModuleTypes.SnapshotOptions & firestoreClientModuleTypes.SnapshotListenOptions): Observable<T[]>;
+export declare function docsDataObservable<T = DocumentData>(query: firestoreAdminModuleTypes.Query<T>): Observable<T[]>;
+export declare function docsDataObservable<T = DocumentData>(query: Query<T>): Observable<T[]>;

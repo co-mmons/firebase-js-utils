@@ -1,20 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const rxjs_1 = require("rxjs");
-const extract_snapshot_listen_options_1 = require("../extract-snapshot-listen-options");
-const firestore_1 = require("../firestore");
-function collectionOrQuerySnapshotObservable(collectionPathOrQuery, options) {
-    if (typeof collectionPathOrQuery == "string") {
-        return this.querySnapshotObservable(this.collection(collectionPathOrQuery), options);
+const extract_snapshot_listen_options_1 = require("../client/extract-snapshot-listen-options");
+const union_types_1 = require("../union-types");
+function querySnapshotObservable(query, options) {
+    if (union_types_1.Query.isClient(query)) {
+        return new rxjs_1.Observable(subscriber => {
+            const unsubscribe = query.onSnapshot(extract_snapshot_listen_options_1.extractSnapshotListenOptions(options) || {}, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            return () => unsubscribe();
+        });
     }
-    return new rxjs_1.Observable(subscriber => {
-        let unsubscribe = collectionPathOrQuery.onSnapshot(extract_snapshot_listen_options_1.extractSnapshotListenOptions(options) || {}, subscriber);
-        return () => unsubscribe();
-    });
+    else if (union_types_1.Query.isAdmin(query)) {
+        return new rxjs_1.Observable(subscriber => {
+            const unsubscribe = query.onSnapshot(snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            return () => unsubscribe();
+        });
+    }
 }
-function collectionQuerySnapshotObservableInject() {
-    firestore_1.UniversalFirestore.prototype.collectionSnapshotObservable = collectionOrQuerySnapshotObservable;
-    firestore_1.UniversalFirestore.prototype.querySnapshotObservable = collectionOrQuerySnapshotObservable;
+exports.querySnapshotObservable = querySnapshotObservable;
+function collectionSnapshotObservable(collection, options) {
+    if (union_types_1.CollectionReference.isClient(collection)) {
+        return querySnapshotObservable(collection, options);
+    }
+    else if (union_types_1.CollectionReference.isAdmin(collection)) {
+        return querySnapshotObservable(collection);
+    }
+    else {
+        throw new Error("Invalid collection");
+    }
 }
-exports.collectionQuerySnapshotObservableInject = collectionQuerySnapshotObservableInject;
+exports.collectionSnapshotObservable = collectionSnapshotObservable;
 //# sourceMappingURL=collection-query-snapshot-observable.js.map
