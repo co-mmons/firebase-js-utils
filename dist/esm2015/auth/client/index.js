@@ -15,7 +15,8 @@ export class AuthUserClient {
         return this.user && this.user.uid;
     }
     get userIdToken() {
-        return this.auth.currentUser.getIdToken();
+        var _a;
+        return (_a = this.auth.currentUser) === null || _a === void 0 ? void 0 : _a.getIdToken();
     }
     get userIdTokenObservable() {
         return new Observable(subscriber => {

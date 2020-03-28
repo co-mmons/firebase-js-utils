@@ -27,7 +27,7 @@ export class AuthUserClient implements AuthUser {
     readonly userIdObservable: ReplaySubject<string> = new ReplaySubject<string>(1);
 
     get userIdToken(): Promise<string> {
-        return this.auth.currentUser.getIdToken();
+        return this.auth.currentUser?.getIdToken();
     }
 
     get userIdTokenObservable(): Observable<string> {

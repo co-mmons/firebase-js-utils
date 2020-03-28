@@ -25,7 +25,8 @@ var AuthUserClient = /** @class */ (function () {
     });
     Object.defineProperty(AuthUserClient.prototype, "userIdToken", {
         get: function () {
-            return this.auth.currentUser.getIdToken();
+            var _a;
+            return (_a = this.auth.currentUser) === null || _a === void 0 ? void 0 : _a.getIdToken();
         },
         enumerable: true,
         configurable: true
