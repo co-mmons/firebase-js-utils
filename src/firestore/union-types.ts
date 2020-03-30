@@ -11,7 +11,7 @@ export namespace Firestore {
     }
 
     export function isAdmin(firestore: Firestore): firestore is firestoreAdminModuleTypes.Firestore {
-        return isFirestoreAdmin() && firestore instanceof firestoreAdminModule().DocumentReference;
+        return isFirestoreAdmin() && firestore instanceof firestoreAdminModule().Firestore;
     }
 
 }

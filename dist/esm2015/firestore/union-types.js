@@ -6,7 +6,7 @@ export var Firestore;
     }
     Firestore.isClient = isClient;
     function isAdmin(firestore) {
-        return isFirestoreAdmin() && firestore instanceof firestoreAdminModule().DocumentReference;
+        return isFirestoreAdmin() && firestore instanceof firestoreAdminModule().Firestore;
     }
     Firestore.isAdmin = isAdmin;
 })(Firestore || (Firestore = {}));

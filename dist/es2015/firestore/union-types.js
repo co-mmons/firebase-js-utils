@@ -8,7 +8,7 @@ var Firestore;
     }
     Firestore.isClient = isClient;
     function isAdmin(firestore) {
-        return mode_1.isFirestoreAdmin() && firestore instanceof mode_1.firestoreAdminModule().DocumentReference;
+        return mode_1.isFirestoreAdmin() && firestore instanceof mode_1.firestoreAdminModule().Firestore;
     }
     Firestore.isAdmin = isAdmin;
 })(Firestore = exports.Firestore || (exports.Firestore = {}));
