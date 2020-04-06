@@ -19,7 +19,7 @@ export class AutoWriteBatch {
         return this.limit$;
     }
     set limit(limit) {
-        this.limit$ = limit > 0 && limit <= 499 ? limit : 499;
+        this.limit$ = limit > 0 && limit <= 249 ? limit : 249;
     }
     isFull() {
         return this.count$ >= this.limit$;

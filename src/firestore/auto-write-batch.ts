@@ -32,7 +32,7 @@ export abstract class AutoWriteBatch {
     }
 
     set limit(limit: number) {
-        this.limit$ = limit > 0 && limit <= 499 ? limit : 499;
+        this.limit$ = limit > 0 && limit <= 249 ? limit : 249;
     }
 
     isFull() {

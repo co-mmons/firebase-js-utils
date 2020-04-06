@@ -28,7 +28,7 @@ var AutoWriteBatch = /** @class */ (function () {
             return this.limit$;
         },
         set: function (limit) {
-            this.limit$ = limit > 0 && limit <= 499 ? limit : 499;
+            this.limit$ = limit > 0 && limit <= 249 ? limit : 249;
         },
         enumerable: true,
         configurable: true
