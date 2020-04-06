@@ -3,7 +3,7 @@ import { DocumentReference, Firestore, WriteBatch } from "./union-types";
 var AutoWriteBatch = /** @class */ (function () {
     function AutoWriteBatch(firestore) {
         this.firestore = firestore;
-        this.limit$ = 499;
+        this.limit$ = 249;
         this.count$ = 0;
     }
     Object.defineProperty(AutoWriteBatch.prototype, "batch", {

@@ -11,7 +11,7 @@ export abstract class AutoWriteBatch {
 
     private batch$: WriteBatch;
 
-    private limit$: number = 499;
+    private limit$: number = 249;
 
     private count$: number = 0;
 

@@ -5,7 +5,7 @@ const union_types_1 = require("./union-types");
 class AutoWriteBatch {
     constructor(firestore) {
         this.firestore = firestore;
-        this.limit$ = 499;
+        this.limit$ = 249;
         this.count$ = 0;
     }
     get batch() {
