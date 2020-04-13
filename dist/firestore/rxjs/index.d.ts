@@ -1,5 +1,5 @@
-export * from "./collection-query-snapshot-observable";
-export * from "./doc-data-observable";
-export * from "./doc-snapshot-observable";
-export * from "./docs-data-observable";
-export * from "./docs-snapshots-observable";
+export { collectionSnapshotObservable, querySnapshotObservable } from "./collection-query-snapshot-observable";
+export { docDataObservable } from "./doc-data-observable";
+export { docSnapshotObservable } from "./doc-snapshot-observable";
+export { docsDataObservable } from "./docs-data-observable";
+export { docsSnapshotsObservable } from "./docs-snapshots-observable";

@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-tslib_1.__exportStar(require("./mode"), exports);
+var mode_1 = require("./mode");
+exports.isFirebaseAdmin = mode_1.isFirebaseAdmin;
+exports.isFirebaseClient = mode_1.isFirebaseClient;
+exports.setFirebaseMode = mode_1.setFirebaseMode;
 //# sourceMappingURL=index.js.map
