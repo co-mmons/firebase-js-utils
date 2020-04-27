@@ -9,13 +9,13 @@ export abstract class AutoWriteBatch {
 
     onCommit: (count: number, results?: any) => void;
 
-    private batch$: WriteBatch;
+    protected batch$: WriteBatch;
 
-    private limit$: number = 249;
+    protected limit$: number = 249;
 
-    private count$: number = 0;
+    protected count$: number = 0;
 
-    private get batch(): WriteBatch {
+    protected get batch(): WriteBatch {
         if (!this.batch$) {
             this.batch$ = this.firestore.batch();
         }
@@ -141,6 +141,8 @@ export class AutoWriteBatchClient extends AutoWriteBatch implements AutoWriteBat
 
 interface AutoWriteBatchAdminMethods {
 
+    create(documentRef: firestoreAdminModuleTypes.DocumentReference<any>, data: UpdateData): this;
+
     /**
      * Update fields of the document referred to by the provided
      * `DocumentReference`. If the document doesn't yet exist, the update fails
@@ -176,9 +178,22 @@ export class AutoWriteBatchAdmin extends AutoWriteBatch implements AutoWriteBatc
         super(firestore);
     }
 
+    private get adminBatch() {
+        return this.batch as firestoreAdminModuleTypes.WriteBatch;
+    }
+
+    create(documentRef: firestoreAdminModuleTypes.DocumentReference<any>, data: any) {
+        this.adminBatch.create(documentRef, data);
+        return this;
+    }
+
 }
 
-export function autoWriteBatch(firestore: Firestore): typeof firestore extends firestoreClientModuleTypes.Firestore ? AutoWriteBatchClient : AutoWriteBatchAdmin {
+export function autoWriteBatch(firestore: firestoreAdminModuleTypes.Firestore): AutoWriteBatchAdmin;
+
+export function autoWriteBatch(firestore: firestoreClientModuleTypes.Firestore): AutoWriteBatchClient;
+
+export function autoWriteBatch(firestore: Firestore): AutoWriteBatch {
     if (Firestore.isClient(firestore)) {
         return new AutoWriteBatchClient(firestore);
     } else if (Firestore.isAdmin(firestore)) {

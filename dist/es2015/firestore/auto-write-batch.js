@@ -113,6 +113,13 @@ class AutoWriteBatchAdmin extends AutoWriteBatch {
     constructor(firestore) {
         super(firestore);
     }
+    get adminBatch() {
+        return this.batch;
+    }
+    create(documentRef, data) {
+        this.adminBatch.create(documentRef, data);
+        return this;
+    }
 }
 exports.AutoWriteBatchAdmin = AutoWriteBatchAdmin;
 function autoWriteBatch(firestore) {

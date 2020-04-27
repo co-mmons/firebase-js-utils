@@ -146,6 +146,17 @@ var AutoWriteBatchAdmin = /** @class */ (function (_super) {
     function AutoWriteBatchAdmin(firestore) {
         return _super.call(this, firestore) || this;
     }
+    Object.defineProperty(AutoWriteBatchAdmin.prototype, "adminBatch", {
+        get: function () {
+            return this.batch;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    AutoWriteBatchAdmin.prototype.create = function (documentRef, data) {
+        this.adminBatch.create(documentRef, data);
+        return this;
+    };
     return AutoWriteBatchAdmin;
 }(AutoWriteBatch));
 export { AutoWriteBatchAdmin };

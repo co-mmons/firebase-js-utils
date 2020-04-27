@@ -1,14 +1,14 @@
 import { UpdateData } from "./shared-types";
 import { firestoreAdminModuleTypes, firestoreClientModuleTypes } from "./types";
-import { DocumentReference, FieldPath, Firestore } from "./union-types";
+import { DocumentReference, FieldPath, Firestore, WriteBatch } from "./union-types";
 export declare abstract class AutoWriteBatch {
     private readonly firestore;
     protected constructor(firestore: Firestore);
     onCommit: (count: number, results?: any) => void;
-    private batch$;
-    private limit$;
-    private count$;
-    private get batch();
+    protected batch$: WriteBatch;
+    protected limit$: number;
+    protected count$: number;
+    protected get batch(): WriteBatch;
     get count(): number;
     get limit(): number;
     set limit(limit: number);
@@ -36,6 +36,7 @@ export declare class AutoWriteBatchClient extends AutoWriteBatch implements Auto
     constructor(firestore: firestoreClientModuleTypes.Firestore);
 }
 interface AutoWriteBatchAdminMethods {
+    create(documentRef: firestoreAdminModuleTypes.DocumentReference<any>, data: UpdateData): this;
     /**
      * Update fields of the document referred to by the provided
      * `DocumentReference`. If the document doesn't yet exist, the update fails
@@ -66,6 +67,9 @@ interface AutoWriteBatchAdminMethods {
 }
 export declare class AutoWriteBatchAdmin extends AutoWriteBatch implements AutoWriteBatchAdminMethods {
     constructor(firestore: firestoreAdminModuleTypes.Firestore);
+    private get adminBatch();
+    create(documentRef: firestoreAdminModuleTypes.DocumentReference<any>, data: any): this;
 }
-export declare function autoWriteBatch(firestore: Firestore): typeof firestore extends firestoreClientModuleTypes.Firestore ? AutoWriteBatchClient : AutoWriteBatchAdmin;
+export declare function autoWriteBatch(firestore: firestoreAdminModuleTypes.Firestore): AutoWriteBatchAdmin;
+export declare function autoWriteBatch(firestore: firestoreClientModuleTypes.Firestore): AutoWriteBatchClient;
 export {};
