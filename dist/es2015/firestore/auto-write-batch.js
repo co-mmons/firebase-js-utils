@@ -117,6 +117,7 @@ class AutoWriteBatchAdmin extends AutoWriteBatch {
         return this.batch;
     }
     create(documentRef, data) {
+        this.count$++;
         this.adminBatch.create(documentRef, data);
         return this;
     }

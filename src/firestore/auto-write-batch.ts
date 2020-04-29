@@ -183,6 +183,7 @@ export class AutoWriteBatchAdmin extends AutoWriteBatch implements AutoWriteBatc
     }
 
     create(documentRef: firestoreAdminModuleTypes.DocumentReference<any>, data: any) {
+        this.count$++;
         this.adminBatch.create(documentRef, data);
         return this;
     }

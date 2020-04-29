@@ -154,6 +154,7 @@ var AutoWriteBatchAdmin = /** @class */ (function (_super) {
         configurable: true
     });
     AutoWriteBatchAdmin.prototype.create = function (documentRef, data) {
+        this.count$++;
         this.adminBatch.create(documentRef, data);
         return this;
     };
