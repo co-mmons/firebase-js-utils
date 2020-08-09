@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.applyConverter = void 0;
 const union_types_1 = require("./union-types");
 function applyConverter(applicable, converter) {
     if (union_types_1.DocumentReference.isClient(applicable) || union_types_1.DocumentReference.isAdmin(applicable)) {

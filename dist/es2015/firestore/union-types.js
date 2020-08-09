@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.QueryDocumentSnapshot = exports.WriteBatch = exports.GeoPoint = exports.Timestamp = exports.FieldPath = exports.FieldValue = exports.DocumentSnapshot = exports.Transaction = exports.Query = exports.CollectionReference = exports.DocumentReference = exports.Firestore = void 0;
 const mode_1 = require("./mode");
 var Firestore;
 (function (Firestore) {

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DataConverter = void 0;
 const union_types_1 = require("./union-types");
 class DataConverter {
     /**

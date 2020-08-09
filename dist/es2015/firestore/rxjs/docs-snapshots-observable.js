@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.docsSnapshotsObservable = void 0;
 const rxjs_1 = require("rxjs");
 const operators_1 = require("rxjs/operators");
 const extract_snapshot_listen_options_1 = require("../client/extract-snapshot-listen-options");

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteQuery = void 0;
 const tslib_1 = require("tslib");
 const core_1 = require("@co.mmons/js-utils/core");
 const union_types_1 = require("./union-types");

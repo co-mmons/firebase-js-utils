@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.autoWriteBatch = exports.AutoWriteBatchAdmin = exports.AutoWriteBatchClient = exports.AutoWriteBatch = void 0;
 const tslib_1 = require("tslib");
 const union_types_1 = require("./union-types");
 class AutoWriteBatch {

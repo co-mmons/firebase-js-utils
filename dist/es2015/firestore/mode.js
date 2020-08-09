@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.firestoreModule = exports.firestoreAdminModule = exports.isFirestoreAdmin = exports.firestoreClientModule = exports.isFirestoreClient = void 0;
 const config_1 = require("../config");
 const mode_1 = require("../mode");
 function isFirestoreClient() {

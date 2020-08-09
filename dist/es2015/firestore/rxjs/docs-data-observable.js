@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.docsDataObservable = void 0;
 const operators_1 = require("rxjs/operators");
 const union_types_1 = require("../union-types");
 const docs_snapshots_observable_1 = require("./docs-snapshots-observable");

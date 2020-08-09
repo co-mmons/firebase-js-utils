@@ -6,11 +6,11 @@
   "license": "MIT",
   "scripts": {
     "install": "node-utils-npm-install-dist",
-    "build": "node-utils-file-system-glob-delete \"dist/**/*\" && npm run build:es5 && npm run build:esm5 && npm run build:es2015 && npm run build:esm2015 && node-utils-file-system-glob-copy src dist \"**/package.json\"",
-    "build:es5": "tsc && tsc -p tsconfig.json -m commonjs -t es5 --outDir dist",
-    "build:esm5": "tsc && tsc -p tsconfig.json -d false -m es2015 -t es5 --outDir dist/esm5",
-    "build:es2015": "tsc && tsc -p tsconfig.json -d false -m commonjs -t es2015 --outDir dist/es2015",
-    "build:esm2015": "tsc && tsc -p tsconfig.json -d false -m es2015 -t es2015 --outDir dist/esm2015"
+    "build": "node-utils-file-system-glob-delete \"dist/**/*\" && tsc --emitDeclarationOnly && npm run build:es5 && npm run build:esm5 && npm run build:es2015 && npm run build:esm2015 && node-utils-file-system-glob-copy src dist \"**/package.json\"",
+    "build:es5": "tsc -p tsconfig.json -d false -m commonjs -t es5 --outDir dist/es5",
+    "build:esm5": "tsc -p tsconfig.json -d false -m es2015 -t es5 --outDir dist/esm5",
+    "build:es2015": "tsc -p tsconfig.json -d false -m commonjs -t es2015 --outDir dist/es2015",
+    "build:esm2015": "tsc -p tsconfig.json -d false -m es2015 -t es2015 --outDir dist/esm2015"
   },
   "dependencies": {
     "@co.mmons/node-utils": "git+https://github.com/co-mmons/node-utils.git"
@@ -20,14 +20,16 @@
     "rxjs": "^6.5.2"
   },
   "devDependencies": {
+    "@co.mmons/js-utils": "git+https://github.com/co-mmons/js-utils.git",
     "firebase": "^7.8.0",
     "firebase-admin": "^8.9.2",
     "tslib": "^1.10.0",
-    "typescript": "^3.8.0-dev.20200201"
+    "typescript": "^3.9.7",
+    "rxjs": "^6.5.2"
   },
-  "main": "index.js",
-  "module": "esm5/index.js",
-  "es5": "index.js",
+  "main": "es2015/index.js",
+  "module": "esm2015/index.js",
+  "es5": "es5/index.js",
   "esm5": "esm5/index.js",
   "es2015": "es2015/index.js",
   "esm2015": "esm2015/index.js",

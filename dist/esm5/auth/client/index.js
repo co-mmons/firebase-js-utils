@@ -13,14 +13,14 @@ var AuthUserClient = /** @class */ (function () {
         get: function () {
             return this._user;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AuthUserClient.prototype, "userId", {
         get: function () {
             return this.user && this.user.uid;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AuthUserClient.prototype, "userIdToken", {
@@ -28,7 +28,7 @@ var AuthUserClient = /** @class */ (function () {
             var _a;
             return (_a = this.auth.currentUser) === null || _a === void 0 ? void 0 : _a.getIdToken();
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AuthUserClient.prototype, "userIdTokenObservable", {
@@ -39,7 +39,7 @@ var AuthUserClient = /** @class */ (function () {
                 return function () { return unsubscribe(); };
             }).pipe(switchMap(function (user) { return user.getIdToken(); }));
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     AuthUserClient.prototype.userChanged = function (user) {

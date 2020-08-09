@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.docData = void 0;
 const tslib_1 = require("tslib");
 const extract_get_options_1 = require("./client/extract-get-options");
 const extract_snapshot_options_1 = require("./client/extract-snapshot-options");

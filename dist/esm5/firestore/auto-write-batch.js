@@ -13,14 +13,14 @@ var AutoWriteBatch = /** @class */ (function () {
             }
             return this.batch$;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AutoWriteBatch.prototype, "count", {
         get: function () {
             return this.count$;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AutoWriteBatch.prototype, "limit", {
@@ -30,7 +30,7 @@ var AutoWriteBatch = /** @class */ (function () {
         set: function (limit) {
             this.limit$ = limit > 0 && limit <= 249 ? limit : 249;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     AutoWriteBatch.prototype.isFull = function () {
@@ -150,7 +150,7 @@ var AutoWriteBatchAdmin = /** @class */ (function (_super) {
         get: function () {
             return this.batch;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     AutoWriteBatchAdmin.prototype.create = function (documentRef, data) {

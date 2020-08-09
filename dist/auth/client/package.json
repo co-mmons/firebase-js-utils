@@ -1,8 +1,8 @@
 {
     "name": "@co.mmons/firebase-js-utils/auth/client",
-    "main": "index.js",
-    "module": "../../esm5/auth/client/index.js",
-    "es5": "index.js",
+    "main": "../../es2015/auth/client/index.js",
+    "module": "../../esm2015/auth/client/index.js",
+    "es5": "../../es5/auth/client/index.js",
     "esm5": "../../esm5/auth/client/index.js",
     "es2015": "../../es2015/auth/client/index.js",
     "esm2015": "../../esm2015/auth/client/index.js",
