@@ -16,7 +16,7 @@ var DataConverter = /** @class */ (function () {
      * @final
      */
     DataConverter.prototype.fromFirestore = function (dataOrSnapshot, options) {
-        if (QueryDocumentSnapshot.is(dataOrSnapshot) && QueryDocumentSnapshot.isClient(dataOrSnapshot)) {
+        if (QueryDocumentSnapshot.is(dataOrSnapshot)) {
             return this.from(dataOrSnapshot.data(options));
         }
         else {

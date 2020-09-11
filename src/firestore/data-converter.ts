@@ -37,7 +37,7 @@ export abstract class DataConverter<T> implements firestoreClientModuleTypes.Fir
      */
     fromFirestore(dataOrSnapshot: DocumentData | firestoreClientModuleTypes.QueryDocumentSnapshot, options?: firestoreClientModuleTypes.SnapshotOptions): T {
 
-        if (QueryDocumentSnapshot.is(dataOrSnapshot) && QueryDocumentSnapshot.isClient(dataOrSnapshot)) {
+        if (QueryDocumentSnapshot.is(dataOrSnapshot)) {
             return this.from(dataOrSnapshot.data(options));
         } else {
             return this.from(dataOrSnapshot);

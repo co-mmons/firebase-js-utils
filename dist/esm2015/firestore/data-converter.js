@@ -14,7 +14,7 @@ export class DataConverter {
      * @final
      */
     fromFirestore(dataOrSnapshot, options) {
-        if (QueryDocumentSnapshot.is(dataOrSnapshot) && QueryDocumentSnapshot.isClient(dataOrSnapshot)) {
+        if (QueryDocumentSnapshot.is(dataOrSnapshot)) {
             return this.from(dataOrSnapshot.data(options));
         }
         else {
