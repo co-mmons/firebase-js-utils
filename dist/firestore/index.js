@@ -21,8 +21,8 @@ Object.defineProperty(exports, "QueryDocumentSnapshot", { enumerable: true, get:
 Object.defineProperty(exports, "Timestamp", { enumerable: true, get: function () { return union_types_1.Timestamp; } });
 Object.defineProperty(exports, "Transaction", { enumerable: true, get: function () { return union_types_1.Transaction; } });
 Object.defineProperty(exports, "WriteBatch", { enumerable: true, get: function () { return union_types_1.WriteBatch; } });
-var dataConverter_1 = require("./dataConverter");
-Object.defineProperty(exports, "DataConverter", { enumerable: true, get: function () { return dataConverter_1.DataConverter; } });
+var DataConverter_1 = require("./DataConverter");
+Object.defineProperty(exports, "DataConverter", { enumerable: true, get: function () { return DataConverter_1.DataConverter; } });
 var deleteQuery_1 = require("./deleteQuery");
 Object.defineProperty(exports, "deleteQuery", { enumerable: true, get: function () { return deleteQuery_1.deleteQuery; } });
 var docData_1 = require("./docData");

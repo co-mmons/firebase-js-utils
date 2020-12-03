@@ -28,6 +28,7 @@ export declare namespace Transaction {
 }
 export declare type DocumentSnapshot<T = DocumentData> = FirebaseClientModule.firestore.DocumentSnapshot<T> | FirebaseAdminModule.firestore.DocumentSnapshot<T>;
 export declare namespace DocumentSnapshot {
+    function is(value: any): value is DocumentSnapshot;
     function isClient<T>(snapshot: DocumentSnapshot<T>): snapshot is FirebaseClientModule.firestore.DocumentSnapshot<T>;
     function isAdmin<T>(snapshot: DocumentSnapshot<T>): snapshot is FirebaseAdminModule.firestore.DocumentSnapshot<T>;
 }

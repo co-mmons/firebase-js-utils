@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataConverter = void 0;
-const union_types_1 = require("./union-types");
 class DataConverter {
     /**
      * Called by the Firestore SDK to convert a custom model object of type T
@@ -17,7 +16,7 @@ class DataConverter {
      * @final
      */
     fromFirestore(dataOrSnapshot, options) {
-        if (union_types_1.QueryDocumentSnapshot.is(dataOrSnapshot)) {
+        if (typeof dataOrSnapshot.data === "function") {
             return this.from(dataOrSnapshot.data(options));
         }
         else {

@@ -81,6 +81,16 @@ export type DocumentSnapshot<T = DocumentData> = FirebaseClientModule.firestore.
 
 export namespace DocumentSnapshot {
 
+    export function is(value: any): value is DocumentSnapshot {
+        if (isFirestoreClient()) {
+            return value instanceof firestoreClientModule().DocumentSnapshot;
+        } else if (isFirestoreAdmin()) {
+            return value instanceof firestoreAdminModule().DocumentSnapshot;
+        }
+
+        return false;
+    }
+
     export function isClient<T>(snapshot: DocumentSnapshot<T>): snapshot is FirebaseClientModule.firestore.DocumentSnapshot<T> {
         return isFirestoreClient() && snapshot instanceof firestoreClientModule().Transaction;
     }

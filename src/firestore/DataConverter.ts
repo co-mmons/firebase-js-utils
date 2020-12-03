@@ -1,7 +1,7 @@
 import {FirebaseAdminModule} from "../FirebaseAdminModule";
 import {FirebaseClientModule} from "../FirebaseClientModule";
 import {DocumentData} from "./shared-types";
-import {QueryDocumentSnapshot} from "./union-types";
+import {DocumentSnapshot, QueryDocumentSnapshot} from "./union-types";
 
 export abstract class DataConverter<T> implements FirebaseClientModule.firestore.FirestoreDataConverter<T>, FirebaseAdminModule.firestore.FirestoreDataConverter<T> {
 
@@ -38,7 +38,7 @@ export abstract class DataConverter<T> implements FirebaseClientModule.firestore
      */
     fromFirestore(dataOrSnapshot: DocumentData | FirebaseClientModule.firestore.QueryDocumentSnapshot, options?: FirebaseClientModule.firestore.SnapshotOptions): T {
 
-        if (QueryDocumentSnapshot.is(dataOrSnapshot)) {
+        if (typeof dataOrSnapshot.data === "function") {
             return this.from(dataOrSnapshot.data(options));
         } else {
             return this.from(dataOrSnapshot);

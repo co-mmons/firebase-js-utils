@@ -56,6 +56,16 @@ export var Transaction;
 })(Transaction || (Transaction = {}));
 export var DocumentSnapshot;
 (function (DocumentSnapshot) {
+    function is(value) {
+        if (isFirestoreClient()) {
+            return value instanceof firestoreClientModule().DocumentSnapshot;
+        }
+        else if (isFirestoreAdmin()) {
+            return value instanceof firestoreAdminModule().DocumentSnapshot;
+        }
+        return false;
+    }
+    DocumentSnapshot.is = is;
     function isClient(snapshot) {
         return isFirestoreClient() && snapshot instanceof firestoreClientModule().Transaction;
     }

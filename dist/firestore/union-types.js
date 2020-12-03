@@ -59,6 +59,16 @@ var Transaction;
 })(Transaction = exports.Transaction || (exports.Transaction = {}));
 var DocumentSnapshot;
 (function (DocumentSnapshot) {
+    function is(value) {
+        if (mode_1.isFirestoreClient()) {
+            return value instanceof mode_1.firestoreClientModule().DocumentSnapshot;
+        }
+        else if (mode_1.isFirestoreAdmin()) {
+            return value instanceof mode_1.firestoreAdminModule().DocumentSnapshot;
+        }
+        return false;
+    }
+    DocumentSnapshot.is = is;
     function isClient(snapshot) {
         return mode_1.isFirestoreClient() && snapshot instanceof mode_1.firestoreClientModule().Transaction;
     }

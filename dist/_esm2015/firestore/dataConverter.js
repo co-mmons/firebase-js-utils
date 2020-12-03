@@ -1,4 +1,3 @@
-import { QueryDocumentSnapshot } from "./union-types";
 export class DataConverter {
     /**
      * Called by the Firestore SDK to convert a custom model object of type T
@@ -14,7 +13,7 @@ export class DataConverter {
      * @final
      */
     fromFirestore(dataOrSnapshot, options) {
-        if (QueryDocumentSnapshot.is(dataOrSnapshot)) {
+        if (typeof dataOrSnapshot.data === "function") {
             return this.from(dataOrSnapshot.data(options));
         }
         else {
