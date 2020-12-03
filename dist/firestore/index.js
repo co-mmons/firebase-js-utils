@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isFirestoreClient = exports.isFirestoreAdmin = exports.firestoreModule = exports.firestoreClientModule = exports.firestoreAdminModule = exports.docsSnapshots = exports.docsData = exports.docData = exports.deleteQuery = exports.DataConverter = exports.WriteBatch = exports.Transaction = exports.Timestamp = exports.QueryDocumentSnapshot = exports.Query = exports.GeoPoint = exports.Firestore = exports.FieldValue = exports.FieldPath = exports.DocumentSnapshot = exports.DocumentReference = exports.CollectionReference = exports.AutoWriteBatchClient = exports.AutoWriteBatchAdmin = exports.autoWriteBatch = exports.AutoWriteBatch = exports.applyConverter = void 0;
+exports.collection = exports.isFirestoreClient = exports.isFirestoreAdmin = exports.firestoreModule = exports.firestoreClientModule = exports.firestoreAdminModule = exports.docsSnapshots = exports.docsData = exports.docData = exports.deleteQuery = exports.DataConverter = exports.WriteBatch = exports.Transaction = exports.Timestamp = exports.QueryDocumentSnapshot = exports.Query = exports.GeoPoint = exports.Firestore = exports.FieldValue = exports.FieldPath = exports.DocumentSnapshot = exports.DocumentReference = exports.CollectionReference = exports.AutoWriteBatchClient = exports.AutoWriteBatchAdmin = exports.autoWriteBatch = exports.AutoWriteBatch = exports.applyConverter = void 0;
 var applyConverter_1 = require("./applyConverter");
 Object.defineProperty(exports, "applyConverter", { enumerable: true, get: function () { return applyConverter_1.applyConverter; } });
 var autoWriteBatch_1 = require("./autoWriteBatch");
@@ -37,4 +37,6 @@ Object.defineProperty(exports, "firestoreClientModule", { enumerable: true, get:
 Object.defineProperty(exports, "firestoreModule", { enumerable: true, get: function () { return mode_1.firestoreModule; } });
 Object.defineProperty(exports, "isFirestoreAdmin", { enumerable: true, get: function () { return mode_1.isFirestoreAdmin; } });
 Object.defineProperty(exports, "isFirestoreClient", { enumerable: true, get: function () { return mode_1.isFirestoreClient; } });
+var collection_1 = require("./collection");
+Object.defineProperty(exports, "collection", { enumerable: true, get: function () { return collection_1.collection; } });
 //# sourceMappingURL=index.js.map

@@ -7,4 +7,5 @@ export { docData } from "./docData";
 export { docsData } from "./docsData";
 export { docsSnapshots } from "./docsSnapshots";
 export { firestoreAdminModule, firestoreClientModule, firestoreModule, isFirestoreAdmin, isFirestoreClient } from "./mode";
+export { collection } from "./collection";
 //# sourceMappingURL=index.js.map
