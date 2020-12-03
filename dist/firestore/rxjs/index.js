@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var collection_query_snapshot_observable_1 = require("./collection-query-snapshot-observable");
-Object.defineProperty(exports, "collectionSnapshotObservable", { enumerable: true, get: function () { return collection_query_snapshot_observable_1.collectionSnapshotObservable; } });
-Object.defineProperty(exports, "querySnapshotObservable", { enumerable: true, get: function () { return collection_query_snapshot_observable_1.querySnapshotObservable; } });
-var doc_data_observable_1 = require("./doc-data-observable");
-Object.defineProperty(exports, "docDataObservable", { enumerable: true, get: function () { return doc_data_observable_1.docDataObservable; } });
-var doc_snapshot_observable_1 = require("./doc-snapshot-observable");
-Object.defineProperty(exports, "docSnapshotObservable", { enumerable: true, get: function () { return doc_snapshot_observable_1.docSnapshotObservable; } });
-var docs_data_observable_1 = require("./docs-data-observable");
-Object.defineProperty(exports, "docsDataObservable", { enumerable: true, get: function () { return docs_data_observable_1.docsDataObservable; } });
-var docs_snapshots_observable_1 = require("./docs-snapshots-observable");
-Object.defineProperty(exports, "docsSnapshotsObservable", { enumerable: true, get: function () { return docs_snapshots_observable_1.docsSnapshotsObservable; } });
+exports.docsSnapshotsObservable = exports.docsDataObservable = exports.docSnapshotObservable = exports.docDataObservable = exports.querySnapshotObservable = exports.collectionSnapshotObservable = void 0;
+var collectionQuerySnapshotObservable_1 = require("./collectionQuerySnapshotObservable");
+Object.defineProperty(exports, "collectionSnapshotObservable", { enumerable: true, get: function () { return collectionQuerySnapshotObservable_1.collectionSnapshotObservable; } });
+Object.defineProperty(exports, "querySnapshotObservable", { enumerable: true, get: function () { return collectionQuerySnapshotObservable_1.querySnapshotObservable; } });
+var docDataObservable_1 = require("./docDataObservable");
+Object.defineProperty(exports, "docDataObservable", { enumerable: true, get: function () { return docDataObservable_1.docDataObservable; } });
+var docSnapshotObservable_1 = require("./docSnapshotObservable");
+Object.defineProperty(exports, "docSnapshotObservable", { enumerable: true, get: function () { return docSnapshotObservable_1.docSnapshotObservable; } });
+var docsDataObservable_1 = require("./docsDataObservable");
+Object.defineProperty(exports, "docsDataObservable", { enumerable: true, get: function () { return docsDataObservable_1.docsDataObservable; } });
+var docsSnapshotsObservable_1 = require("./docsSnapshotsObservable");
+Object.defineProperty(exports, "docsSnapshotsObservable", { enumerable: true, get: function () { return docsSnapshotsObservable_1.docsSnapshotsObservable; } });
 //# sourceMappingURL=index.js.map

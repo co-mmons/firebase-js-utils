@@ -1,10 +1,10 @@
-import { auth } from "firebase/app";
+import firebase from "firebase/app";
 import { Observable, ReplaySubject } from "rxjs";
-import { AuthUser } from "../auth-user";
-import { User } from "../user";
+import { AuthUser } from "../AuthUser";
+import { User } from "../User";
 export declare class AuthUserClient implements AuthUser {
     private readonly auth;
-    constructor(auth: auth.Auth);
+    constructor(auth: firebase.auth.Auth);
     private authInitialized;
     private _user;
     get user(): User;

@@ -1,12 +1,13 @@
 import {modules} from "../config";
-import {firestoreClientModuleTypes, firestoreAdminModuleTypes} from "./types";
+import {FirebaseAdminModule} from "../FirebaseAdminModule";
+import {FirebaseClientModule} from "../FirebaseClientModule";
 import {isFirebaseClient, isFirebaseAdmin} from "../mode";
 
 export function isFirestoreClient() {
     return isFirebaseClient();
 }
 
-export function firestoreClientModule(): typeof firestoreClientModuleTypes {
+export function firestoreClientModule(): typeof FirebaseClientModule.firestore {
 
     if (isFirebaseClient()) {
         const mod = modules.firestore;
@@ -24,7 +25,7 @@ export function isFirestoreAdmin() {
     return isFirebaseAdmin();
 }
 
-export function firestoreAdminModule(): typeof firestoreAdminModuleTypes {
+export function firestoreAdminModule(): typeof FirebaseAdminModule.firestore {
 
     if (isFirebaseAdmin()) {
         const mod = modules.firestore;

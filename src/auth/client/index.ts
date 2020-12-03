@@ -1,19 +1,19 @@
-import {auth, User as FirebaseUser} from "firebase/app";
+import firebase from "firebase/app";
 import {Observable, of, ReplaySubject, throwError} from "rxjs";
 import {first, map, switchMap} from "rxjs/operators";
-import {AuthUser} from "../auth-user";
-import {User} from "../user";
+import {AuthUser} from "../AuthUser";
+import {User} from "../User";
 
 export class AuthUserClient implements AuthUser {
 
-    constructor(private readonly auth: auth.Auth) {
+    constructor(private readonly auth: firebase.auth.Auth) {
         this.auth.onIdTokenChanged((user) => this.userChanged(user));
     }
 
     private authInitialized: boolean = false;
 
-    private _user: FirebaseUser;
-    
+    private _user: firebase.User;
+
     get user(): User {
         return this._user;
     }
@@ -32,13 +32,13 @@ export class AuthUserClient implements AuthUser {
 
     get userIdTokenObservable(): Observable<string> {
 
-        return new Observable<FirebaseUser>(subscriber => {
+        return new Observable<firebase.User>(subscriber => {
             let unsubscribe = this.auth.onIdTokenChanged(subscriber);
             return () => unsubscribe();
         }).pipe(switchMap(user => user.getIdToken()));
     }
 
-    private userChanged(user: FirebaseUser) {
+    private userChanged(user: firebase.User) {
 
         const changed = !this.authInitialized || (!this._user && !!user) || (this._user && !user) || (this._user && user && this._user.uid !== user.uid);
 

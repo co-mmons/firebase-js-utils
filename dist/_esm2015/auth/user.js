@@ -1,1 +1,2 @@
-//# sourceMappingURL=user.js.map
+export {};
+//# sourceMappingURL=User.js.map
