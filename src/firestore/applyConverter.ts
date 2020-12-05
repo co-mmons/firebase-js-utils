@@ -1,6 +1,6 @@
 import {FirebaseAdminModule} from "../FirebaseAdminModule";
 import {FirebaseClientModule} from "../FirebaseClientModule";
-import {DataConverter} from "./dataConverter";
+import {DataConverter} from "./DataConverter";
 import {CollectionReference, DocumentReference, Query} from "./union-types";
 
 export function applyConverter<T>(documentRef: FirebaseClientModule.firestore.DocumentReference<any>, converter: DataConverter<T>): FirebaseClientModule.firestore.DocumentReference<T>;
