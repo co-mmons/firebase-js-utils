@@ -1,6 +1,0 @@
-{
-    "name": "@co.mmons/firebase-js-utils/auth/client",
-    "module": "../../_esm2015/auth/client/index.js",
-    "esm2015": "../../_esm2015/auth/client/index.js",
-    "sideEffects": false
-}
