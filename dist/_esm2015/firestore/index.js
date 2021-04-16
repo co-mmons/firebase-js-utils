@@ -9,4 +9,5 @@ export { docsSnapshots } from "./docsSnapshots";
 export { firestoreAdminModule, firestoreClientModule, firestoreModule, isFirestoreAdmin, isFirestoreClient } from "./mode";
 export { collectionRef } from "./collectionRef";
 export { docRef } from "./docRef";
+export { FirestoreTimestampSerializer } from "./FirestoreTimestampSerializer";
 //# sourceMappingURL=index.js.map

@@ -10,3 +10,4 @@ export { DocumentData, UpdateData } from "./shared-types";
 export { firestoreAdminModule, firestoreClientModule, firestoreModule, isFirestoreAdmin, isFirestoreClient } from "./mode";
 export { collectionRef } from "./collectionRef";
 export { docRef } from "./docRef";
+export { FirestoreTimestampSerializer } from "./FirestoreTimestampSerializer";
