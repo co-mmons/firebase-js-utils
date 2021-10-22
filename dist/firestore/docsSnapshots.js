@@ -5,9 +5,9 @@ const tslib_1 = require("tslib");
 const extractGetOptions_1 = require("./client/extractGetOptions");
 const union_types_1 = require("./union-types");
 function docsSnapshots(query, options) {
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         if (union_types_1.Query.isClient(query)) {
-            return (yield query.get(extractGetOptions_1.extractGetOptions(options))).docs;
+            return (yield query.get((0, extractGetOptions_1.extractGetOptions)(options))).docs;
         }
         else if (union_types_1.Query.isAdmin(query)) {
             return (yield query.get()).docs;

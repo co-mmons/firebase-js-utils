@@ -5,7 +5,7 @@ const tslib_1 = require("tslib");
 const core_1 = require("@co.mmons/js-utils/core");
 const union_types_1 = require("./union-types");
 function deleteQuery(query, options) {
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         if (!options) {
             options = {};
         }
@@ -46,7 +46,7 @@ function deleteQuery(query, options) {
                     catch (error) {
                         console.warn(error);
                         if (i < (options.batchRetryCount > 1 ? options.batchRetryCount : 1)) {
-                            yield core_1.sleep(options.batchRetryDelay || (2000 * i));
+                            yield (0, core_1.sleep)(options.batchRetryDelay || (2000 * i));
                         }
                     }
                 }

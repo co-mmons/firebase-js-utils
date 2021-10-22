@@ -9,11 +9,13 @@ export declare abstract class AutoWriteBatch {
     protected batch$: WriteBatch;
     protected limit$: number;
     protected count$: number;
+    protected committedCount$: number;
     protected get batch(): WriteBatch;
     get count(): number;
     get limit(): number;
     set limit(limit: number);
     isFull(): boolean;
+    resetCommittedCount(): void;
     autoCommit(): Promise<{
         count: number;
         results?: any;

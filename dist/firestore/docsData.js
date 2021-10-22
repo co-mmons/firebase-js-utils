@@ -5,9 +5,9 @@ const tslib_1 = require("tslib");
 const docsSnapshots_1 = require("./docsSnapshots");
 const union_types_1 = require("./union-types");
 function docsData(query, options) {
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         const data = [];
-        for (const snapshot of yield (union_types_1.Query.isClient(query) ? docsSnapshots_1.docsSnapshots(query, options) : docsSnapshots_1.docsSnapshots(query))) {
+        for (const snapshot of yield (union_types_1.Query.isClient(query) ? (0, docsSnapshots_1.docsSnapshots)(query, options) : (0, docsSnapshots_1.docsSnapshots)(query))) {
             data.push(snapshot.data());
         }
         return data;

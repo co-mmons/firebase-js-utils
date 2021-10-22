@@ -7,7 +7,7 @@ const union_types_1 = require("../union-types");
 function querySnapshotObservable(query, options) {
     if (union_types_1.Query.isClient(query)) {
         return new rxjs_1.Observable(subscriber => {
-            const unsubscribe = query.onSnapshot(extractSnapshotListenOptions_1.extractSnapshotListenOptions(options) || {}, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
+            const unsubscribe = query.onSnapshot((0, extractSnapshotListenOptions_1.extractSnapshotListenOptions)(options) || {}, snapshot => subscriber.next(snapshot), error => subscriber.error(error));
             return () => unsubscribe();
         });
     }

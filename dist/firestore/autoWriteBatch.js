@@ -8,6 +8,7 @@ class AutoWriteBatch {
         this.firestore = firestore;
         this.limit$ = 249;
         this.count$ = 0;
+        this.committedCount$ = 0;
     }
     get batch() {
         if (!this.batch$) {
@@ -27,11 +28,15 @@ class AutoWriteBatch {
     isFull() {
         return this.count$ >= this.limit$;
     }
+    resetCommittedCount() {
+        this.committedCount$ = 0;
+    }
     autoCommit() {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
             if (this.count$ > this.limit$) {
                 const count = this.count$;
                 const results = yield this.batch.commit();
+                this.committedCount$ += count;
                 this.batch$ = undefined;
                 this.count$ = 0;
                 if (this.onCommit) {
@@ -48,10 +53,11 @@ class AutoWriteBatch {
         });
     }
     commit() {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
             if (this.count$ > 0) {
                 const count = this.count$;
                 const results = yield this.batch.commit();
+                this.committedCount$ += count;
                 this.batch$ = undefined;
                 this.count$ = 0;
                 if (this.onCommit) {

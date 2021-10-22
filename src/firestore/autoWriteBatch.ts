@@ -16,6 +16,8 @@ export abstract class AutoWriteBatch {
 
     protected count$: number = 0;
 
+    protected committedCount$: number = 0;
+
     protected get batch(): WriteBatch {
         if (!this.batch$) {
             this.batch$ = this.firestore.batch();
@@ -40,11 +42,16 @@ export abstract class AutoWriteBatch {
         return this.count$ >= this.limit$;
     }
 
+    resetCommittedCount() {
+        this.committedCount$ = 0;
+    }
+
     async autoCommit(): Promise<{count: number, results?: any}> {
 
         if (this.count$ > this.limit$) {
             const count = this.count$;
             const results = await this.batch.commit();
+            this.committedCount$ += count;
             this.batch$ = undefined;
             this.count$ = 0;
 
@@ -67,6 +74,7 @@ export abstract class AutoWriteBatch {
         if (this.count$ > 0) {
             const count = this.count$;
             const results = await this.batch.commit();
+            this.committedCount$ += count;
             this.batch$ = undefined;
             this.count$ = 0;
 

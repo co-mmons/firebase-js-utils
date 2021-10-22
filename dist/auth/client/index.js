@@ -25,7 +25,7 @@ class AuthUserClient {
         return new rxjs_1.Observable(subscriber => {
             let unsubscribe = this.auth.onIdTokenChanged(subscriber);
             return () => unsubscribe();
-        }).pipe(operators_1.switchMap(user => user.getIdToken()));
+        }).pipe((0, operators_1.switchMap)(user => user.getIdToken()));
     }
     userChanged(user) {
         const changed = !this.authInitialized || (!this._user && !!user) || (this._user && !user) || (this._user && user && this._user.uid !== user.uid);
@@ -53,14 +53,14 @@ class AuthUserClient {
             return Promise.resolve(true);
         }
         else {
-            return this.userIdObservable.pipe(operators_1.first(), operators_1.map(id => true)).toPromise();
+            return this.userIdObservable.pipe((0, operators_1.first)(), (0, operators_1.map)(id => true)).toPromise();
         }
     }
     userNotSignedError() {
         return new Error("User not signed");
     }
     observeUser(assertSigned) {
-        return this.userObservable.pipe(operators_1.switchMap(user => user || !assertSigned ? rxjs_1.of(user) : rxjs_1.throwError(this.userNotSignedError())));
+        return this.userObservable.pipe((0, operators_1.switchMap)(user => user || !assertSigned ? (0, rxjs_1.of)(user) : (0, rxjs_1.throwError)(this.userNotSignedError())));
     }
 }
 exports.AuthUserClient = AuthUserClient;
