@@ -19,6 +19,9 @@ class AutoWriteBatch {
     get count() {
         return this.count$;
     }
+    get committedCount() {
+        return this.committedCount$;
+    }
     get limit() {
         return this.limit$;
     }

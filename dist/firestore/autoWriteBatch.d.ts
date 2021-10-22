@@ -12,6 +12,7 @@ export declare abstract class AutoWriteBatch {
     protected committedCount$: number;
     protected get batch(): WriteBatch;
     get count(): number;
+    get committedCount(): number;
     get limit(): number;
     set limit(limit: number);
     isFull(): boolean;

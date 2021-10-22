@@ -30,6 +30,10 @@ export abstract class AutoWriteBatch {
         return this.count$;
     }
 
+    get committedCount() {
+        return this.committedCount$;
+    }
+
     get limit() {
         return this.limit$;
     }
