@@ -10,14 +10,15 @@
     "build:es2015": "tsc -p tsconfig.json -m commonjs -t es2015 --outDir dist",
     "build:esm2015": "tsc -p tsconfig.json -d false -m es2015 -t es2015 --outDir dist/_esm2015"
   },
+  "dependencies": {
+    "@co.mmons/node-utils": "github:co-mmons/node-utils"
+  },
   "peerDependencies": {
-    "@co.mmons/node-utils": "github:co-mmons/node-utils",
     "@co.mmons/js-utils": "github:co-mmons/js-utils",
     "tslib": "^2.0.0",
     "rxjs": "^7.0.0"
   },
   "devDependencies": {
-    "@co.mmons/node-utils": "github:co-mmons/node-utils",
     "@co.mmons/js-utils": "github:co-mmons/js-utils",
     "firebase": "^8.10.0",
     "firebase-admin": "^9.12.0",
